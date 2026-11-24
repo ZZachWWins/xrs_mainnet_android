@@ -11,12 +11,13 @@
  * 
  * INTEGRATION:
  *   In Flutter, inject this script into WebView before page load.
- *   Set up a JavaScriptChannel named "XerisWallet" to receive messages.
- *   Respond via controller.runJavaScript("window.__xerisResponse(id, result, error)")
+ *   Register the native-origin WebMessageListener "XerisWalletNative" before load.
+ *   Responses are accepted only in the same nonce-bound top-level document.
  */
 
 (function () {
   'use strict';
+  if (window.top !== window.self) return;
 
   // Prevent double-injection
   if (window.__xerisProviderInjected) return;
@@ -27,75 +28,59 @@
   // =========================================================================
 
   let _requestId = 0;
-  const _pending = new Map(); // id -> { resolve, reject }
+  const _pending = new Map();
   let _connected = false;
   let _publicKey = null;
   const _listeners = {};
+  let _documentId = null;
+  try {
+    _documentId = Array.from(window.crypto.getRandomValues(new Uint8Array(16)), byte => byte.toString(16).padStart(2, '0')).join('');
+    Object.defineProperty(window, '__xerisDocumentId', { value: _documentId });
+  } catch (_) { /* A browser without secure session nonces cannot connect. */ }
 
-  /**
-   * Send a request to the native wallet and return a Promise.
-   * The native side calls window.__xerisResponse(id, result, error) to resolve.
-   */
+  function rejectPending(message) {
+    for (const pending of _pending.values()) { clearTimeout(pending.timer); pending.reject(new Error(message)); }
+    _pending.clear();
+  }
+
   function sendToNative(method, params) {
     return new Promise((resolve, reject) => {
+      if (!_documentId || window.location.protocol !== 'https:' || typeof window.XerisWalletNative?.postMessage !== 'function') {
+        reject(new Error('Secure wallet communication is unavailable. Open an HTTPS page and update Android System WebView if needed.'));
+        return;
+      }
+      if (_pending.size >= 16) { reject(new Error('Too many pending wallet requests.')); return; }
       const id = ++_requestId;
-      _pending.set(id, { resolve, reject });
-
-      const message = JSON.stringify({ id, method, params: params || {} });
-
-      // Flutter InAppWebView: callHandler
-      if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler) {
-        window.flutter_inappwebview.callHandler('XerisWallet', message)
-          .then(result => {
-            // If the handler returns a value directly (not common with our current bridge)
-          })
-          .catch(err => {
-            console.error('Xeris bridge error:', err);
-            reject(err);
-          });
-      }
-      // Legacy Flutter JavaScriptChannel (webview_flutter)
-      else if (window.XerisWallet && window.XerisWallet.postMessage) {
-        window.XerisWallet.postMessage(message);
-      }
-      // Fallback: webkit message handler (iOS WKWebView)
-      else if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.XerisWallet) {
-        window.webkit.messageHandlers.XerisWallet.postMessage(message);
-      }
-      // Fallback: Android JSInterface
-      else if (window.XerisWalletAndroid) {
-        window.XerisWalletAndroid.postMessage(message);
-      }
-      else {
-        // If we haven't found a bridge yet, maybe it's still loading
-        console.warn('Xeris Wallet native bridge not FOUND yet (initialization?)');
-        // We'll still wait for the timeout instead of immediate reject
-      }
-
-      // Timeout after 120s (user may be slow to approve)
-      setTimeout(() => {
-        if (_pending.has(id)) {
-          _pending.get(id).reject(new Error('Request timed out'));
-          _pending.delete(id);
-        }
+      const timer = setTimeout(() => {
+        const pending = _pending.get(id);
+        if (pending) { _pending.delete(id); pending.reject(new Error('Wallet request timed out.')); }
       }, 120000);
+      _pending.set(id, { resolve, reject, timer });
+      try {
+        const message = JSON.stringify({ id, document_id: _documentId, method, params: params || {} });
+        if (message.length > 65536) throw new Error();
+        // No callHandler, JavaScriptInterface or unverified legacy fallback.
+        window.XerisWalletNative.postMessage(message);
+      } catch (_) {
+        clearTimeout(timer); _pending.delete(id);
+        reject(new Error('The secure wallet request could not be sent.'));
+      }
     });
   }
 
-  /**
-   * Called by the native wallet to resolve/reject a pending request.
-   * Flutter calls: controller.runJavaScript("window.__xerisResponse(1, {...}, null)")
-   */
-  window.__xerisResponse = function (id, result, error) {
-    const pending = _pending.get(id);
+  Object.defineProperty(window, '__xerisNativeResponse', { value: function (response) {
+    const pending = _pending.get(response?.id);
     if (!pending) return;
-    _pending.delete(id);
-    if (error) {
-      pending.reject(new Error(typeof error === 'string' ? error : JSON.stringify(error)));
-    } else {
-      pending.resolve(result);
-    }
-  };
+    _pending.delete(response.id); clearTimeout(pending.timer);
+    if (response.error) pending.reject(new Error(typeof response.error === 'string' ? response.error : 'Wallet request rejected.'));
+    else pending.resolve(response.result);
+  }});
+  window.addEventListener('pagehide', () => {
+    rejectPending('The requesting page was closed.');
+    _connected = false; _publicKey = null;
+    provider.isConnected = false; provider.publicKey = null;
+    emit('disconnect');
+  });
 
   // =========================================================================
   // PUBLIC KEY WRAPPER (mimics Solana web3.js PublicKey interface)
@@ -141,6 +126,7 @@
 
   /** Called by native wallet when account changes (e.g., user switches wallet) */
   window.__xerisAccountChanged = function (newPublicKey) {
+    rejectPending('The active wallet changed.');
     if (newPublicKey) {
       _publicKey = new XerisPublicKey(newPublicKey);
       _connected = true;
@@ -148,6 +134,8 @@
       _publicKey = null;
       _connected = false;
     }
+    provider.publicKey = _publicKey;
+    provider.isConnected = _connected;
     emit('accountChanged', _publicKey);
   };
 
@@ -301,7 +289,8 @@
       if (message instanceof Uint8Array) {
         msgData = btoa(String.fromCharCode.apply(null, message));
       } else {
-        msgData = btoa(message);
+        if (typeof message !== 'string') throw new Error('Provide message bytes or UTF-8 text.');
+        msgData = btoa(String.fromCharCode.apply(null, new TextEncoder().encode(message)));
       }
 
       const result = await sendToNative('signMessage', {
@@ -374,12 +363,6 @@
       writable: false,
       configurable: false,
     });
-  } else if (window.solana.isXeris === undefined) {
-    // If something else is there but we want to mark it as Xeris-compatible
-    try {
-      window.solana.isXeris = true;
-      window.solana.isXerisWallet = true;
-    } catch (e) { }
   }
 
   // Announce to dApps that a wallet is available

@@ -1,6 +1,6 @@
 # Xeris mainnet Android wallet
 
-Flutter source for the Android Xeris Wallet, configured for the existing `xeris-mainnet-v4` chain at **https://mainnetrpc.xerisweb.com**. The web4 browser opens the new DEX at **https://dex.xerisweb.com**. This repository contains application source, public configuration and regression tests; it is not a Google Play release.
+Flutter source for the Android Xeris Wallet, configured for the existing `xeris-mainnet-v4` chain at **https://mainnetrpc.xerisweb.com**. The web4 browser opens the new DEX at **https://dex.xerisweb.com/?network=mainnet**. This repository contains application source, public configuration and regression tests; it is not a Google Play release.
 
 ## Open in Android Studio
 
@@ -19,10 +19,14 @@ Mainnet is also the source default. Mainnet builds ignore a previously saved tes
 
 - Holdings load independently of price, pool and stake enrichment, with bounded request budgets and explicit retry/stale states.
 - Mainnet uses HTTPS for JSON-RPC and REST; WebSockets are not required.
-- The web4 browser exposes `window.xeris.connect()`, `getRpcUrl()` and `signTransaction()`. The DEX asks the user's wallet to sign; no treasury or reserve key belongs in this app.
-- Built-in old DEX bookmarks resolve to `dex.xerisweb.com`; user-created bookmarks are preserved. The network-status bookmark opens the public mainnet API, since no separate human-facing mainnet explorer is configured.
+- The web4 browser exposes `window.xeris.connect()`, `getRpcUrl()`, `signMessage()` and `signTransaction()`. Native HTTPS main-frame origin, document, active wallet/tab and parent Web4 selection, network and a native 120-second approval deadline bind requests. Unsupported WebView caller-metadata support leaves wallet access disabled; browsing remains available.
+- dApp transaction approval decodes complete effects before authentication. The release policy accepts exactly one unsigned legacy instruction: native XRS transfer, verified wXRS/xUSDC transfer, wrap/unwrap or the fixed XRS/xUSDC pool swap. It shows exact amounts, full recipient, minimum output and fees, and verifies a recent blockhash against the pinned mainnet checkpoint and fresh archive attestation. Unknown instructions, multisig, batch signing and unbound token burns are rejected. The legacy `signAndSendTransaction` convenience method is disabled; dApps use sign-only approval followed by tracked submission and durable original-signature recovery.
+- Ownership message signing accepts only printable ASCII plus line breaks, up to 8 KiB, displays the complete text and rejects binary/control/invisible text and disguised canonical transaction bytes. The DEX asks the user's wallet to sign; no treasury or reserve key belongs in this app.
+- Built-in old DEX bookmarks resolve to `dex.xerisweb.com/?network=mainnet`; user-created bookmarks are preserved. The network-status bookmark opens the public mainnet API, since no separate human-facing mainnet explorer is configured.
 - Transaction submission preserves the locally computed signature when the response is ambiguous. Dependent wallet operations wait for execution receipts.
 - Current-node restrictions on legacy PQ/zk transfers, limit/DCA orders and fixed-roster staking remain enforced by the existing client adapters.
+
+The strict dApp burn gate means direct xUSDC redemption is not supported by this release policy. Recipient-bound settlement authorization and finality need a separately reviewed integration; public automatic deposit/redemption availability is not implied.
 
 The repository preserves the existing native swap UI and wallet browser. It does not include the unshipped experimental native pool screen or a public automatic USDC deposit/redemption service. The new web DEX is developed separately. App integration code is separate from the L1's CertiK review.
 
@@ -33,6 +37,11 @@ The focused suite uses mocked HTTP and synthetic test keys. These commands do no
 ```sh
 flutter test --no-pub --dart-define-from-file=config/mainnet.json \
   test/mainnet_build_configuration_test.dart \
+  test/dapp_transaction_review_test.dart \
+  test/dapp_network_verifier_test.dart \
+  test/dapp_session_guard_test.dart \
+  test/browser_tab_lifecycle_test.dart \
+  test/wallet_bridge_origin_test.dart \
   test/network_configuration_test.dart \
   test/dashboard_loading_test.dart \
   test/balance_api_loading_test.dart \
@@ -47,6 +56,8 @@ flutter test --no-pub --dart-define-from-file=config/mainnet.json \
   test/transaction_confirmation_test.dart \
   test/transaction_submission_recovery_test.dart
 ```
+
+The provider transport also has an offline mocked JavaScript check: `node --test test/xeris_provider_transport_test.mjs`.
 
 Older integration/manual scripts under `test/` may access a configured network or require a host native library. Use the explicit offline list above for regression checks. Do not use an unrestricted test invocation as a production-wallet test.
 

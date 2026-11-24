@@ -13,6 +13,8 @@ import 'package:xeris_wallet/core/theme/app_theme.dart';
 import 'package:xeris_wallet/core/utils/pin_hasher.dart';
 
 class StorageService {
+  static const _mainnetDexBookmarkUrl =
+      'https://dex.xerisweb.com/?network=mainnet';
   static const _storage = FlutterSecureStorage(
     // resetOnError:false — NEVER silently wipe secure storage (which holds every
     // wallet's only copy of the mnemonic) on a keystore decryption error. Such
@@ -606,7 +608,7 @@ class StorageService {
         ),
         BrowserBookmark(
           title: 'Xeris DEX',
-          url: 'https://dex.xerisweb.com',
+          url: _mainnetDexBookmarkUrl,
           isDefault: true,
         ),
         BrowserBookmark(
@@ -622,10 +624,14 @@ class StorageService {
       final bookmark = BrowserBookmark.fromJson(e);
       // Update only built-in links; user-created bookmarks keep their URLs.
       if (bookmark.isDefault &&
-          bookmark.url == 'https://xeris-dex.vercel.app') {
+          {
+            'https://xeris-dex.vercel.app',
+            'https://dex.xerisweb.com',
+            'https://dex.xerisweb.com/',
+          }.contains(bookmark.url)) {
         return BrowserBookmark(
           title: 'Xeris DEX',
-          url: 'https://dex.xerisweb.com',
+          url: _mainnetDexBookmarkUrl,
           isDefault: true,
         );
       }

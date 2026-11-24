@@ -1,0 +1,159 @@
+{
+  "note": "PUBLIC unsigned synthetic-account fixtures only; no private keys, seeds or signatures. Current strict one-instruction wallet policy; not complete L1 instruction support.",
+  "blockhash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "positives": [
+    {
+      "name": "buy",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEBAGQEAAAAFAAAAAAAAAB4cnMteHVzZGMtbWFpbm5ldC12MQsAAAAAAAAAc3dhcF9iX3RvX2EpAAAAAAAAAHsiYW1vdW50IjoxMDAwMDAwMDAxLCJtaW5fb3V0cHV0Ijo5OTk5OTl9",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx",
+      "expected": {
+        "action": "buy",
+        "title": "Buy XRS",
+        "contract": "xrs-xusdc-mainnet-v1",
+        "amountRaw": "1000000001",
+        "amount": "1000.000001",
+        "asset": "xUSDC",
+        "minimumRaw": "999999",
+        "minimum": "0.000999999",
+        "minimumAsset": "wXRS",
+        "recipient": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx"
+      }
+    },
+    {
+      "name": "sell",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEBAGQEAAAAFAAAAAAAAAB4cnMteHVzZGMtbWFpbm5ldC12MQsAAAAAAAAAc3dhcF9hX3RvX2IpAAAAAAAAAHsiYW1vdW50IjoxMDAwMDAwMDAxLCJtaW5fb3V0cHV0Ijo5OTk5OTl9",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx",
+      "expected": {
+        "action": "sell",
+        "title": "Sell XRS",
+        "contract": "xrs-xusdc-mainnet-v1",
+        "amountRaw": "1000000001",
+        "amount": "1.000000001",
+        "asset": "wXRS",
+        "minimumRaw": "999999",
+        "minimum": "0.999999",
+        "minimumAsset": "xUSDC",
+        "recipient": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx"
+      }
+    },
+    {
+      "name": "wrap",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEBAAwNAAAAAcqaOwAAAAA=",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx",
+      "expected": {
+        "action": "wrap",
+        "title": "Wrap XRS",
+        "amountRaw": "1000000001",
+        "amount": "1.000000001",
+        "asset": "XRS",
+        "recipient": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx"
+      }
+    },
+    {
+      "name": "unwrap",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEBAAwOAAAAAcqaOwAAAAA=",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx",
+      "expected": {
+        "action": "unwrap",
+        "title": "Unwrap XRS",
+        "amountRaw": "1000000001",
+        "amount": "1.000000001",
+        "asset": "XRS",
+        "recipient": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx"
+      }
+    },
+    {
+      "name": "native11-exact-large",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEAcgsAAAArAAAAAAAAAFVTNTE3RzU5NjVheWRrWjQ2SFMzOFFMaTdVUWlTb2p1cmZiUWZLQ0VMRngrAAAAAAAAAFlNTjlRajVqUE5wN2oxNFZQY01MMUI2eEdnY1BXVlpVR0xGVTNNbnlmYWZvL4CXwiHHAg==",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx",
+      "expected": {
+        "action": "transfer",
+        "title": "Send native XRS",
+        "amountRaw": "200165828090408815",
+        "amount": "200165828.090408815",
+        "asset": "XRS",
+        "recipient": "YMN9Qj5jPNp7j14VPcML1B6xGgcPWVZUGLFU3Mnyfaf"
+      }
+    },
+    {
+      "name": "token1-xrs_native",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEBAIQBAQAAAAoAAAAAAAAAeHJzX25hdGl2ZSsAAAAAAAAAVVM1MTdHNTk2NWF5ZGtaNDZIUzM4UUxpN1VRaVNvanVyZmJRZktDRUxGeCsAAAAAAAAAWU1OOVFqNWpQTnA3ajE0VlBjTUwxQjZ4R2djUFdWWlVHTEZVM01ueWZhZofWEgAAAAAA",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx",
+      "expected": {
+        "action": "tokenTransfer",
+        "title": "Send tokens",
+        "token": "xrs_native",
+        "amountRaw": "1234567",
+        "amount": "0.001234567",
+        "asset": "wXRS",
+        "recipient": "YMN9Qj5jPNp7j14VPcML1B6xGgcPWVZUGLFU3Mnyfaf"
+      }
+    },
+    {
+      "name": "token1-xeris_usdc",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEBAIQBAQAAAAoAAAAAAAAAeGVyaXNfdXNkYysAAAAAAAAAVVM1MTdHNTk2NWF5ZGtaNDZIUzM4UUxpN1VRaVNvanVyZmJRZktDRUxGeCsAAAAAAAAAWU1OOVFqNWpQTnA3ajE0VlBjTUwxQjZ4R2djUFdWWlVHTEZVM01ueWZhZofWEgAAAAAA",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx",
+      "expected": {
+        "action": "tokenTransfer",
+        "title": "Send tokens",
+        "token": "xeris_usdc",
+        "amountRaw": "1234567",
+        "amount": "1.234567",
+        "asset": "xUSDC",
+        "recipient": "YMN9Qj5jPNp7j14VPcML1B6xGgcPWVZUGLFU3Mnyfaf"
+      }
+    }
+  ],
+  "negatives": [
+    {
+      "name": "multisig",
+      "transaction": "AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEBAGQEAAAAFAAAAAAAAAB4cnMteHVzZGMtbWFpbm5ldC12MQsAAAAAAAAAc3dhcF9iX3RvX2EpAAAAAAAAAHsiYW1vdW50IjoxMDAwMDAwMDAxLCJtaW5fb3V0cHV0Ijo5OTk5OTl9",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx"
+    },
+    {
+      "name": "already-signed",
+      "transaction": "AQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEBAGQEAAAAFAAAAAAAAAB4cnMteHVzZGMtbWFpbm5ldC12MQsAAAAAAAAAc3dhcF9iX3RvX2EpAAAAAAAAAHsiYW1vdW50IjoxMDAwMDAwMDAxLCJtaW5fb3V0cHV0Ijo5OTk5OTl9",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx"
+    },
+    {
+      "name": "wrong-header",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEBAGQEAAAAFAAAAAAAAAB4cnMteHVzZGMtbWFpbm5ldC12MQsAAAAAAAAAc3dhcF9iX3RvX2EpAAAAAAAAAHsiYW1vdW50IjoxMDAwMDAwMDAxLCJtaW5fb3V0cHV0Ijo5OTk5OTl9",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx"
+    },
+    {
+      "name": "writable-program",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAACBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEBAGQEAAAAFAAAAAAAAAB4cnMteHVzZGMtbWFpbm5ldC12MQsAAAAAAAAAc3dhcF9iX3RvX2EpAAAAAAAAAHsiYW1vdW50IjoxMDAwMDAwMDAxLCJtaW5fb3V0cHV0Ijo5OTk5OTl9",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx"
+    },
+    {
+      "name": "wrong-program",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEBAGQEAAAAFAAAAAAAAAB4cnMteHVzZGMtbWFpbm5ldC12MQsAAAAAAAAAc3dhcF9iX3RvX2EpAAAAAAAAAHsiYW1vdW50IjoxMDAwMDAwMDAxLCJtaW5fb3V0cHV0Ijo5OTk5OTl9",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx"
+    },
+    {
+      "name": "multiple-instructions",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAgEBAGQEAAAAFAAAAAAAAAB4cnMteHVzZGMtbWFpbm5ldC12MQsAAAAAAAAAc3dhcF9iX3RvX2EpAAAAAAAAAHsiYW1vdW50IjoxMDAwMDAwMDAxLCJtaW5fb3V0cHV0Ijo5OTk5OTl9",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx"
+    },
+    {
+      "name": "wrong-program-index",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQABAGQEAAAAFAAAAAAAAAB4cnMteHVzZGMtbWFpbm5ldC12MQsAAAAAAAAAc3dhcF9iX3RvX2EpAAAAAAAAAHsiYW1vdW50IjoxMDAwMDAwMDAxLCJtaW5fb3V0cHV0Ijo5OTk5OTl9",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx"
+    },
+    {
+      "name": "wrong-account-index",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEBAWQEAAAAFAAAAAAAAAB4cnMteHVzZGMtbWFpbm5ldC12MQsAAAAAAAAAc3dhcF9iX3RvX2EpAAAAAAAAAHsiYW1vdW50IjoxMDAwMDAwMDAxLCJtaW5fb3V0cHV0Ijo5OTk5OTl9",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx"
+    },
+    {
+      "name": "trailing-byte",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEBAGQEAAAAFAAAAAAAAAB4cnMteHVzZGMtbWFpbm5ldC12MQsAAAAAAAAAc3dhcF9iX3RvX2EpAAAAAAAAAHsiYW1vdW50IjoxMDAwMDAwMDAxLCJtaW5fb3V0cHV0Ijo5OTk5OTl9AA==",
+      "signer": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx"
+    },
+    {
+      "name": "different-selected-wallet",
+      "transaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAQEBAGQEAAAAFAAAAAAAAAB4cnMteHVzZGMtbWFpbm5ldC12MQsAAAAAAAAAc3dhcF9iX3RvX2EpAAAAAAAAAHsiYW1vdW50IjoxMDAwMDAwMDAxLCJtaW5fb3V0cHV0Ijo5OTk5OTl9",
+      "signer": "YMN9Qj5jPNp7j14VPcML1B6xGgcPWVZUGLFU3Mnyfaf"
+    }
+  ]
+}

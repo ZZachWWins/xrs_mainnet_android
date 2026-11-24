@@ -1,4 +1,6 @@
 import 'dart:collection';
+import 'package:flutter/foundation.dart' show ValueListenable;
+import '../browser_tab_lifecycle.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +10,7 @@ import 'package:xeris_wallet/core/providers/wallet_provider.dart';
 import 'package:xeris_wallet/core/theme/app_theme.dart';
 import 'package:xeris_wallet/core/services/auth_service.dart';
 import 'package:xeris_wallet/core/services/wallet_bridge.dart';
+import 'package:xeris_wallet/core/services/dapp_transaction_review.dart';
 import 'package:xeris_wallet/core/services/wallet_service.dart';
 import 'package:xeris_wallet/core/config/network_config.dart';
 import 'package:xeris_wallet/core/services/storage_service.dart';
@@ -17,10 +20,12 @@ import 'package:xeris_wallet/core/models/browser_bookmark.dart';
 
 class DAppBrowserScreen extends ConsumerStatefulWidget {
   final String initialUrl;
+  final ValueListenable<bool>? selected;
 
   const DAppBrowserScreen({
     super.key,
     this.initialUrl = 'xeris://home',
+    this.selected,
   });
 
   @override
@@ -53,6 +58,7 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
   late TextEditingController _urlController;
   final List<BrowserTab> _tabs = [];
   int _activeTabIndex = 0;
+  late final BrowserPageActivity _pageActivity;
   bool _isDependenciesLoaded = false;
   String? _cachedProviderScript;
 
@@ -61,26 +67,53 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
   @override
   void initState() {
     super.initState();
-    _urlController = TextEditingController(text: widget.initialUrl == 'xeris://home' ? '' : widget.initialUrl);
+    _pageActivity = BrowserPageActivity(
+        selected: widget.selected,
+        onHidden: () {
+          for (final tab in _tabs) {
+            tab.bridge.navigationStarted();
+          }
+        });
+    _urlController = TextEditingController(
+        text: widget.initialUrl == 'xeris://home' ? '' : widget.initialUrl);
     // Don't add the tab yet, we'll wait for the script in build()
+  }
+
+  @override
+  void didUpdateWidget(covariant DAppBrowserScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(widget.selected, oldWidget.selected)) {
+      for (final tab in _tabs) {
+        tab.bridge.navigationStarted();
+      }
+      _pageActivity.bind(widget.selected);
+    }
   }
 
   void _addNewTab(String url, {bool loadImmediately = true}) {
     if (_tabs.length >= 10) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Maximum tab limit reached (10). Please close some tabs.')),
+        const SnackBar(
+            content: Text(
+                'Maximum tab limit reached (10). Please close some tabs.')),
       );
       return;
     }
 
+    late final BrowserTab tab;
     final bridge = XerisWalletBridge(
       getPublicKey: () => ref.read(walletAddressProvider).value ?? '',
       signTransaction: _signTx,
       signMessage: _signMsg,
       rpcUrl: NetworkConfig.rpcUrl,
+      isActive: () =>
+          mounted &&
+          _pageActivity.isSelected &&
+          _tabs.isNotEmpty &&
+          identical(_activeTab, tab),
     );
 
-    final tab = BrowserTab(
+    tab = BrowserTab(
       controller: null, // Will be set when InAppWebView is created
       bridge: bridge,
       url: url,
@@ -88,15 +121,22 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
       isLoading: url != 'xeris://home',
     );
 
+    if (_tabs.isNotEmpty) _activeTab.bridge.navigationStarted();
     setState(() {
       _tabs.add(tab);
       _activeTabIndex = _tabs.length - 1;
       _urlController.text = url == 'xeris://home' ? '' : url;
     });
 
-    if (loadImmediately && _isDependenciesLoaded && tab.controller != null && !tab.isHome) {
+    if (loadImmediately &&
+        _isDependenciesLoaded &&
+        tab.controller != null &&
+        !tab.isHome) {
       _loadAndInject(tab);
-    } else if (loadImmediately && _isDependenciesLoaded && _cachedProviderScript == null && !tab.isHome) {
+    } else if (loadImmediately &&
+        _isDependenciesLoaded &&
+        _cachedProviderScript == null &&
+        !tab.isHome) {
       // If script not loaded yet, load it then the page will pick it up on rebuild
       _tabs.first.bridge.loadProviderScript(context).then((script) {
         if (mounted) {
@@ -121,15 +161,18 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
   void _closeTab(int index) {
     if (_tabs.length <= 1) return; // Don't close the last tab
     setState(() {
-      _tabs.removeAt(index);
-      if (_activeTabIndex >= _tabs.length) {
-        _activeTabIndex = _tabs.length - 1;
-      }
+      _activeTabIndex = closeTabAndPreserveActive(
+        tabs: _tabs,
+        activeIndex: _activeTabIndex,
+        closingIndex: index,
+        close: (tab) => tab.bridge.close(),
+      );
       _urlController.text = _activeTab.isHome ? '' : _activeTab.url;
     });
   }
 
   void _switchTab(int index) {
+    if (_activeTabIndex != index) _activeTab.bridge.navigationStarted();
     setState(() {
       _activeTabIndex = index;
       _urlController.text = _activeTab.isHome ? '' : _activeTab.url;
@@ -155,17 +198,26 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
     }
   }
 
-  Future<SignResult> _signTx(String txBase64) async {
+  Future<SignResult> _signTx(String txBase64,
+      {required DAppEnsureCurrent ensureCurrent,
+      required DAppTransactionReview review}) async {
+    await ensureCurrent();
     if (!mounted) throw Exception('User rejected the transaction');
     final twoFactor = await StorageService.getTwoFactorEnabled();
+    await ensureCurrent();
     if (!mounted) throw Exception('User rejected the transaction');
-    final ok = await AuthService.authenticate(context, requireTwoFactor: twoFactor);
+    final ok =
+        await AuthService.authenticate(context, requireTwoFactor: twoFactor);
+    await ensureCurrent();
     if (!ok) throw Exception('User rejected the transaction');
     final mnemonic = await StorageService.getMnemonic();
+    await ensureCurrent();
     if (mnemonic == null) throw Exception('No wallet connected');
     final result = await WalletService.signDAppTransaction(
       mnemonic: mnemonic,
       txBase64: txBase64,
+      expectedPublicKey: review.signer,
+      ensureCurrent: ensureCurrent,
     );
     return SignResult(
       signature: result['signature']!,
@@ -173,22 +225,35 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
     );
   }
 
-  Future<String> _signMsg(Uint8List message) async {
+  Future<String> _signMsg(Uint8List message,
+      {required DAppEnsureCurrent ensureCurrent,
+      required String expectedSigner}) async {
+    await ensureCurrent();
     if (!mounted) throw Exception('User rejected message signing');
     final twoFactor = await StorageService.getTwoFactorEnabled();
+    await ensureCurrent();
     if (!mounted) throw Exception('User rejected message signing');
-    final ok = await AuthService.authenticate(context, requireTwoFactor: twoFactor);
+    final ok =
+        await AuthService.authenticate(context, requireTwoFactor: twoFactor);
+    await ensureCurrent();
     if (!ok) throw Exception('User rejected message signing');
     final mnemonic = await StorageService.getMnemonic();
+    await ensureCurrent();
     if (mnemonic == null) throw Exception('No wallet connected');
     return await WalletService.signDAppMessage(
       mnemonic: mnemonic,
       message: message,
+      expectedPublicKey: expectedSigner,
+      ensureCurrent: ensureCurrent,
     );
   }
 
   @override
   void dispose() {
+    _pageActivity.dispose();
+    for (final tab in _tabs) {
+      tab.bridge.close();
+    }
     _urlController.dispose();
     super.dispose();
   }
@@ -201,15 +266,15 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
 
   Future<void> _saveBookmark() async {
     if (_activeTab.isHome) return;
-    
+
     final url = _activeTab.url;
     final title = _activeTab.title ?? 'Untitled Site';
-    
+
     final bookmark = BrowserBookmark(
       title: title,
       url: url,
     );
-    
+
     await StorageService.saveBookmark(bookmark);
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -237,7 +302,10 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
                     children: [
                       const Text(
                         'Tabs',
-                        style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
                       ),
                       IconButton(
                         icon: const Icon(Icons.add, color: Colors.white),
@@ -264,18 +332,27 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Center(
-                            child: tab.isHome 
-                              ? const Icon(Icons.home, color: AppColors.brandVibrant, size: 20)
-                              : Text(
-                                  tab.title?.isNotEmpty == true ? tab.title![0].toUpperCase() : '?',
-                                  style: const TextStyle(color: AppColors.brandVibrant, fontWeight: FontWeight.bold),
-                                ),
+                            child: tab.isHome
+                                ? const Icon(Icons.home,
+                                    color: AppColors.brandVibrant, size: 20)
+                                : Text(
+                                    tab.title?.isNotEmpty == true
+                                        ? tab.title![0].toUpperCase()
+                                        : '?',
+                                    style: const TextStyle(
+                                        color: AppColors.brandVibrant,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                           ),
                         ),
                         title: Text(
-                          tab.isHome ? 'Xeris web4 browser' : (tab.title ?? tab.url),
-
-                          style: TextStyle(color: isActive ? AppColors.brandVibrant : Colors.white),
+                          tab.isHome
+                              ? 'Xeris web4 browser'
+                              : (tab.title ?? tab.url),
+                          style: TextStyle(
+                              color: isActive
+                                  ? AppColors.brandVibrant
+                                  : Colors.white),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -286,7 +363,8 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         trailing: IconButton(
-                          icon: const Icon(Icons.close, color: Colors.redAccent),
+                          icon:
+                              const Icon(Icons.close, color: Colors.redAccent),
                           onPressed: () {
                             if (_tabs.length > 1) {
                               _closeTab(index);
@@ -353,7 +431,9 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
         canPop: false,
         onPopInvokedWithResult: (didPop, result) async {
           if (didPop) return;
-          if (_activeTab.controller != null && await _activeTab.controller!.canGoBack()) {
+          if (_activeTab.controller != null &&
+              await _activeTab.controller!.canGoBack()) {
+            _activeTab.bridge.navigationStarted();
             await _activeTab.controller!.goBack();
           }
         },
@@ -386,7 +466,8 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
                       style: const TextStyle(color: Colors.white, fontSize: 13),
                       decoration: InputDecoration(
                         hintText: l10n.searchOrEnterUrl,
-                        hintStyle: const TextStyle(color: Colors.white54, fontSize: 13),
+                        hintStyle: const TextStyle(
+                            color: Colors.white54, fontSize: 13),
                         border: InputBorder.none,
                         isDense: true,
                         contentPadding: EdgeInsets.zero,
@@ -395,19 +476,22 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
                         var url = value.trim();
                         if (url.isEmpty) return;
                         if (!url.contains('.') && !url.startsWith('http')) {
-                          url = 'https://www.google.com/search?q=${Uri.encodeComponent(url)}';
+                          url =
+                              'https://www.google.com/search?q=${Uri.encodeComponent(url)}';
                         } else if (!url.startsWith('http')) {
                           url = 'https://$url';
                         }
-                        
+
                         setState(() {
+                          _activeTab.bridge.navigationStarted();
                           _activeTab.url = url;
                           _activeTab.isSecure = url.startsWith('https');
                           _activeTab.isLoading = true;
                         });
-                        
+
                         if (_activeTab.controller != null) {
-                          _activeTab.controller!.loadUrl(urlRequest: URLRequest(url: WebUri(url)));
+                          _activeTab.controller!.loadUrl(
+                              urlRequest: URLRequest(url: WebUri(url)));
                         }
                       },
                     ),
@@ -417,144 +501,200 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
             ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.bookmark_add_outlined, color: Colors.white, size: 20),
+                icon: const Icon(Icons.bookmark_add_outlined,
+                    color: Colors.white, size: 20),
                 onPressed: _activeTab.isHome ? null : _saveBookmark,
               ),
               IconButton(
                 icon: const Icon(Icons.refresh, color: Colors.white, size: 20),
                 onPressed: () {
-                   if (_activeTab.controller != null) {
-                      _activeTab.controller!.reload();
-                   }
+                  if (_activeTab.controller != null) {
+                    _activeTab.bridge.navigationStarted();
+                    _activeTab.controller!.reload();
+                  }
                 },
               ),
             ],
           ),
           body: IndexedStack(
             index: _activeTabIndex,
-            children: _tabs.map((tab) => Column(
-              children: [
-                if (tab.progress < 1.0 && !tab.isHome)
-                  LinearProgressIndicator(
-                    value: tab.progress,
-                    backgroundColor: Colors.transparent,
-                    color: AppColors.brandVibrant,
-                    minHeight: 2,
-                  ),
-                Expanded(
-                  child: tab.isHome 
-                    ? BrowserHomepage(
-                        onUrlSelected: (url) {
-                          setState(() {
-                            tab.url = url;
-                            tab.isSecure = url.startsWith('https');
-                            tab.isLoading = true;
-                          });
-                          if (tab.controller != null) {
-                            tab.controller!.loadUrl(urlRequest: URLRequest(url: WebUri(url)));
-                          }
-                        },
-                      )
-                    : InAppWebView(
-                        initialUrlRequest: URLRequest(url: WebUri(tab.url)),
-                        initialSettings: InAppWebViewSettings(
-                          javaScriptEnabled: true,
-                          transparentBackground: false,
-                          useOnLoadResource: true,
-                          allowsInlineMediaPlayback: true,
+            children: _tabs
+                .map((tab) => Column(
+                      key: ObjectKey(tab),
+                      children: [
+                        if (tab.progress < 1.0 && !tab.isHome)
+                          LinearProgressIndicator(
+                            value: tab.progress,
+                            backgroundColor: Colors.transparent,
+                            color: AppColors.brandVibrant,
+                            minHeight: 2,
+                          ),
+                        Expanded(
+                          child: tab.isHome
+                              ? BrowserHomepage(
+                                  onUrlSelected: (url) {
+                                    setState(() {
+                                      tab.bridge.navigationStarted();
+                                      tab.url = url;
+                                      tab.isSecure = url.startsWith('https');
+                                      tab.isLoading = true;
+                                    });
+                                    if (tab.controller != null) {
+                                      tab.controller!.loadUrl(
+                                          urlRequest:
+                                              URLRequest(url: WebUri(url)));
+                                    }
+                                  },
+                                )
+                              : InAppWebView(
+                                  // Register the native-origin wallet channel before load.
+                                  initialSettings: InAppWebViewSettings(
+                                    javaScriptEnabled: true,
+                                    transparentBackground: false,
+                                    useOnLoadResource: true,
+                                    allowsInlineMediaPlayback: true,
+                                    useShouldOverrideUrlLoading: true,
+                                    allowFileAccess: false,
+                                    allowContentAccess: false,
+                                    mixedContentMode: MixedContentMode
+                                        .MIXED_CONTENT_NEVER_ALLOW,
+                                  ),
+                                  initialUserScripts:
+                                      UnmodifiableListView<UserScript>([
+                                    if (_cachedProviderScript != null)
+                                      UserScript(
+                                        source: _cachedProviderScript!,
+                                        injectionTime: UserScriptInjectionTime
+                                            .AT_DOCUMENT_START,
+                                        forMainFrameOnly: true,
+                                      ),
+                                  ]),
+                                  onWebViewCreated: (controller) async {
+                                    final targetUrl = tab.url;
+                                    tab.controller = controller;
+                                    await tab.bridge
+                                        .attachToWebView(controller, context);
+                                    if (mounted && _tabs.contains(tab)) {
+                                      await controller.loadUrl(
+                                          urlRequest: URLRequest(
+                                              url: WebUri(targetUrl)));
+                                    }
+                                  },
+                                  onLoadStart: (controller, url) {
+                                    tab.bridge.navigationStarted();
+                                    if (url != null) {
+                                      final urlStr = url.toString();
+                                      if (url.scheme != 'http' &&
+                                          url.scheme != 'https') {
+                                        return;
+                                      }
+                                      if (_tabs[_activeTabIndex] == tab) {
+                                        _handleUrl(urlStr);
+                                      }
+                                      setState(() {
+                                        tab.isLoading = true;
+                                        tab.url = urlStr;
+                                        tab.isSecure =
+                                            urlStr.startsWith('https');
+                                      });
+                                    }
+                                  },
+                                  onLoadStop: (controller, url) async {
+                                    final loadedUrl = tab.url;
+                                    bool isCurrent() =>
+                                        mounted &&
+                                        _tabs.contains(tab) &&
+                                        identical(tab.controller, controller) &&
+                                        tab.url == loadedUrl;
+                                    if (!isCurrent()) return;
+                                    setState(() {
+                                      tab.isLoading = false;
+                                    });
+                                    await applyCurrentTabTitle(
+                                      isCurrent: isCurrent,
+                                      readTitle: controller.getTitle,
+                                      apply: (title) => setState(() {
+                                        tab.title = title;
+                                      }),
+                                    );
+                                  },
+                                  onProgressChanged: (controller, progress) {
+                                    setState(() {
+                                      tab.progress = progress / 100;
+                                    });
+                                  },
+                                  shouldOverrideUrlLoading:
+                                      (controller, navigationAction) async {
+                                    final reqUrl = navigationAction.request.url
+                                        ?.toString();
+                                    if (reqUrl == null) {
+                                      return NavigationActionPolicy.CANCEL;
+                                    }
+                                    final uri = Uri.tryParse(reqUrl);
+
+                                    if (reqUrl.startsWith('wc:') ||
+                                        reqUrl.startsWith('walletconnect:')) {
+                                      return NavigationActionPolicy.CANCEL;
+                                    }
+                                    if (uri != null &&
+                                        uri.path.contains('/wc') &&
+                                        uri.queryParameters
+                                            .containsKey('uri')) {
+                                      return NavigationActionPolicy.CANCEL;
+                                    }
+                                    if (uri != null &&
+                                        uri.scheme != 'http' &&
+                                        uri.scheme != 'https') {
+                                      return NavigationActionPolicy.CANCEL;
+                                    }
+
+                                    return NavigationActionPolicy.ALLOW;
+                                  },
+                                ),
                         ),
-                        initialUserScripts: UnmodifiableListView<UserScript>([
-                          if (_cachedProviderScript != null)
-                            UserScript(
-                              source: _cachedProviderScript!,
-                              injectionTime: UserScriptInjectionTime.AT_DOCUMENT_START,
-                              forMainFrameOnly: true,
-                            ),
-                        ]),
-                        onWebViewCreated: (controller) {
-                          tab.controller = controller;
-                          tab.bridge.attachToWebView(controller, context);
-                        },
-                        onLoadStart: (controller, url) {
-                          if (url != null) {
-                            final urlStr = url.toString();
-                            debugPrint('[DAppBrowser] onLoadStart: $urlStr');
-                            if (_tabs[_activeTabIndex] == tab) {
-                               _handleUrl(urlStr);
-                            }
-                            setState(() {
-                              tab.isLoading = true;
-                              tab.url = urlStr;
-                              tab.isSecure = urlStr.startsWith('https');
-                            });
-                          }
-                        },
-                        onLoadStop: (controller, url) async {
-                          setState(() {
-                            tab.isLoading = false;
-                          });
-                          final title = await controller.getTitle();
-                          setState(() {
-                            tab.title = title;
-                          });
-                        },
-                        onProgressChanged: (controller, progress) {
-                          setState(() {
-                            tab.progress = progress / 100;
-                          });
-                        },
-                        shouldOverrideUrlLoading: (controller, navigationAction) async {
-                          final reqUrl = navigationAction.request.url?.toString();
-                          if (reqUrl == null) return NavigationActionPolicy.ALLOW;
-                          final uri = Uri.tryParse(reqUrl);
-
-                          if (reqUrl.startsWith('wc:') || reqUrl.startsWith('walletconnect:')) {
-                            return NavigationActionPolicy.CANCEL;
-                          }
-                          if (uri != null && uri.path.contains('/wc') && uri.queryParameters.containsKey('uri')) {
-                            return NavigationActionPolicy.CANCEL;
-                          }
-                          if (uri != null && uri.scheme != 'http' && uri.scheme != 'https') {
-                            return NavigationActionPolicy.CANCEL;
-                          }
-
-                          return NavigationActionPolicy.ALLOW;
-                        },
-                      ),
-                ),
-              ],
-            )).toList(),
+                      ],
+                    ))
+                .toList(),
           ),
           bottomNavigationBar: Container(
             color: AppColors.brandMidnight,
-            padding: const EdgeInsets.only(bottom: 100), // Add padding to clear floating nav
+            padding: const EdgeInsets.only(
+                bottom: 100), // Add padding to clear floating nav
             child: SafeArea(
-              top: false, 
+              top: false,
               child: SizedBox(
                 height: 50,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.arrow_back_ios_new, size: 18, color: Colors.white),
+                      icon: const Icon(Icons.arrow_back_ios_new,
+                          size: 18, color: Colors.white),
                       onPressed: () async {
-                        if (_activeTab.controller != null && await _activeTab.controller!.canGoBack()) {
+                        if (_activeTab.controller != null &&
+                            await _activeTab.controller!.canGoBack()) {
+                          _activeTab.bridge.navigationStarted();
                           _activeTab.controller!.goBack();
                         }
                       },
                     ),
                     IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.white),
+                      icon: const Icon(Icons.arrow_forward_ios,
+                          size: 18, color: Colors.white),
                       onPressed: () async {
-                        if (_activeTab.controller != null && await _activeTab.controller!.canGoForward()) {
+                        if (_activeTab.controller != null &&
+                            await _activeTab.controller!.canGoForward()) {
+                          _activeTab.bridge.navigationStarted();
                           _activeTab.controller!.goForward();
                         }
                       },
                     ),
                     IconButton(
-                      icon: const Icon(Icons.home_outlined, size: 24, color: Colors.white),
+                      icon: const Icon(Icons.home_outlined,
+                          size: 24, color: Colors.white),
                       onPressed: () {
                         setState(() {
+                          _activeTab.bridge.navigationStarted();
                           _activeTab.url = 'xeris://home';
                           _urlController.text = '';
                         });
@@ -563,19 +703,24 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
                     InkWell(
                       onTap: _showTabsOverlay,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.white, width: 1.5),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
                           '${_tabs.length}',
-                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12),
                         ),
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.share_outlined, size: 22, color: Colors.white),
+                      icon: const Icon(Icons.share_outlined,
+                          size: 22, color: Colors.white),
                       onPressed: () async {
                         final url = _activeTab.url;
                         if (url != 'xeris://home') {
@@ -585,7 +730,8 @@ class _DAppBrowserScreenState extends ConsumerState<DAppBrowserScreen> {
                           await Clipboard.setData(ClipboardData(text: url));
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('URL copied to clipboard')),
+                              const SnackBar(
+                                  content: Text('URL copied to clipboard')),
                             );
                           }
                         }

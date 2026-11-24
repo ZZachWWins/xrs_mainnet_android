@@ -31,6 +31,11 @@ android {
     defaultConfig {
         applicationId = "io.xeris.wallet"
         minSdk = 24
+        // The current PQ FFI and reviewed Flutter runtime are arm64-only.
+        ndk {
+            abiFilters.clear()
+            abiFilters.add("arm64-v8a")
+        }
         targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName

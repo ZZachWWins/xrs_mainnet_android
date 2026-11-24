@@ -34,7 +34,8 @@ void main() {
   test('new browser defaults open the mainnet DEX', () async {
     final bookmarks = await StorageService.getBookmarks();
     expect(
-      bookmarks.any((b) => b.isDefault && b.url == 'https://dex.xerisweb.com'),
+      bookmarks.any((b) =>
+          b.isDefault && b.url == 'https://dex.xerisweb.com/?network=mainnet'),
       isTrue,
     );
     expect(
@@ -61,8 +62,31 @@ void main() {
         ]),
       });
       final bookmarks = await StorageService.getBookmarks();
-      expect(bookmarks[0].url, 'https://dex.xerisweb.com');
+      expect(bookmarks[0].url, 'https://dex.xerisweb.com/?network=mainnet');
       expect(bookmarks[1].url, 'https://xeris-dex.vercel.app');
     },
   );
+
+  test(
+      'built-in bare DEX links select Mainnet while custom and explicit choices remain',
+      () async {
+    const urls = [
+      'https://dex.xerisweb.com',
+      'https://dex.xerisweb.com/',
+      'https://dex.xerisweb.com',
+      'https://dex.xerisweb.com/?network=testnet',
+    ];
+    FlutterSecureStorage.setMockInitialValues({
+      'browser_bookmarks': jsonEncode([
+        for (var i = 0; i < urls.length; i++)
+          {'title': 'Saved $i', 'url': urls[i], 'isDefault': i != 2},
+      ]),
+    });
+    final bookmarks = await StorageService.getBookmarks();
+    expect(bookmarks[0].url, 'https://dex.xerisweb.com/?network=mainnet');
+    expect(bookmarks[1].url, 'https://dex.xerisweb.com/?network=mainnet');
+    expect(bookmarks[2].url, urls[2]);
+    expect(bookmarks[3].url, urls[3]);
+    expect(bookmarks[2].title, 'Saved 2');
+  });
 }

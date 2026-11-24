@@ -1,11 +1,13 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'dapp_session_guard.dart';
+import 'dapp_transaction_review.dart';
+import 'dapp_network_verifier.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:xeris_wallet/core/config/network_config.dart';
 import 'base_api_service.dart';
-import 'wallet_service.dart';
 import '../utils/context_extensions.dart';
 import 'storage_service.dart';
 import 'xeris_api_service.dart';
@@ -34,12 +36,14 @@ class DAppRequest {
   final String method;
   final Map<String, dynamic> params;
   final String dappOrigin;
+  final DAppTransactionReview? transactionReview;
 
   DAppRequest({
     required this.id,
     required this.method,
     required this.params,
     required this.dappOrigin,
+    this.transactionReview,
   });
 }
 
@@ -52,6 +56,14 @@ class DAppRequest {
 ///     rpcUrl: 'http://138.197.116.81:56001',
 ///   );
 ///   bridge.attachToWebView(webViewController);
+typedef DAppEnsureCurrent = Future<void> Function();
+
+class _PendingDAppRequest {
+  final int wireId;
+  final DAppRequestScope scope;
+  _PendingDAppRequest(this.wireId, this.scope);
+}
+
 class XerisWalletBridge {
   /// Returns the user's current public key (base58 string)
   final String Function() getPublicKey;
@@ -59,13 +71,18 @@ class XerisWalletBridge {
   /// Signs a base64-encoded transaction and returns the signed tx as base64
   /// along with the signature. The wallet should show an approval dialog
   /// before calling this.
-  final Future<SignResult> Function(String txBase64) signTransaction;
+  final Future<SignResult> Function(String txBase64,
+      {required DAppEnsureCurrent ensureCurrent,
+      required DAppTransactionReview review}) signTransaction;
 
   /// Signs an arbitrary message and returns the signature as base64.
-  final Future<String> Function(Uint8List message) signMessage;
+  final Future<String> Function(Uint8List message,
+      {required DAppEnsureCurrent ensureCurrent,
+      required String expectedSigner}) signMessage;
 
   /// The RPC endpoint URL for the Xeris node
   final String rpcUrl;
+  final bool Function()? isActive;
   final String _networkScope;
 
   /// Called when a dApp requests approval. Show your custom UI here.
@@ -81,6 +98,11 @@ class XerisWalletBridge {
 
   /// The JS provider script content (loaded from assets)
   String? _providerScript;
+  DAppSessionGuard? _sessionGuard;
+  final _requests = <int, _PendingDAppRequest>{};
+  final _reservations = <String, Object>{};
+  int _nextNativeId = 0;
+  bool _approvalPending = false;
 
   String? get providerScript => _providerScript;
 
@@ -89,28 +111,49 @@ class XerisWalletBridge {
     required this.signTransaction,
     required this.signMessage,
     required this.rpcUrl,
+    this.isActive,
     this.onApprovalRequired,
   }) : _networkScope = NetworkConfig.cacheKey;
 
-  /// Returns true if the given origin is currently trusted for the active wallet.
-  /// Looked up per-call so wallet switches immediately revoke trust.
-  Future<bool> _isConnected(String origin) async {
-    final walletId = await StorageService.getActiveWalletId();
+  Future<void> _ensureCurrent(int id) async {
+    final request = _requests[id];
+    if (request == null || _sessionGuard == null) {
+      throw StateError('The wallet request is no longer active.');
+    }
+    await _sessionGuard!.ensureCurrent(request.scope);
+    if (_requests[id] != request) {
+      throw StateError('The wallet request was replaced.');
+    }
+  }
+
+  Future<bool> _isConnected(int id, String origin) async {
+    await _ensureCurrent(id);
+    final walletId = _requests[id]!.scope.walletId;
     if (walletId == null) return false;
     final sites = await StorageService.getConnectedSites(walletId);
+    await _ensureCurrent(id);
     return sites.contains(origin);
   }
 
-  Future<void> _persistConnect(String origin) async {
-    final walletId = await StorageService.getActiveWalletId();
+  Future<void> _persistConnect(int id, String origin) async {
+    await _ensureCurrent(id);
+    final walletId = _requests[id]!.scope.walletId;
     if (walletId == null) return;
-    await StorageService.addConnectedSite(walletId, origin);
+    await persistDAppConnection(
+      ensureCurrent: () => _ensureCurrent(id),
+      contains: () async =>
+          (await StorageService.getConnectedSites(walletId)).contains(origin),
+      add: () => StorageService.addConnectedSite(walletId, origin),
+      remove: () => StorageService.removeConnectedSite(walletId, origin),
+    );
   }
 
-  Future<void> _persistDisconnect(String origin) async {
-    final walletId = await StorageService.getActiveWalletId();
+  Future<void> _persistDisconnect(int id, String origin) async {
+    await _ensureCurrent(id);
+    final walletId = _requests[id]!.scope.walletId;
     if (walletId == null) return;
     await StorageService.removeConnectedSite(walletId, origin);
+    await _ensureCurrent(id);
   }
 
   /// Load the provider JS from assets. Call once at startup.
@@ -127,61 +170,110 @@ class XerisWalletBridge {
 
   /// Attach this bridge to a WebViewController.
   /// Call this after creating the controller but before loading any URL.
-  void attachToWebView(
-      InAppWebViewController controller, BuildContext context) {
+  Future<bool> attachToWebView(
+      InAppWebViewController controller, BuildContext context) async {
     _controller = controller;
     _context = context;
-
-    // Register the JavaScript handler for flutter_inappwebview
-    controller.addJavaScriptHandler(
-      handlerName: 'XerisWallet',
-      callback: (args) {
-        debugPrint('[XerisWalletBridge] Received message: $args');
-        if (args.isNotEmpty) {
-          // inappwebview passing args as a list
-          final dynamic message = args[0];
-          if (message is String) {
-            _handleMessage(message);
-          } else if (message is Map) {
-            _handleMessage(jsonEncode(message));
-          }
-        }
-        return null; // Handlers can return a value to JS
+    _sessionGuard = DAppSessionGuard(
+      networkScope: _networkScope,
+      isActive: isActive,
+      currentNetworkScope: () => NetworkConfig.cacheKey,
+      currentPublicKey: getPublicKey,
+      currentWalletId: StorageService.getActiveWalletId,
+      currentTopLevelUrl: () async {
+        final url = await controller.getUrl();
+        return url == null ? null : Uri.tryParse(url.toString());
       },
+      isCurrentDocument: (documentId) async =>
+          await controller.evaluateJavascript(
+            source: 'window.__xerisDocumentId === ${jsonEncode(documentId)}',
+          ) ==
+          true,
     );
+    if (defaultTargetPlatform == TargetPlatform.android &&
+        !await WebViewFeature.isFeatureSupported(
+            WebViewFeature.WEB_MESSAGE_LISTENER)) {
+      return false; // Read-only browsing; no insecure callHandler fallback.
+    }
+    await controller.addWebMessageListener(WebMessageListener(
+      jsObjectName: 'XerisWalletNative',
+      // This is a general dApp browser. All callers are still checked below:
+      // native main frame, HTTPS, current top origin, active wallet and consent.
+      allowedOriginRules: {'*'},
+      onPostMessage: (message, sourceOrigin, isMainFrame, replyProxy) {
+        final data = message?.data;
+        if (data is! String || data.length > 65536) return;
+        _handleMessage(
+          data,
+          sourceOrigin: sourceOrigin == null
+              ? null
+              : Uri.tryParse(sourceOrigin.toString()),
+          isMainFrame: isMainFrame,
+        );
+      },
+    ));
+    return true;
   }
 
-  /// Inject the JS provider into the current page
+  void navigationStarted() {
+    _sessionGuard?.navigationStarted();
+    _requests.clear();
+    _reservations.clear();
+  }
+
+  void close() {
+    _sessionGuard?.close();
+    _requests.clear();
+    _reservations.clear();
+    _controller = null;
+    _context = null;
+  }
+
   Future<void> injectProvider() async {
     if (_controller == null || _providerScript == null) return;
     await _controller!.evaluateJavascript(source: _providerScript!);
   }
 
-  /// Handle an incoming message from the JS provider
-  Future<void> _handleMessage(String messageStr) async {
+  Future<void> _handleMessage(
+    String messageStr, {
+    required Uri? sourceOrigin,
+    required bool isMainFrame,
+  }) async {
+    String? reservationKey;
+    Object? reservation;
+    int? nativeId;
     try {
-      final Map<String, dynamic> message = jsonDecode(messageStr);
-      final int id = message['id'] as int;
-      final String method = message['method'] as String;
-      if (_networkScope != NetworkConfig.cacheKey) {
-        _sendError(
-            id, 'Network changed. Open a new browser tab to connect again.');
+      final message = jsonDecode(messageStr);
+      if (message is! Map<String, dynamic>) return;
+      final wireId = message['id'];
+      final documentId = message['document_id'];
+      final method = message['method'];
+      final params = message['params'];
+      if (wireId is! int ||
+          wireId < 1 ||
+          wireId > 2147483647 ||
+          documentId is! String ||
+          method is! String ||
+          params is! Map<String, dynamic> ||
+          _sessionGuard == null) {
         return;
       }
-      final Map<String, dynamic> params =
-          (message['params'] as Map<String, dynamic>?) ?? {};
-
-      // Detect origin from the current URL if available
-      String? origin;
-      if (_controller != null) {
-        final url = await _controller!.getUrl();
-        if (url != null) {
-          origin = url.origin;
-        }
+      reservationKey = '$documentId:$wireId';
+      if (_reservations.containsKey(reservationKey) ||
+          _reservations.length >= 16) {
+        return;
       }
-
-      final currentOrigin = origin ?? 'unknown';
-
+      reservation = Object();
+      _reservations[reservationKey] = reservation;
+      final scope = await _sessionGuard!.pin(
+        sourceOrigin: sourceOrigin,
+        isMainFrame: isMainFrame,
+        documentId: documentId,
+      );
+      nativeId = ++_nextNativeId;
+      _requests[nativeId] = _PendingDAppRequest(wireId, scope);
+      final id = nativeId;
+      final currentOrigin = scope.origin;
       switch (method) {
         case 'connect':
           await _handleConnect(id, params, currentOrigin);
@@ -202,31 +294,40 @@ class XerisWalletBridge {
           await _handleSignMessage(id, params, currentOrigin);
           break;
         case 'getRpcUrl':
-          if (!await _isConnected(currentOrigin)) {
+          if (!await _isConnected(id, currentOrigin)) {
             _sendError(id, 'DApp not connected');
             break;
           }
           _sendResponse(id, {'rpcUrl': rpcUrl});
           break;
         case 'requestAirdrop':
-          if (!await _isConnected(currentOrigin)) {
+          if (!await _isConnected(id, currentOrigin)) {
             _sendError(id, 'DApp not connected');
             break;
           }
           await _handleRequestAirdrop(id, params);
           break;
         case 'getBalances':
-          if (!await _isConnected(currentOrigin)) {
+          if (!await _isConnected(id, currentOrigin)) {
             _sendError(id, 'DApp not connected');
             break;
           }
           await _handleGetBalances(id);
           break;
         default:
-          _sendError(id, 'Unknown method: $method');
+          _sendError(id, 'Unsupported wallet method.');
       }
-    } catch (e) {
-      debugPrint('[XerisWalletBridge] Error handling message: $e');
+    } catch (_) {
+      if (nativeId != null) {
+        _sendError(nativeId,
+            'The page, wallet or network changed, or the request was rejected. Review again.');
+      }
+    } finally {
+      if (nativeId != null) _requests.remove(nativeId);
+      if (reservationKey != null &&
+          _reservations[reservationKey] == reservation) {
+        _reservations.remove(reservationKey);
+      }
     }
   }
 
@@ -243,7 +344,7 @@ class XerisWalletBridge {
     }
 
     final onlyIfTrusted = params['onlyIfTrusted'] == true;
-    final alreadyConnected = await _isConnected(origin);
+    final alreadyConnected = await _isConnected(id, origin);
 
     // If the dApp only wants to reconnect (no popup), check if already connected
     if (onlyIfTrusted && !alreadyConnected) {
@@ -263,7 +364,7 @@ class XerisWalletBridge {
         _sendError(id, 'User rejected the connection');
         return;
       }
-      await _persistConnect(origin);
+      await _persistConnect(id, origin);
     }
 
     _sendResponse(id, {
@@ -273,29 +374,33 @@ class XerisWalletBridge {
   }
 
   Future<void> _handleDisconnect(int id, String origin) async {
-    await _persistDisconnect(origin);
+    await _persistDisconnect(id, origin);
     _sendResponse(id, {'disconnected': true});
   }
 
   Future<void> _handleSignTransaction(
       int id, Map<String, dynamic> params, String origin) async {
     final txBase64 = params['transaction'] as String?;
-    if (txBase64 == null || txBase64.isEmpty) {
+    if (txBase64 == null || txBase64.isEmpty || txBase64.length > 16384) {
       _sendError(id, 'Missing transaction data');
       return;
     }
 
     // Ensure connected first
-    if (!await _isConnected(origin)) {
+    if (!await _isConnected(id, origin)) {
       _sendError(id, 'DApp not connected');
       return;
     }
 
-    // Show approval dialog
+    final review =
+        DAppTransactionReview.parse(txBase64, _requests[id]!.scope.publicKey);
+    await DAppMainnetVerifier.verify(review.blockhash);
+    await _ensureCurrent(id);
     final approved = await _requestApproval(DAppRequest(
       id: id,
       method: 'signTransaction',
-      params: params,
+      params: const {},
+      transactionReview: review,
       dappOrigin: origin,
     ));
     if (!approved) {
@@ -304,111 +409,64 @@ class XerisWalletBridge {
     }
 
     try {
-      final result = await signTransaction(txBase64);
+      final result = await signTransaction(txBase64,
+          ensureCurrent: () => _ensureCurrent(id), review: review);
+      await _ensureCurrent(id);
       _sendResponse(id, {
         'signature': result.signature,
         'signedTransaction': result.signedTxBase64,
       });
     } catch (e) {
-      _sendError(id, 'Signing failed: $e');
+      _sendError(id, 'Signing was rejected or could not be completed.');
     }
   }
 
   Future<void> _handleSignAllTransactions(
       int id, Map<String, dynamic> params, String origin) async {
-    final transactions = (params['transactions'] as List?)?.cast<String>();
-    if (transactions == null || transactions.isEmpty) {
-      _sendError(id, 'Missing transactions');
-      return;
-    }
-
-    if (!await _isConnected(origin)) {
-      _sendError(id, 'DApp not connected');
-      return;
-    }
-
-    final approved = await _requestApproval(DAppRequest(
-      id: id,
-      method: 'signAllTransactions',
-      params: {'count': transactions.length},
-      dappOrigin: origin,
-    ));
-    if (!approved) {
-      _sendError(id, 'User rejected the transactions');
-      return;
-    }
-
-    try {
-      final List<String> signed = [];
-      for (final tx in transactions) {
-        final result = await signTransaction(tx);
-        signed.add(result.signedTxBase64);
-      }
-      _sendResponse(id, {'signedTransactions': signed});
-    } catch (e) {
-      _sendError(id, 'Signing failed: $e');
-    }
+    _sendError(
+        id, 'Batch signing is unavailable. Review one transaction at a time.');
   }
 
   Future<void> _handleSignAndSendTransaction(
       int id, Map<String, dynamic> params, String origin) async {
-    final txBase64 = params['transaction'] as String?;
-    if (txBase64 == null || txBase64.isEmpty) {
-      _sendError(id, 'Missing transaction data');
-      return;
-    }
-
-    if (!await _isConnected(origin)) {
-      _sendError(id, 'DApp not connected');
-      return;
-    }
-
-    final approved = await _requestApproval(DAppRequest(
-      id: id,
-      method: 'signAndSendTransaction',
-      params: params,
-      dappOrigin: origin,
-    ));
-    if (!approved) {
-      _sendError(id, 'User rejected the transaction');
-      return;
-    }
-
-    try {
-      if (_networkScope != NetworkConfig.cacheKey) {
-        throw StateError(
-            'Network changed before signing. Open a new browser tab.');
-      }
-      final result = await signTransaction(txBase64);
-      if (_networkScope != NetworkConfig.cacheKey) {
-        throw StateError(
-            'Network changed before submission. Transaction was not sent.');
-      }
-      final signature =
-          await WalletService.submitTransaction(result.signedTxBase64);
-      _sendResponse(id, {'signature': signature});
-    } catch (e) {
-      _sendError(id, 'Sign and send failed: $e');
-    }
+    _sendError(id,
+        'Automatic submission is unavailable. Use signTransaction with tracked submission and receipt recovery.');
   }
 
   Future<void> _handleSignMessage(
       int id, Map<String, dynamic> params, String origin) async {
     final msgBase64 = params['message'] as String?;
-    if (msgBase64 == null || msgBase64.isEmpty) {
+    if (msgBase64 == null || msgBase64.isEmpty || msgBase64.length > 10924) {
       _sendError(id, 'Missing message');
       return;
     }
 
-    if (!await _isConnected(origin)) {
+    if (!await _isConnected(id, origin)) {
       _sendError(id, 'DApp not connected');
       return;
     }
 
+    late final Uint8List messageBytes;
+    String preview;
+    try {
+      messageBytes = base64Decode(msgBase64);
+      if (messageBytes.isEmpty ||
+          messageBytes.length > 8192 ||
+          base64Encode(messageBytes) != msgBase64) {
+        throw const FormatException();
+      }
+      preview = reviewDAppMessage(messageBytes);
+    } catch (_) {
+      _sendError(id, 'Invalid or oversized message.');
+      return;
+    }
+
+    await DAppMainnetVerifier.verifyIdentity();
+    await _ensureCurrent(id);
     final approved = await _requestApproval(DAppRequest(
       id: id,
       method: 'signMessage',
-      params: {'message': '(${msgBase64.length} bytes)'},
+      params: {'message': preview},
       dappOrigin: origin,
     ));
     if (!approved) {
@@ -417,11 +475,13 @@ class XerisWalletBridge {
     }
 
     try {
-      final messageBytes = base64Decode(msgBase64);
-      final signature = await signMessage(Uint8List.fromList(messageBytes));
+      final signature = await signMessage(Uint8List.fromList(messageBytes),
+          ensureCurrent: () => _ensureCurrent(id),
+          expectedSigner: _requests[id]!.scope.publicKey);
+      await _ensureCurrent(id);
       _sendResponse(id, {'signature': signature});
     } catch (e) {
-      _sendError(id, 'Message signing failed: $e');
+      _sendError(id, 'Message signing was rejected or could not be completed.');
     }
   }
 
@@ -473,48 +533,57 @@ class XerisWalletBridge {
   // ==========================================================================
 
   Future<bool> _requestApproval(DAppRequest request) async {
-    // If a custom approval handler is provided, use it
-    if (onApprovalRequired != null && _context != null) {
-      return await onApprovalRequired!(_context!, request);
+    await _ensureCurrent(request.id);
+    if (_approvalPending || _context == null) return false;
+    _approvalPending = true;
+    try {
+      final approved = onApprovalRequired != null
+          ? await onApprovalRequired!(_context!, request)
+          : await showDialog<bool>(
+                context: _context!,
+                barrierDismissible: false,
+                builder: (ctx) => _DefaultApprovalDialog(request: request),
+              ) ??
+              false;
+      await _ensureCurrent(request.id);
+      return approved;
+    } finally {
+      _approvalPending = false;
     }
-
-    // Default: show a simple Material dialog
-    if (_context == null) return false;
-
-    return await showDialog<bool>(
-          context: _context!,
-          barrierDismissible: false,
-          builder: (ctx) => _DefaultApprovalDialog(request: request),
-        ) ??
-        false;
   }
 
   // ==========================================================================
   // RESPONSE HELPERS
   // ==========================================================================
 
-  void _sendResponse(int id, dynamic result) {
-    if (_controller == null) return;
-    final resultJson = jsonEncode(result);
-    _controller!.evaluateJavascript(
-      source: 'window.__xerisResponse($id, $resultJson, null)',
-    );
-  }
+  void _sendResponse(int id, dynamic result) => _reply(id, result, null);
+  void _sendError(int id, String error) => _reply(id, null, error);
 
-  void _sendError(int id, String error) {
-    if (_controller == null) return;
-    final errorJson = jsonEncode(error);
+  void _reply(int id, dynamic result, String? error) {
+    final request = _requests[id];
+    if (request == null ||
+        _controller == null ||
+        _sessionGuard?.isCurrentSynchronously(request.scope) != true) {
+      return;
+    }
+    // Stable plugin6.1.5 reuses its native reply proxy for the last caller.
+    // Never use that mutable proxy for signing responses. Main-frame evaluation
+    // plus the per-document nonce prevents a late reply reaching a new page.
+    final documentId = jsonEncode(request.scope.documentId);
+    final response =
+        jsonEncode({'id': request.wireId, 'result': result, 'error': error});
     _controller!.evaluateJavascript(
-      source: 'window.__xerisResponse($id, null, $errorJson)',
-    );
+        source:
+            'if(window.__xerisDocumentId === $documentId && window.__xerisNativeResponse) { window.__xerisNativeResponse($response); }');
   }
 
   /// Notify the dApp that the account has changed (e.g., user switches wallet)
   void notifyAccountChanged(String? newPublicKey) {
+    navigationStarted();
     if (_controller == null) return;
     if (newPublicKey != null) {
       _controller!.evaluateJavascript(
-        source: 'window.__xerisAccountChanged("$newPublicKey")',
+        source: 'window.__xerisAccountChanged(${jsonEncode(newPublicKey)})',
       );
     } else {
       _controller!
@@ -587,7 +656,8 @@ class _DefaultApprovalDialog extends StatelessWidget {
           Expanded(child: Text(title, style: const TextStyle(fontSize: 18))),
         ],
       ),
-      content: Column(
+      content: SingleChildScrollView(
+          child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -612,8 +682,45 @@ class _DefaultApprovalDialog extends StatelessWidget {
               ],
             ),
           ),
+          if (request.transactionReview != null) ...[
+            const SizedBox(height: 16),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 280),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: request.transactionReview!.display.entries
+                      .map((entry) => Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(entry.key,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w600)),
+                                  SelectableText(entry.value),
+                                ]),
+                          ))
+                      .toList(),
+                ),
+              ),
+            ),
+          ],
+          if (request.method == 'signMessage') ...[
+            const SizedBox(height: 16),
+            const Text('Message to sign',
+                style: TextStyle(fontWeight: FontWeight.w600)),
+            const SizedBox(height: 8),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 240),
+              child: SingleChildScrollView(
+                child:
+                    SelectableText(request.params['message'] as String? ?? ''),
+              ),
+            ),
+          ],
         ],
-      ),
+      )),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),

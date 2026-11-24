@@ -25,6 +25,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _selectedIndex = 0;
+  final _browserSelected = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -32,6 +33,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(activityProvider.future);
     });
+  }
+
+  @override
+  void dispose() {
+    _browserSelected.value = false;
+    _browserSelected.dispose();
+    super.dispose();
   }
 
   @override
@@ -72,7 +80,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             index: _selectedIndex,
             children: [
               _buildWalletDashboard(context, ref),
-              const DAppBrowserScreen(initialUrl: 'xeris://home'),
+              DAppBrowserScreen(
+                  initialUrl: 'xeris://home', selected: _browserSelected),
               const ActivityScreen(),
               const AgentsScreen(),
               const SettingsScreen(),
@@ -238,6 +247,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return GestureDetector(
       onTap: () {
         if (index == 2) ref.invalidate(activityProvider);
+        // Revoke native browser scopes before a pending approval can resume.
+        _browserSelected.value = index == 1;
         setState(() => _selectedIndex = index);
       },
       behavior: HitTestBehavior.opaque,

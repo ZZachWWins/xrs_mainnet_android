@@ -9,6 +9,8 @@ import 'package:xeris_wallet/core/services/xeris_api_service.dart';
 import 'package:xeris_wallet/core/services/base_api_service.dart';
 import 'package:xeris_wallet/core/config/network_config.dart';
 import 'dart:math';
+import 'dapp_transaction_review.dart';
+import 'dapp_network_verifier.dart';
 
 class WalletService {
   // Cache derived key pairs to avoid re-running expensive BIP39 derivation
@@ -386,52 +388,54 @@ class WalletService {
     return bytes;
   }
 
-  /// Signs a base64 encoded transaction from a dApp
+  /// Only an independently decoded, current mainnet action may reach the key.
   static Future<Map<String, String>> signDAppTransaction({
     required String mnemonic,
     required String txBase64,
+    required String expectedPublicKey,
+    required Future<void> Function() ensureCurrent,
   }) async {
-    try {
-      final keyPair = await getKeyPair(mnemonic);
-      final txBytes = base64Decode(txBase64);
-
-      if (txBytes.isEmpty) throw Exception('Empty transaction bytes');
-
-      final numSigs = txBytes[0];
-      final messageOffset = 1 + (numSigs * 64);
-
-      if (txBytes.length <= messageOffset) {
-        throw Exception('Invalid transaction format');
-      }
-
-      final messageBytes = txBytes.sublist(messageOffset);
-      final signature = await keyPair.sign(messageBytes);
-
-      final signedTx = Uint8List.fromList(txBytes);
-      signedTx.setRange(1, 1 + 64, signature.bytes);
-
-      return {
-        'signature': signature.toBase58(),
-        'signedTxBase64': base64Encode(signedTx),
-      };
-    } catch (e) {
-      debugPrint('Error signing dApp transaction: $e');
-      rethrow;
+    final review = DAppTransactionReview.parse(txBase64, expectedPublicKey);
+    await ensureCurrent();
+    await DAppMainnetVerifier.verify(review.blockhash);
+    await ensureCurrent();
+    final keyPair = await getKeyPair(mnemonic);
+    await ensureCurrent();
+    if (keyPair.address != review.signer) {
+      throw StateError('The signing wallet changed. Review again.');
     }
+    await DAppMainnetVerifier.verify(review.blockhash);
+    await ensureCurrent();
+    final signature = await keyPair.sign(review.message);
+    await ensureCurrent();
+    if (signature.bytes.length != 64) throw StateError('Invalid signature.');
+    final signedTx = review.wire..setRange(1, 65, signature.bytes);
+    return {
+      'signature': signature.toBase58(),
+      'signedTxBase64': base64Encode(signedTx),
+    };
   }
 
-  /// Signs an arbitrary message from a dApp
+  /// Readable ownership text only; transaction bytes use the effect review.
   static Future<String> signDAppMessage({
     required String mnemonic,
     required Uint8List message,
+    required String expectedPublicKey,
+    required Future<void> Function() ensureCurrent,
   }) async {
-    try {
-      final keyPair = await getKeyPair(mnemonic);
-      final signature = await keyPair.sign(message);
-      return base64Encode(signature.bytes);
-    } catch (e) {
-      debugPrint('Error signing dApp message: $e');
-      rethrow;
+    reviewDAppMessage(message);
+    await ensureCurrent();
+    await DAppMainnetVerifier.verifyIdentity();
+    await ensureCurrent();
+    final keyPair = await getKeyPair(mnemonic);
+    await ensureCurrent();
+    if (keyPair.address != expectedPublicKey) {
+      throw StateError('The signing wallet changed. Review again.');
     }
+    await DAppMainnetVerifier.verifyIdentity();
+    await ensureCurrent();
+    final signature = await keyPair.sign(message);
+    await ensureCurrent();
+    return base64Encode(signature.bytes);
   }
 }
