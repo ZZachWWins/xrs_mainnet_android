@@ -11,6 +11,7 @@ import 'package:xeris_wallet/core/providers/wallet_provider.dart';
 import 'package:xeris_wallet/core/services/pqc_service.dart';
 import 'package:xeris_wallet/core/services/stealth_service.dart';
 import 'package:xeris_wallet/core/services/xeris_api_service.dart';
+import 'package:xeris_wallet/core/config/network_config.dart';
 
 class SendReviewScreen extends ConsumerStatefulWidget {
   final AssetModel asset;
@@ -44,8 +45,10 @@ class _SendReviewScreenState extends ConsumerState<SendReviewScreen> {
     if (!enabled) return false;
     final threshold = await StorageService.getTwoFactorSendThreshold();
     if (threshold <= 0) return true;
-    final thresholdCurrency = await StorageService.getTwoFactorThresholdCurrency();
-    final txFiat = widget.amount * widget.asset.price * fiatMultiplier(thresholdCurrency);
+    final thresholdCurrency =
+        await StorageService.getTwoFactorThresholdCurrency();
+    final txFiat =
+        widget.amount * widget.asset.price * fiatMultiplier(thresholdCurrency);
     return txFiat >= threshold;
   }
 
@@ -54,6 +57,19 @@ class _SendReviewScreenState extends ConsumerState<SendReviewScreen> {
     // gap, so a double-tap (the button stays enabled during auth) cannot submit
     // the transaction twice.
     if (_isSubmitting) return;
+    if (widget.stealthMode && !NetworkConfig.stealthEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text(StealthService.unavailableMessage)),
+      );
+      return;
+    }
+    if (widget.pqMode) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text(PqcService.transferUnavailableMessage)),
+      );
+      return;
+    }
+    final networkScope = NetworkConfig.cacheKey;
     setState(() {
       _isSubmitting = true;
     });
@@ -72,29 +88,43 @@ class _SendReviewScreenState extends ConsumerState<SendReviewScreen> {
     }
 
     try {
+      if (NetworkConfig.cacheKey != networkScope) {
+        throw StateError('Network changed. Review the transfer again.');
+      }
+      if (widget.stealthMode) StealthService.requireSendingAvailable();
       final mnemonic = await StorageService.getMnemonic();
       if (mnemonic == null) {
         throw Exception('No wallet found');
       }
 
       String? txHash;
-      
+
       if (widget.asset.id == 'xrs' || widget.asset.id == 'xrs_native') {
         // Check spendable balance (native + wrapped) and auto-unwrap if needed
         final keyPair = await WalletService.getKeyPair(mnemonic);
         final address = keyPair.address;
         final nativeBalance = await WalletService.getBalance(address);
+        if (NetworkConfig.cacheKey != networkScope) {
+          throw StateError('Network changed. Review the transfer again.');
+        }
+        if (widget.stealthMode) StealthService.requireSendingAvailable();
 
         if (nativeBalance < widget.amount) {
           // Check if wrapped XRS can cover the shortfall
           final spendable = await ref.read(spendableXrsProvider.future);
           if (spendable.spendable < widget.amount) {
-            throw Exception('Insufficient spendable XRS. You have ${spendable.spendable.toStringAsFixed(4)} XRS available (${spendable.native.toStringAsFixed(4)} native + ${spendable.wrapped.toStringAsFixed(4)} wrapped). Staked XRS cannot be used for transfers.');
+            throw Exception(
+                'Insufficient spendable XRS. You have ${spendable.spendable.toStringAsFixed(4)} XRS available (${spendable.native.toStringAsFixed(4)} native + ${spendable.wrapped.toStringAsFixed(4)} wrapped). Staked XRS cannot be used for transfers.');
           }
 
           // Auto-unwrap the shortfall
           final shortfall = widget.amount - nativeBalance;
-          final unwrapLamports = (shortfall * 1e9).ceil() + 1000; // ceil + buffer so we always unwrap enough to cover the shortfall
+          final unwrapLamports = (shortfall * 1e9).ceil() +
+              1000; // ceil + buffer so we always unwrap enough to cover the shortfall
+          if (NetworkConfig.cacheKey != networkScope) {
+            throw StateError('Network changed. Review the transfer again.');
+          }
+          if (widget.stealthMode) StealthService.requireSendingAvailable();
           await XerisApiService.unwrapXrs(
             keyPair: keyPair,
             amountLamports: unwrapLamports,
@@ -124,6 +154,7 @@ class _SendReviewScreenState extends ConsumerState<SendReviewScreen> {
             mnemonic: mnemonic,
             destinationAddress: widget.address,
             solAmount: widget.amount,
+            expectedNetworkScope: networkScope,
           );
         }
       } else {
@@ -159,7 +190,7 @@ class _SendReviewScreenState extends ConsumerState<SendReviewScreen> {
       });
     } catch (e) {
       if (!mounted) return;
-      
+
       setState(() {
         _isSubmitting = false;
       });
@@ -196,29 +227,38 @@ class _SendReviewScreenState extends ConsumerState<SendReviewScreen> {
                 // Amount Display
                 Column(
                   children: [
-                    Text(l10n.youAreSending, style: Theme.of(context).textTheme.bodyMedium),
+                    Text(l10n.youAreSending,
+                        style: Theme.of(context).textTheme.bodyMedium),
                     const SizedBox(height: 8),
                     Text(
                       '${AssetModel.formatValue(widget.amount)} ${widget.asset.symbol}',
-                      style: Theme.of(context).textTheme.displayMedium?.copyWith(color: AppColors.brandLight),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium
+                          ?.copyWith(color: AppColors.brandLight),
                     ),
                     const SizedBox(height: 4),
                     Builder(
                       builder: (context) {
                         final currency = ref.watch(currencyProvider);
                         final symbol = currencySymbol(currency);
-                        final fiatValue = widget.amount * widget.asset.price * fiatMultiplier(currency);
+                        final fiatValue = widget.amount *
+                            widget.asset.price *
+                            fiatMultiplier(currency);
                         return Text(
                           '≈ $symbol${fiatValue.toStringAsFixed(2)}',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textBody),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: AppColors.textBody),
                         );
                       },
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 48),
-    
+
                 // Details Card
                 Container(
                   padding: const EdgeInsets.all(16),
@@ -229,24 +269,31 @@ class _SendReviewScreenState extends ConsumerState<SendReviewScreen> {
                   child: Column(
                     children: [
                       _buildDetailRow(context, l10n.from, l10n.myWallet),
-                      const Padding(padding: EdgeInsets.symmetric(vertical: 8), child: Divider(color: Colors.white10)),
+                      const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8),
+                          child: Divider(color: Colors.white10)),
                       _buildDetailRow(context, l10n.toLabel, widget.address),
-                      const Padding(padding: EdgeInsets.symmetric(vertical: 8), child: Divider(color: Colors.white10)),
-                      _buildDetailRow(context, l10n.networkFee, widget.pqMode ? '0.001 XRS' : '0.001 XRS'),
+                      const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8),
+                          child: Divider(color: Colors.white10)),
+                      _buildDetailRow(context, l10n.networkFee,
+                          widget.pqMode ? '0.001 XRS' : '0.001 XRS'),
                     ],
                   ),
                 ),
-    
+
                 const SizedBox(height: 48),
-    
+
                 ElevatedButton(
                   onPressed: _isSubmitting ? null : _confirmTransaction,
-                  style: ElevatedButton.styleFrom(minimumSize: const Size(double.infinity, 56)),
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 56)),
                   child: _isSubmitting
                       ? const SizedBox(
                           height: 20,
                           width: 20,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                          child: CircularProgressIndicator(
+                              strokeWidth: 2, color: Colors.white),
                         )
                       : Text(l10n.confirmAndSend),
                 ),
@@ -263,11 +310,18 @@ class _SendReviewScreenState extends ConsumerState<SendReviewScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textBody)),
+        Text(label,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: AppColors.textBody)),
         Flexible(
           child: Text(
             value,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(fontWeight: FontWeight.w600),
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.right,
           ),

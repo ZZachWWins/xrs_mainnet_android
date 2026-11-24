@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:xeris_wallet/core/config/network_config.dart';
 import 'package:xeris_wallet/core/providers/privacy_provider.dart';
 import 'package:xeris_wallet/core/providers/wallet_provider.dart';
 import 'package:xeris_wallet/core/services/pqc_service.dart';
 import 'package:xeris_wallet/core/services/storage_service.dart';
+import 'package:xeris_wallet/core/services/auth_service.dart';
+import 'package:xeris_wallet/core/services/screen_security.dart';
 import 'package:xeris_wallet/core/theme/app_theme.dart';
 import 'package:xeris_wallet/l10n/app_localizations.dart';
 import 'package:xeris_wallet/core/utils/secure_clipboard.dart';
@@ -16,11 +17,13 @@ class QuantumShieldScreen extends ConsumerStatefulWidget {
   const QuantumShieldScreen({super.key});
 
   @override
-  ConsumerState<QuantumShieldScreen> createState() => _QuantumShieldScreenState();
+  ConsumerState<QuantumShieldScreen> createState() =>
+      _QuantumShieldScreenState();
 }
 
 class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
-  bool _isProtected = false;
+  PqRegistrationStatus _registration = PqRegistrationStatus.unavailable;
+  bool get _isRegistered => _registration == PqRegistrationStatus.registered;
   bool _isLoading = true;
   bool _isEnabling = false;
 
@@ -32,6 +35,7 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
   @override
   void initState() {
     super.initState();
+    ScreenSecurity.enable();
     _checkStatus();
     _fetchNetworkStats();
   }
@@ -39,12 +43,11 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
   Future<void> _checkStatus() async {
     final address = await ref.read(walletAddressProvider.future);
     if (address != 'No Wallet' && address.isNotEmpty) {
-      // On-chain registry is the source of truth, so Quantum Shield status
-      // follows the account across devices (not a device-local flag).
-      final isEnabled = await PqcService.isPqcEnabledOnChain(address);
+      // Registration is not proof of post-quantum transaction enforcement.
+      final status = await PqcService.getRegistrationStatus(address);
       if (mounted) {
         setState(() {
-          _isProtected = isEnabled;
+          _registration = status;
           _isLoading = false;
         });
       }
@@ -55,26 +58,30 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
 
   Future<void> _fetchNetworkStats() async {
     try {
-      final pkResponse = await http.get(Uri.parse('${NetworkConfig.controlUrl}/pq/status'));
+      final pkResponse =
+          await http.get(Uri.parse('${NetworkConfig.controlUrl}/pq/status'));
       if (pkResponse.statusCode == 200) {
         final data = jsonDecode(pkResponse.body);
         if (mounted && data['total_registered'] != null) {
           setState(() {
-            _pqKeysRegistered = data['total_registered'] is int ? data['total_registered'] : 12;
+            _pqKeysRegistered =
+                data['total_registered'] is int ? data['total_registered'] : 0;
           });
         }
       }
     } catch (e) {
       debugPrint('Error fetching PQ status: $e');
     }
-    
+
     try {
-      final zkResponse = await http.get(Uri.parse('${NetworkConfig.controlUrl}/zk/stats'));
+      final zkResponse =
+          await http.get(Uri.parse('${NetworkConfig.controlUrl}/zk/stats'));
       if (zkResponse.statusCode == 200) {
         final data = jsonDecode(zkResponse.body);
         if (mounted && data['total_verified'] != null) {
           setState(() {
-            _zkProofsUsed = data['total_verified'] is int ? data['total_verified'] : 30;
+            _zkProofsUsed =
+                data['total_verified'] is int ? data['total_verified'] : 0;
           });
         }
       }
@@ -83,7 +90,10 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
     }
   }
 
-  Future<void> _showBackupDialog(String pqPk, String pqSk) async {
+  Future<bool> _showBackupDialog(String pqPk, String pqSk) async {
+    final authenticated = await AuthService.authenticate(context,
+        reason: 'Authenticate to reveal your post-quantum backup key');
+    if (!authenticated || !mounted) return false;
     bool confirmed = false;
     final l10n = AppLocalizations.of(context)!;
 
@@ -93,16 +103,19 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
       builder: (context) => StatefulBuilder(
         builder: (context, setModalState) => AlertDialog(
           backgroundColor: AppColors.brandMidnight,
-          title: Text(l10n.quantumBackupTitle, style: const TextStyle(color: Colors.white)),
+          title: Text(l10n.quantumBackupTitle,
+              style: const TextStyle(color: Colors.white)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.warning_amber_rounded, color: Colors.orange, size: 48),
+              const Icon(Icons.warning_amber_rounded,
+                  color: Colors.orange, size: 48),
               const SizedBox(height: 16),
               Text(
                 l10n.quantumBackupWarning,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white.withValues(alpha: 0.8), fontSize: 13),
+                style: TextStyle(
+                    color: Colors.white.withValues(alpha: 0.8), fontSize: 13),
               ),
               const SizedBox(height: 20),
               Container(
@@ -118,11 +131,15 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
                         pqSk,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(color: Colors.white54, fontFamily: 'monospace', fontSize: 10),
+                        style: const TextStyle(
+                            color: Colors.white54,
+                            fontFamily: 'monospace',
+                            fontSize: 10),
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.copy, color: AppColors.brandVibrant),
+                      icon:
+                          const Icon(Icons.copy, color: AppColors.brandVibrant),
                       onPressed: () {
                         copySensitiveToClipboard(pqSk);
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -149,12 +166,16 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
           actions: [
             TextButton(
               onPressed: confirmed ? () => Navigator.pop(context) : null,
-              child: Text(l10n.ok.toUpperCase(), style: TextStyle(color: confirmed ? AppColors.brandVibrant : Colors.white24)),
+              child: Text(l10n.ok.toUpperCase(),
+                  style: TextStyle(
+                      color:
+                          confirmed ? AppColors.brandVibrant : Colors.white24)),
             ),
           ],
         ),
       ),
     );
+    return confirmed;
   }
 
   Future<void> _enableProtection() async {
@@ -169,28 +190,29 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
       final pqSk = base64Encode(keypair.secretKey);
 
       // 2. Force backup step
-      if (mounted) {
-        await _showBackupDialog(pqPk, pqSk);
-      }
+      if (!mounted || !await _showBackupDialog(pqPk, pqSk)) return;
 
       // 3. Register on-chain after backup confirmation
-      final success = await PqcService.registerPqcOnChain(mnemonic: mnemonic, pqPk: keypair.publicKey, pqSk: keypair.secretKey);
-      
+      final success = await PqcService.registerPqcOnChain(
+          mnemonic: mnemonic, pqPk: keypair.publicKey, pqSk: keypair.secretKey);
+
       if (mounted && success) {
         ref.invalidate(privacyMetricsProvider);
-        final l10n = AppLocalizations.of(context)!;
-        setState(() {
-          _isProtected = true;
-        });
+        await _checkStatus();
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.quantumEnabledSuccess), backgroundColor: Colors.green),
+          const SnackBar(
+              content: Text(
+                  'PQ key registration submitted. Transfer protection is unchanged.')),
         );
       }
     } catch (e) {
       if (mounted) {
         final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.failedToEnablePq(e.toString())), backgroundColor: Colors.red),
+          SnackBar(
+              content: Text(l10n.failedToEnablePq(e.toString())),
+              backgroundColor: Colors.red),
         );
       }
     } finally {
@@ -202,7 +224,7 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
 
   @override
   void dispose() {
-    // Audit Note: Added as part of remediation plan to ensure screen lifecycle is handled.
+    ScreenSecurity.disable();
     super.dispose();
   }
 
@@ -212,12 +234,16 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
     if (_isLoading) {
       return const Scaffold(
         backgroundColor: AppColors.brandNavy,
-        body: Center(child: CircularProgressIndicator(color: AppColors.brandVibrant)),
+        body: Center(
+            child: CircularProgressIndicator(color: AppColors.brandVibrant)),
       );
     }
 
-    final shieldColor = _isProtected ? Colors.greenAccent[400]! : AppColors.brandVibrant;
-    final shieldGlow = _isProtected ? Colors.greenAccent.withValues(alpha: 0.1) : AppColors.brandBlue.withValues(alpha: 0.1);
+    final shieldColor =
+        _isRegistered ? Colors.greenAccent[400]! : AppColors.brandVibrant;
+    final shieldGlow = _isRegistered
+        ? Colors.greenAccent.withValues(alpha: 0.1)
+        : AppColors.brandBlue.withValues(alpha: 0.1);
 
     return Scaffold(
       backgroundColor: AppColors.brandNavy,
@@ -240,7 +266,8 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(30),
-                  border: Border.all(color: shieldColor.withValues(alpha: 0.3), width: 1.5),
+                  border: Border.all(
+                      color: shieldColor.withValues(alpha: 0.3), width: 1.5),
                   color: shieldGlow,
                   boxShadow: [
                     BoxShadow(
@@ -258,7 +285,7 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
               ),
               const SizedBox(height: 24),
               Text(
-                l10n.quantumShieldTitle,
+                PqcService.registrationTitle,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -267,7 +294,7 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
               ),
               const SizedBox(height: 12),
               Text(
-                l10n.quantumShieldDesc,
+                PqcService.registrationExplanation,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.6),
@@ -279,12 +306,15 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
 
               // Status Card
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 decoration: BoxDecoration(
                   color: AppColors.brandSpace,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: _isProtected ? Colors.green.withValues(alpha: 0.3) : Colors.white.withValues(alpha: 0.05),
+                    color: _isRegistered
+                        ? Colors.green.withValues(alpha: 0.3)
+                        : Colors.white.withValues(alpha: 0.05),
                   ),
                 ),
                 child: Row(
@@ -293,11 +323,16 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
                       width: 8,
                       height: 8,
                       decoration: BoxDecoration(
-                        color: _isProtected ? Colors.greenAccent[400] : Colors.redAccent,
+                        color: _isRegistered
+                            ? Colors.greenAccent[400]
+                            : Colors.redAccent,
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: (_isProtected ? Colors.greenAccent[400]! : Colors.redAccent).withValues(alpha: 0.5),
+                            color: (_isRegistered
+                                    ? Colors.greenAccent[400]!
+                                    : Colors.redAccent)
+                                .withValues(alpha: 0.5),
                             blurRadius: 8,
                             spreadRadius: 2,
                           ),
@@ -310,7 +345,7 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            _isProtected ? l10n.quantumProtectionActive : l10n.notProtected,
+                            PqcService.registrationLabel(_registration),
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -319,7 +354,7 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            _isProtected ? l10n.pqSecurityLevel : l10n.vulnerableToQuantum,
+                            PqcService.registrationExplanation,
                             style: TextStyle(
                               color: Colors.white.withValues(alpha: 0.5),
                               fontSize: 13,
@@ -329,17 +364,22 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: _isProtected ? Colors.green.withValues(alpha: 0.5) : Colors.orange.withValues(alpha: 0.5),
+                          color: _isRegistered
+                              ? Colors.green.withValues(alpha: 0.5)
+                              : Colors.orange.withValues(alpha: 0.5),
                         ),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
-                        _isProtected ? l10n.statusActive : l10n.statusOff,
+                        _isRegistered ? 'Registered' : 'Unconfirmed',
                         style: TextStyle(
-                          color: _isProtected ? Colors.greenAccent[400] : Colors.orange[300],
+                          color: _isRegistered
+                              ? Colors.greenAccent[400]
+                              : Colors.orange[300],
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
@@ -354,9 +394,13 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
               // Stats Row
               Row(
                 children: [
-                  Expanded(child: _buildStatCard('$_zkProofsUsed', l10n.zkProofsUsed)),
+                  Expanded(
+                      child:
+                          _buildStatCard('$_zkProofsUsed', l10n.zkProofsUsed)),
                   const SizedBox(width: 12),
-                  Expanded(child: _buildStatCard('$_pqKeysRegistered', l10n.pqKeysRegistered)),
+                  Expanded(
+                      child: _buildStatCard(
+                          '$_pqKeysRegistered', l10n.pqKeysRegistered)),
                   const SizedBox(width: 12),
                   Expanded(child: _buildStatCard('4s', l10n.blockTimeStat)),
                 ],
@@ -368,13 +412,13 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: _isProtected 
-                      ? Colors.green.withValues(alpha: 0.1) 
+                  color: _isRegistered
+                      ? Colors.green.withValues(alpha: 0.1)
                       : Colors.orange.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: _isProtected 
-                        ? Colors.green.withValues(alpha: 0.3) 
+                    color: _isRegistered
+                        ? Colors.green.withValues(alpha: 0.3)
                         : Colors.orange.withValues(alpha: 0.3),
                   ),
                 ),
@@ -382,16 +426,16 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Icon(
-                      _isProtected ? Icons.check : Icons.lock_clock,
+                      _isRegistered ? Icons.check : Icons.lock_clock,
                       size: 16,
-                      color: _isProtected ? Colors.green[300] : Colors.orange[300],
+                      color: _isRegistered
+                          ? Colors.green[300]
+                          : Colors.orange[300],
                     ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        _isProtected
-                            ? l10n.quantumProtectedDesc
-                            : l10n.enableQuantumProtectionDesc,
+                        PqcService.registrationExplanation,
                         style: TextStyle(
                           color: Colors.white.withValues(alpha: 0.7),
                           fontSize: 13,
@@ -403,7 +447,7 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
                 ),
               ),
 
-              if (_isProtected) ...[
+              if (_isRegistered) ...[
                 const SizedBox(height: 16),
                 TextButton.icon(
                   onPressed: () async {
@@ -413,11 +457,14 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
                     }
                   },
                   icon: const Icon(Icons.key, color: Colors.white70),
-                  label: Text(l10n.viewRecoveryKey, style: const TextStyle(color: Colors.white70)),
+                  label: Text(l10n.viewRecoveryKey,
+                      style: const TextStyle(color: Colors.white70)),
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.white.withValues(alpha: 0.05),
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
                   ),
                 ),
               ],
@@ -429,13 +476,16 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
-                  onPressed: _isEnabling ? null : () {
-                    if (_isProtected) {
-                      context.push('/send/input', extra: {'pq_mode': true});
-                    } else {
-                      _enableProtection();
-                    }
-                  },
+                  onPressed: _isEnabling || _isRegistered
+                      ? null
+                      : () {
+                          if (_registration ==
+                              PqRegistrationStatus.unavailable) {
+                            _checkStatus();
+                          } else {
+                            _enableProtection();
+                          }
+                        },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.brandVibrant,
                     shape: RoundedRectangleBorder(
@@ -443,13 +493,19 @@ class _QuantumShieldScreenState extends ConsumerState<QuantumShieldScreen> {
                     ),
                     elevation: 0,
                   ),
-                  child: _isEnabling 
+                  child: _isEnabling
                       ? const SizedBox(
-                          width: 24, height: 24, 
-                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)
-                        )
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                              color: Colors.white, strokeWidth: 2))
                       : Text(
-                          _isProtected ? l10n.sendWithQuantumSigning : l10n.enableQuantumProtectionBtn,
+                          _isRegistered
+                              ? 'PQ transfers unavailable'
+                              : _registration ==
+                                      PqRegistrationStatus.unavailable
+                                  ? 'Refresh registration status'
+                                  : 'Register PQ key',
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

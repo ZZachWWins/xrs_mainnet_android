@@ -6,6 +6,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:xeris_wallet/core/theme/app_theme.dart';
 import 'package:xeris_wallet/core/providers/wallet_provider.dart';
 import 'package:xeris_wallet/core/providers/stealth_provider.dart';
+import 'package:xeris_wallet/core/config/network_config.dart';
+import 'package:xeris_wallet/core/providers/network_provider.dart';
 
 class ReceiveScreen extends ConsumerStatefulWidget {
   const ReceiveScreen({super.key});
@@ -19,20 +21,22 @@ class _ReceiveScreenState extends ConsumerState<ReceiveScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(networkProvider);
     final activeWalletAsync = ref.watch(activeWalletProvider);
-    final stealthMetaAsync = ref.watch(stealthMetaAddressProvider);
+    final stealthMetaAsync = NetworkConfig.stealthEnabled
+        ? ref.watch(stealthMetaAddressProvider)
+        : null;
 
     return activeWalletAsync.when(
       loading: () =>
           const Scaffold(body: Center(child: CircularProgressIndicator())),
-      error: (err, stack) =>
-          Scaffold(body: Center(child: Text('Error: $err'))),
+      error: (err, stack) => Scaffold(body: Center(child: Text('Error: $err'))),
       data: (activeWallet) {
         final baseAddress = activeWallet?.address ?? 'No wallet selected';
 
         // Resolve the display address based on stealth toggle
         String displayAddress;
-        if (_useStealth) {
+        if (_useStealth && stealthMetaAsync != null) {
           displayAddress = stealthMetaAsync.when(
             data: (meta) => meta?.encode() ?? 'Generating...',
             loading: () => 'Generating...',
@@ -85,50 +89,51 @@ class _ReceiveScreenState extends ConsumerState<ReceiveScreen> {
                 ),
                 const SizedBox(height: 32),
 
-                // Address Type Selector
-                Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: AppColors.brandSpace,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: SegmentedButton<bool>(
-                    segments: const [
-                      ButtonSegment(
-                        value: false,
-                        label: Text('Standard'),
-                        icon: Icon(Icons.account_balance_wallet),
+                // Mainnet never advertises an undiscoverable receive address.
+                if (NetworkConfig.stealthEnabled)
+                  Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: AppColors.brandSpace,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: SegmentedButton<bool>(
+                      segments: const [
+                        ButtonSegment(
+                          value: false,
+                          label: Text('Standard'),
+                          icon: Icon(Icons.account_balance_wallet),
+                        ),
+                        ButtonSegment(
+                          value: true,
+                          label: Text('Stealth'),
+                          icon: Icon(Icons.visibility_off),
+                        ),
+                      ],
+                      selected: {_useStealth},
+                      onSelectionChanged: (Set<bool> newSelection) {
+                        setState(() {
+                          _useStealth = newSelection.first;
+                        });
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            WidgetStateProperty.resolveWith<Color>((states) {
+                          if (states.contains(WidgetState.selected)) {
+                            return AppColors.brandBlue;
+                          }
+                          return AppColors.brandSpace;
+                        }),
+                        foregroundColor:
+                            WidgetStateProperty.resolveWith<Color>((states) {
+                          if (states.contains(WidgetState.selected)) {
+                            return Colors.white;
+                          }
+                          return AppColors.textBody;
+                        }),
                       ),
-                      ButtonSegment(
-                        value: true,
-                        label: Text('Stealth'),
-                        icon: Icon(Icons.visibility_off),
-                      ),
-                    ],
-                    selected: {_useStealth},
-                    onSelectionChanged: (Set<bool> newSelection) {
-                      setState(() {
-                        _useStealth = newSelection.first;
-                      });
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          WidgetStateProperty.resolveWith<Color>((states) {
-                        if (states.contains(WidgetState.selected)) {
-                          return AppColors.brandBlue;
-                        }
-                        return AppColors.brandSpace;
-                      }),
-                      foregroundColor:
-                          WidgetStateProperty.resolveWith<Color>((states) {
-                        if (states.contains(WidgetState.selected)) {
-                          return Colors.white;
-                        }
-                        return AppColors.textBody;
-                      }),
                     ),
                   ),
-                ),
 
                 const SizedBox(height: 32),
 
@@ -138,8 +143,8 @@ class _ReceiveScreenState extends ConsumerState<ReceiveScreen> {
                   decoration: BoxDecoration(
                     color: AppColors.brandSpace,
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.05)),
+                    border:
+                        Border.all(color: Colors.white.withValues(alpha: 0.05)),
                   ),
                   child: Column(
                     children: [
@@ -187,7 +192,8 @@ class _ReceiveScreenState extends ConsumerState<ReceiveScreen> {
                             icon: Icons.share,
                             label: 'Share',
                             onTap: () {
-                              SharePlus.instance.share(ShareParams(text: displayAddress,
+                              SharePlus.instance.share(ShareParams(
+                                  text: displayAddress,
                                   subject: 'My Xeris Wallet Address'));
                             },
                           ),

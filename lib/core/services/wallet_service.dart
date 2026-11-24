@@ -71,7 +71,8 @@ class WalletService {
   }
 
   /// Derives a keypair from a raw private key input (base58 64-byte, base58 32-byte, or hex).
-  static Future<Ed25519HDKeyPair> getKeyPairFromPrivateKeyInput(String input) async {
+  static Future<Ed25519HDKeyPair> getKeyPairFromPrivateKeyInput(
+      String input) async {
     final seed = _extractSeedBytes(input.trim());
     return Ed25519HDKeyPair.fromPrivateKeyBytes(privateKey: seed);
   }
@@ -109,7 +110,8 @@ class WalletService {
     if (isPrivateKeyWallet(mnemonic)) {
       final encoded = mnemonic.substring(_pkPrefix.length);
       final seed = base58.decode(encoded);
-      final keyPair = await Ed25519HDKeyPair.fromPrivateKeyBytes(privateKey: seed);
+      final keyPair =
+          await Ed25519HDKeyPair.fromPrivateKeyBytes(privateKey: seed);
       _keyPairCache[cacheKey] = keyPair;
       return keyPair;
     }
@@ -163,13 +165,25 @@ class WalletService {
     required String mnemonic,
     required String destinationAddress,
     required double solAmount,
+    String? expectedNetworkScope,
   }) async {
     try {
+      if (expectedNetworkScope != null &&
+          expectedNetworkScope != NetworkConfig.cacheKey) {
+        throw StateError('Network changed. Review the transfer again.');
+      }
+      if (!solAmount.isFinite || solAmount <= 0) {
+        throw Exception('Invalid transfer amount');
+      }
       if (solAmount > 9000000000) {
         throw Exception('Amount exceeds total supply and would cause overflow');
       }
       final keyPair = await getKeyPair(mnemonic);
       final lamports = (solAmount * 1000000000).round();
+      if (lamports < 0 || lamports > 9007199254740992) {
+        throw Exception(
+            'Amount has too many significant digits to send precisely.');
+      }
 
       final ixData = XerisApiService.buildNativeTransfer(
         from: keyPair.address,
@@ -180,8 +194,11 @@ class WalletService {
       return await XerisApiService.submitXerisInstruction(
         keyPair: keyPair,
         instructionData: ixData,
+        expectedNetworkScope: expectedNetworkScope,
         extraAccounts: [
-           AccountMeta.writeable(pubKey: Ed25519HDPublicKey.fromBase58(destinationAddress), isSigner: false),
+          AccountMeta.writeable(
+              pubKey: Ed25519HDPublicKey.fromBase58(destinationAddress),
+              isSigner: false),
         ],
       );
     } catch (e) {
@@ -201,8 +218,7 @@ class WalletService {
       {'tx_base64': txBase64},
       timeout: const Duration(seconds: 25),
     );
-    if (data is Map &&
-        (data['status'] == 'ok' || data['status'] == 'queued')) {
+    if (data is Map && (data['status'] == 'ok' || data['status'] == 'queued')) {
       final signature = data['signature'];
       if (signature is String && signature.isNotEmpty) return signature;
     }
@@ -218,26 +234,32 @@ class WalletService {
     try {
       // 1. Get recent signatures for the address from RPC.
       // The Xeris node returns enriched transaction info in this call.
-      final List<dynamic> signaturesResult = await XerisApiService.getSignaturesForAddress(address, limit: 20);
-      
+      final List<dynamic> signaturesResult =
+          await XerisApiService.getSignaturesForAddress(address, limit: 20);
+
       if (signaturesResult.isEmpty) return [];
 
       return signaturesResult.map((tx) {
         final String signature = tx['signature'] ?? '';
-        final dynamic rawBlockTime = tx['blockTime'] ?? tx['block_time'] ?? tx['timestamp'];
-        final int timestamp = (rawBlockTime is num) 
-            ? rawBlockTime.toInt() 
+        final dynamic rawBlockTime =
+            tx['blockTime'] ?? tx['block_time'] ?? tx['timestamp'];
+        final int timestamp = (rawBlockTime is num)
+            ? rawBlockTime.toInt()
             : (DateTime.now().millisecondsSinceEpoch ~/ 1000);
-        
+
         // Use UTC for consistency across app and server
-        final String date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000, isUtc: true).toIso8601String();
-        
+        final String date =
+            DateTime.fromMillisecondsSinceEpoch(timestamp * 1000, isUtc: true)
+                .toIso8601String();
+
         final String rawType = tx['type']?.toString().toLowerCase() ?? 'sent';
-        final TransactionType type = rawType == 'received' ? TransactionType.receive : TransactionType.send;
-        
+        final TransactionType type = rawType == 'received'
+            ? TransactionType.receive
+            : TransactionType.send;
+
         // Find other party based on transaction direction
-        final String otherParty = type == TransactionType.receive 
-            ? (tx['from']?.toString() ?? '') 
+        final String otherParty = type == TransactionType.receive
+            ? (tx['from']?.toString() ?? '')
             : (tx['to']?.toString() ?? '');
 
         // Determine symbol and amount
@@ -245,9 +267,13 @@ class WalletService {
         if (tx['details'] != null && tx['details']['token'] != null) {
           symbol = tx['details']['token'].toString().toUpperCase();
         }
-        
-        final double amount = (tx['amount_xrs'] != null) ? (tx['amount_xrs'] as num).toDouble() : 0.0;
-        final TransactionStatus status = (tx['err'] == null) ? TransactionStatus.confirmed : TransactionStatus.failed;
+
+        final double amount = (tx['amount_xrs'] != null)
+            ? (tx['amount_xrs'] as num).toDouble()
+            : 0.0;
+        final TransactionStatus status = (tx['err'] == null)
+            ? TransactionStatus.confirmed
+            : TransactionStatus.failed;
 
         return TransactionModel(
           id: signature,
@@ -264,11 +290,14 @@ class WalletService {
       return [];
     }
   }
+
   /// Fetches the balance of a specific token (e.g. 'xeris_usdc').
-  static Future<double> getTokenBalance(String address, String tokenId, {int decimals = 9}) async {
+  static Future<double> getTokenBalance(String address, String tokenId,
+      {int decimals = 9}) async {
     // debugPrint('Fetching token balance for $tokenId at $address');
     try {
-      final rawBalance = await XerisApiService.getTokenBalance(address, tokenId);
+      final rawBalance =
+          await XerisApiService.getTokenBalance(address, tokenId);
       final balance = rawBalance?.balance ?? 0;
       return balance / pow(10, decimals);
     } catch (e) {
@@ -301,7 +330,9 @@ class WalletService {
         keyPair: keyPair,
         instructionData: ixData,
         extraAccounts: [
-          AccountMeta.writeable(pubKey: Ed25519HDPublicKey.fromBase58(destinationAddress), isSigner: false),
+          AccountMeta.writeable(
+              pubKey: Ed25519HDPublicKey.fromBase58(destinationAddress),
+              isSigner: false),
         ],
       );
     } catch (e) {
@@ -345,7 +376,8 @@ class WalletService {
 
   /// Helper to convert a hex string to byte array
   static List<int> _hexToBytes(String hexString) {
-    var cleanHex = hexString.startsWith('0x') ? hexString.substring(2) : hexString;
+    var cleanHex =
+        hexString.startsWith('0x') ? hexString.substring(2) : hexString;
     List<int> bytes = [];
     for (int i = 0; i < cleanHex.length; i += 2) {
       String byteString = cleanHex.substring(i, i + 2);

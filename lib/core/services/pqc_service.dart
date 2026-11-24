@@ -8,7 +8,22 @@ import 'package:xeris_wallet/core/services/instruction_builder.dart';
 import 'package:xeris_wallet/core/services/ffi_bridge.dart';
 import 'package:flutter/foundation.dart';
 
+enum PqRegistrationStatus { registered, notRegistered, unavailable }
+
 class PqcService {
+  static const registrationTitle = 'Post-quantum key registration';
+  static const registrationExplanation =
+      'Key registration does not enable post-quantum transfers. '
+      'Ordinary wallet transfers currently use Ed25519; '
+      'the legacy PQ transfer instruction is disabled.';
+  static String registrationLabel(PqRegistrationStatus status) =>
+      switch (status) {
+        PqRegistrationStatus.registered => 'PQ key registered',
+        PqRegistrationStatus.notRegistered => 'No PQ key registered',
+        PqRegistrationStatus.unavailable =>
+          'PQ registration status unavailable',
+      };
+
   /// Legacy random keygen. Kept for compatibility; new enables use the
   /// deterministic, seed-derived path so the PQ key follows the wallet.
   static Future<DilithiumKeypair> generatePqcKeypair() async {
@@ -33,7 +48,7 @@ class PqcService {
   static Future<DilithiumKeypair> ensureLocalKey(String mnemonic) async {
     final kp = await derivePqcKeypair(mnemonic);
     await StorageService.savePqKeys(
-      base64Encode(kp.publicKey), base64Encode(kp.secretKey));
+        base64Encode(kp.publicKey), base64Encode(kp.secretKey));
     return kp;
   }
 
@@ -78,24 +93,41 @@ class PqcService {
     );
   }
 
-  /// Source of truth for whether PQ protection is enabled for an *account*:
-  /// the on-chain registry. This makes Quantum Shield follow the wallet across
-  /// devices (registering on one device shows enabled on any other). Falls back
-  /// to the local flag if the node is unreachable.
-  static Future<bool> isPqcEnabledOnChain(String address) async {
+  /// Registration is a public registry fact, not a transfer-protection claim.
+  /// A stale local flag must never replace an unavailable on-chain result.
+  static Future<PqRegistrationStatus> getRegistrationStatus(String address,
+      {http.Client? client}) async {
+    if (!RegExp(r'^[1-9A-HJ-NP-Za-km-z]{32,44}$').hasMatch(address)) {
+      return PqRegistrationStatus.unavailable;
+    }
+    final ownedClient = client == null;
+    final transport = client ?? http.Client();
+    final scope = NetworkConfig.cacheKey;
     try {
-      final resp = await http
+      final response = await transport
           .get(Uri.parse('${NetworkConfig.controlUrl}/pq/keys/$address'))
           .timeout(const Duration(seconds: 6));
-      if (resp.statusCode == 200) {
-        final data = jsonDecode(resp.body) as Map<String, dynamic>;
-        return data['has_pq_key'] == true;
+      if (scope != NetworkConfig.cacheKey || response.statusCode != 200) {
+        return PqRegistrationStatus.unavailable;
       }
-    } catch (e) {
-      if (kDebugMode) print('PQ on-chain status check failed: $e');
+      final data = jsonDecode(response.body);
+      if (data is! Map<String, dynamic> ||
+          data['success'] != true ||
+          data['has_pq_key'] is! bool) {
+        return PqRegistrationStatus.unavailable;
+      }
+      return data['has_pq_key'] == true
+          ? PqRegistrationStatus.registered
+          : PqRegistrationStatus.notRegistered;
+    } catch (_) {
+      return PqRegistrationStatus.unavailable;
+    } finally {
+      if (ownedClient) transport.close();
     }
-    return await StorageService.isQuantumProtected();
   }
+
+  static Future<bool> isPqcEnabledOnChain(String address) async =>
+      await getRegistrationStatus(address) == PqRegistrationStatus.registered;
 
   static const transferUnavailableMessage =
       'Post-quantum transfers are unavailable on the current node. '

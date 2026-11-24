@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xeris_wallet/core/services/storage_service.dart';
+import 'package:xeris_wallet/core/services/pqc_service.dart';
 import 'package:xeris_wallet/core/services/biometric_service.dart';
 import 'package:xeris_wallet/core/providers/wallet_provider.dart';
 
@@ -8,7 +9,7 @@ class PrivacyMetrics {
   final int pqKeysCount;
   final bool isBiometricAvailable;
   final bool isPinSet;
-  final bool isQuantumProtected;
+  final PqRegistrationStatus pqRegistration;
   final bool isPrivacyModeEnabled;
 
   PrivacyMetrics({
@@ -16,7 +17,7 @@ class PrivacyMetrics {
     required this.pqKeysCount,
     required this.isBiometricAvailable,
     required this.isPinSet,
-    required this.isQuantumProtected,
+    required this.pqRegistration,
     required this.isPrivacyModeEnabled,
   });
 }
@@ -25,15 +26,16 @@ final privacyMetricsProvider = FutureProvider<PrivacyMetrics>((ref) async {
   final zkCount = await StorageService.getZkProofCount();
   final isBioAvailable = await BiometricService.isBiometricsAvailable;
   final pin = await StorageService.getPinCode();
-  final isPQ = await StorageService.isQuantumProtected();
+  final address = await ref.watch(walletAddressProvider.future);
+  final registration = await PqcService.getRegistrationStatus(address);
   final privacyMode = ref.watch(privacyModeProvider);
 
   return PrivacyMetrics(
     zkProofsCount: zkCount,
-    pqKeysCount: isPQ ? 1 : 0, // In this version, we usually have 1 active PQ registration
+    pqKeysCount: registration == PqRegistrationStatus.registered ? 1 : 0,
     isBiometricAvailable: isBioAvailable,
     isPinSet: pin != null && pin.isNotEmpty,
-    isQuantumProtected: isPQ,
+    pqRegistration: registration,
     isPrivacyModeEnabled: privacyMode,
   );
 });

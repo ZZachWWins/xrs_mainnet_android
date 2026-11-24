@@ -13,6 +13,16 @@ import 'package:xeris_wallet/core/utils/stealth_utils.dart';
 import 'package:solana/encoder.dart';
 
 class StealthService {
+  static const unavailableMessage =
+      'Stealth transfers are unavailable on mainnet. '
+      'Ask the recipient for a standard Xeris address. No stealth payment was sent.';
+
+  static void requireSendingAvailable() {
+    if (!NetworkConfig.stealthEnabled) {
+      throw UnsupportedError(unavailableMessage);
+    }
+  }
+
   /// Initialize stealth keys for a wallet if not already present.
   static Future<void> initializeStealthKeys(
       String walletId, String mnemonic) async {
@@ -55,6 +65,8 @@ class StealthService {
     required String stealthMetaAddress,
     required double amount,
   }) async {
+    requireSendingAvailable();
+    final networkScope = NetworkConfig.cacheKey;
     final meta = StealthMetaAddress.decode(stealthMetaAddress);
     if (meta == null) throw Exception('Invalid stealth meta-address');
 
@@ -69,10 +81,15 @@ class StealthService {
     }
 
     // 2. Send funds to the one-time stealth address
+    requireSendingAvailable();
+    if (NetworkConfig.cacheKey != networkScope) {
+      throw StateError('Network changed. Review the transfer again.');
+    }
     final txSignature = await WalletService.sendTransfer(
       mnemonic: mnemonic,
       destinationAddress: payment.stealthAddress,
       solAmount: amount,
+      expectedNetworkScope: networkScope,
     );
 
     // 3. Create announcement
@@ -165,8 +182,7 @@ class StealthService {
     }
 
     // 3. Get balance and calculate sweep amount (minus fee)
-    final balance =
-        await WalletService.getBalance(announcement.stealthAddress);
+    final balance = await WalletService.getBalance(announcement.stealthAddress);
     const fee = 0.002; // 2,000,000 lamports
     if (balance <= fee) throw Exception('Balance too low to cover fee');
 
@@ -212,7 +228,8 @@ class StealthService {
       );
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('Stealth API announcement failed (expected if endpoint not deployed): $e');
+        debugPrint(
+            'Stealth API announcement failed (expected if endpoint not deployed): $e');
       }
     }
 
@@ -235,7 +252,8 @@ class StealthService {
       }
     } catch (e) {
       if (kDebugMode) {
-        debugPrint('Stealth API scan failed (expected if endpoint not deployed): $e');
+        debugPrint(
+            'Stealth API scan failed (expected if endpoint not deployed): $e');
       }
     }
     return [];

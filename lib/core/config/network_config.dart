@@ -88,4 +88,8 @@ class NetworkConfig {
       : 'xeris-testnet-v2';
   static const caipChainId = String.fromEnvironment('XERIS_CAIP_CHAIN_ID');
   static const int tokenDecimals = 9;
+
+  /// Mainnet has no reviewed stealth announcement/scan service. Gate the active
+  /// network, not the build default: testnet builds can switch to mainnet.
+  static bool get stealthEnabled => currentNetwork == XerisNetwork.testnet;
 }
