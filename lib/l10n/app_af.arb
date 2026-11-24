@@ -1,0 +1,478 @@
+{
+  "@@locale": "af",
+  "settingsTitle": "Instellings",
+  "accountSection": "Rekening",
+  "manageWalletsTitle": "Bestuur Beursies",
+  "manageWalletsSubtitle": "Voeg by, verwyder of wissel beursies",
+  "recoveryPhraseTitle": "Herstelfrase",
+  "recoveryPhraseSubtitle": "Bekyk jou geheime saadfrase veilig",
+  "generalSection": "Algemeen",
+  "currencyTitle": "Geldeenheid",
+  "notificationsTitle": "Kennisgewings",
+  "notificationsSubtitle": "Ontvang waarskuwings vir transaksies",
+  "privacyModeTitle": "Privaatheidsmodus",
+  "privacyModeSubtitle": "Verberg balanse op die paneelbord",
+  "securitySection": "Sekuriteit",
+  "biometricTitle": "Biometriese Verifikasie",
+  "biometricSubtitle": "Vereis Face ID / Vingerafdruk by aanvang",
+  "supportSection": "Ondersteuning",
+  "privacyPolicyTitle": "Privaatheidsbeleid",
+  "privacyPolicySubtitle": "Lees ons privaatheidsbeleid",
+  "termsOfServiceTitle": "Diensbepalings",
+  "termsOfServiceSubtitle": "Lees ons diensbepalings",
+  "aboutWalletTitle": "Oor Xeris Wallet",
+  "languageTitle": "Taal",
+  "selectLanguage": "Kies Taal",
+  "addressCopied": "Adres na knipbord gekopieer",
+  "loadingAddress": "Laai...",
+  "errorLoadingAddress": "Fout met laai van adres",
+  "sinceLastMonth": "Sedert Verlede Maand",
+  "tokensTitle": "Tokens",
+  "comingSoon": "{itemName} besonderhede kom binnekort!",
+  "@comingSoon": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "actionSend": "Stuur",
+  "actionReceive": "Ontvang",
+  "actionSwap": "Ruil",
+  "actionEarn": "Verdien",
+  "actionScan": "Skandeer",
+  "navWallet": "Beursie",
+  "navBrowser": "Blaaier",
+  "navActivity": "Aktiwiteit",
+  "balanceHistoryTitle": "Balansgeskiedenis",
+  "totalBalanceTitle": "Totale Balans",
+  "noHistoryAvailable": "Geen geskiedenis beskikbaar",
+  "errorPrefix": "Fout: {error}",
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "addWalletTitle": "Voeg Beursie By",
+  "addWalletSubtitle": "Hoe wil jy 'n beursie byvoeg?",
+  "createNewWallet": "Skep Nuwe Beursie",
+  "createNewWalletDesc": "Genereer 'n nuwe 12-woord geheime herstelfrase",
+  "importExistingWallet": "Voer Bestaande Beursie In",
+  "importExistingWalletDesc": "Herstel met 'n geheime herstelfrase",
+  "myWalletsTitle": "My Beursies",
+  "noWallets": "Geen Beursies",
+  "noWalletsDesc": "Jy het nog geen beursies nie. Skep of voer jou eerste beursie in om te begin.",
+  "deleteWalletPromptTitle": "Vee Beursie Uit?",
+  "deleteWalletPromptDesc": "Is jy seker jy wil \"{walletName}\" uitvee? Hierdie aksie kan nie ongedaan gemaak word nie tensy jy jou herstelfrase gestoor het.",
+  "cancel": "Kanselleer",
+  "delete": "Vee Uit",
+  "unlockWallet": "Sluit Beursie Oop",
+  "authRequired": "Verifikasie vereis.",
+  "verifySecretPhraseTitle": "Verifieer Geheime Frase",
+  "verifyBackup": "Verifieer jou rugsteun",
+  "verifyBackupDesc": "Voer die volgende woorde van jou geheime frase in om te bevestig dat jy hulle gestoor het.",
+  "wordNumber": "Woord #{number}",
+  "@wordNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "enterWordNumber": "Voer woord #{number} in",
+  "@enterWordNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyComplete": "Verifieer & Voltooi",
+  "walletVerified": "Beursie geverifieer en beveilig!",
+  "failedCreateWallet": "Kon nie beursie skep nie: {error}",
+  "@failedCreateWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "incorrectWords": "Verkeerde woorde. Kontroleer asseblief jou frase en probeer weer.",
+  "importWalletTitle": "Voer Beursie In",
+  "enterSecretPhrase": "Voer Geheime Frase In",
+  "enterRecoveryPhraseDesc": "Voer jou 12 of 24-woord herstelfrase in om jou beursie te herstel.",
+  "invalidRecoveryPhrase": "Ongeldige herstelfrase",
+  "walletImportedSuccess": "Beursie suksesvol ingevoer!",
+  "failedImportWallet": "Kon nie beursie invoer nie: {error}",
+  "@failedImportWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "secretRecoveryPhraseTitle": "Geheime Herstelfrase",
+  "secretPhraseMasterKeyDesc": "Hierdie geheime frase is die meestersleutel tot jou beursie. Skryf dit neer en bêre dit op 'n veilige plek. Deel dit nooit met enigiemand nie.",
+  "copyToClipboard": "Kopieer na Knipbord",
+  "secretPhraseCopied": "Geheime frase na knipbord gekopieer",
+  "savedSecretPhraseBtn": "Ek het my geheime frase gestoor",
+  "welcomeTo": "Welkom by\nXeris Wallet",
+  "secureWalletForChain": "Die veilige beursie vir die Xeris Chain.",
+  "createANewWallet": "Skep 'n Nuwe Beursie",
+  "alreadyHaveWallet": "Ek het reeds 'n beursie",
+  "sendAssetsTitle": "Stuur Bates",
+  "recipientAddress": "Ontvanger se Adres",
+  "pasteAddressOrScan": "Plak adres of skandeer QR",
+  "amount": "Bedrag",
+  "max": "MAKS",
+  "review": "Hersien",
+  "balance": "Balans: {amount} {symbol}",
+  "@balance": {
+    "placeholders": {
+      "amount": { "type": "String" },
+      "symbol": { "type": "String" }
+    }
+  },
+  "errorEnterRecipient": "Voer asseblief 'n ontvanger se adres in",
+  "errorInvalidAddress": "Ongeldige Xeris Chain adres",
+  "errorEnterValidAmount": "Voer asseblief 'n geldige bedrag in",
+  "errorInsufficientBalance": "Onvoldoende balans",
+  "receiveAssetsTitle": "Ontvang Bates",
+  "scanToReceive": "Skandeer om te Ontvang",
+  "sendOnlyXerisAssets": "Stuur slegs Xeris Chain bates na hierdie adres.",
+  "shareAddress": "Deel Adres",
+  "swapTitle": "Ruil",
+  "from": "Van",
+  "toEstimated": "Na (Geskat)",
+  "price": "Prys",
+  "priceEstimate": "1 {fromSymbol} ≈ {rate} {toSymbol}",
+  "@priceEstimate": {
+    "placeholders": {
+      "fromSymbol": { "type": "String" },
+      "rate": { "type": "String" },
+      "toSymbol": { "type": "String" }
+    }
+  },
+  "slippageTolerance": "Glytoleransie",
+  "swapping": "Ruil tans...",
+  "selectToken": "Kies Token",
+  "scanQrCodeTitle": "Skandeer QR Kode",
+  "alignQrCode": "Belyn QR kode binne die raam",
+  "earnRewardsTitle": "Verdien Belonings",
+  "noValidatorsFound": "Geen valideerders op testnet gevind nie.\nJy kan steeds probeer om aan die netwerk te staak.",
+  "validatorAddress": "Valideerder {address}...",
+  "@validatorAddress": {
+    "placeholders": {
+      "address": { "type": "String" }
+    }
+  },
+  "stakeAmount": "Staak: {amount} XRS",
+  "@stakeAmount": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "stake": "Staak",
+  "unstake": "Onstaak",
+  "directStake": "Direkte Staak",
+  "stakedBalance": "Gestaakte Balans",
+  "totalStaked": "Totaal Gestaak: {amount} XRS",
+  "@totalStaked": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "commissionLabel": "Kommissie: {value}%",
+  "@commissionLabel": {
+    "placeholders": {
+      "value": { "type": "String" }
+    }
+  },
+  "searchValidators": "Soek Valideerders",
+  "stakeAmountPercentage": "{percent}%",
+  "confirmStakeTitle": "Bevestig Staak",
+  "confirmStakeDesc": "Jy is op die punt om {amount} XRS aan {validator} te staak.",
+  "confirmUnstakeTitle": "Bevestig Onstaak",
+  "confirmUnstakeDesc": "Jy is op die punt om {amount} XRS van {validator} te onstaak.",
+  "unbondingNotice": "7-dae ontbindingsperiode geld",
+  "transactionSubmitted": "Transaksie Ingedien",
+  "transactionFailed": "Transaksie Misluk",
+  "txSubmittedDesc": "Jou transaksie is by die Xeris netwerk ingedien.",
+  "hashLabel": "Hash: {hash}",
+  "@hashLabel": {
+    "placeholders": {
+      "hash": { "type": "String" }
+    }
+  },
+  "txHashCopied": "Transaksie hash na knipbord gekopieer",
+  "viewInExplorer": "Bekyk in Verkenner",
+  "backToDashboard": "Terug na Paneelbord",
+  "shareReceipt": "Deel Kwitansie",
+  "transactionDetails": "Transaksiebesonderhede",
+  "receiptTitle": "Xeris Transaksie Kwitansie",
+  "dateLabel": "Datum",
+  "statusLabel": "Status",
+  "successStatus": "Suksesvol",
+  "failedStatus": "Misluk",
+  "copiedToClipboard": "Na knipbord gekopieer",
+  "connectToDapp": "Koppel aan {dappName}?",
+  "@connectToDapp": {
+    "placeholders": {
+      "dappName": { "type": "String" }
+    }
+  },
+  "reject": "Verwerp",
+  "approve": "Keur Goed",
+  "details": "BESONDERHEDE",
+  "activityTitle": "Aktiwiteit",
+  "noActivityYet": "Nog Geen Aktiwiteit",
+  "noActivityDesc": "Jou transaksies sal hier verskyn sodra jy fondse stuur of ontvang.",
+  "errorLoadingActivity": "Fout met laai van aktiwiteit",
+  "activitySearchHint": "Soek adres, tx hash, of token",
+  "activityFilterAll": "Alles",
+  "activityFilterSent": "Gestuur",
+  "activityFilterReceived": "Ontvang",
+  "activityFilterSwap": "Ruil",
+  "activityFilterFailed": "Misluk",
+  "activityNoMatches": "Geen passings",
+  "activityNoMatchesDesc": "Probeer om jou filters of soektog aan te pas",
+  "unknownAddress": "Onbekend",
+  "receivedAsset": "{symbol} Ontvang",
+  "@receivedAsset": { "placeholders": { "symbol": { "type": "String" } } },
+  "sentAsset": "{symbol} Gestuur",
+  "@sentAsset": { "placeholders": { "symbol": { "type": "String" } } },
+  "fromAddress": "Van: {address}",
+  "@fromAddress": { "placeholders": { "address": { "type": "String" } } },
+  "toAddress": "Aan: {address}",
+  "@toAddress": { "placeholders": { "address": { "type": "String" } } },
+  "execContract": "Voer Uit",
+  "todayAt": "Vandag {time}",
+  "@todayAt": { "placeholders": { "time": { "type": "String" } } },
+  "yesterdayAt": "Gister {time}",
+  "@yesterdayAt": { "placeholders": { "time": { "type": "String" } } },
+  "connectingToDapp": "Koppel aan dApp...",
+  "signMessageTitle": "Teken Boodskap",
+  "messageToSign": "BOODSKAP",
+  "signBtn": "Teken",
+  "searchOrEnterUrl": "Soek of voer URL in",
+  "renameWalletTitle": "Hernoem Beursie",
+  "renameWalletPromptDesc": "Voer 'n nuwe naam vir jou beursie in.",
+  "walletNameLabel": "Beursie Naam",
+  "save": "Stoor",
+  "rename": "Hernoem",
+  "marketOrder": "Mark",
+  "limitOrder": "Limiet",
+  "limitPriceLabel": "Limietprys",
+  "placeLimitOrder": "Plaas Limietbestelling",
+  "manageCoins": "Bestuur Munte",
+  "dAppBrowser": "Xeris web4 blaaier",
+
+  "connectedTo": "Gekoppel: {publicKey}",
+  "@connectedTo": {
+    "placeholders": {
+      "publicKey": { "type": "String" }
+    }
+  },
+  "selectCurrency": "Kies Geldeenheid",
+  "stakeXrs": "Staak XRS",
+  "availableXrs": "Beskikbaar: {balance} XRS",
+  "@availableXrs": {
+    "placeholders": {
+      "balance": { "type": "String" }
+    }
+  },
+  "confirmStake": "Bevestig Staak",
+  "addLiquidityWithTokens": "Voeg Likiditeit By: {tokenA}/{tokenB}",
+  "@addLiquidityWithTokens": {
+    "placeholders": {
+      "tokenA": { "type": "String" },
+      "tokenB": { "type": "String" }
+    }
+  },
+  "confirmDeposit": "Bevestig Deposito",
+  "ok": "OK",
+  "reviewTransaction": "Hersien Transaksie",
+  "youAreSending": "Jy stuur",
+  "confirmAndSend": "Bevestig & Stuur",
+  "biometricAuthFailed": "Verifikasie misluk. Kan nie biometrika aktiveer nie.",
+  "couldNotOpenLink": "Kon nie skakel oopmaak nie",
+  "recoveryPhraseWarning": "Deel hierdie frase nooit nie. Enigiemand met hierdie woorde kan jou bates steel.",
+  "noWalletFound": "Geen beursie gevind nie.",
+  "recoveryPhraseCopied": "Herstelfrase na knipbord gekopieer",
+  "versionLabel": "Weergawe {version}",
+  "@versionLabel": {
+    "placeholders": {
+      "version": { "type": "String" }
+    }
+  },
+  "authFailed": "Verifikasie misluk",
+  "marketCap": "Markkapitalisasie",
+  "totalHolders": "Totale Houers",
+  "mintAddress": "Mint Adres",
+  "totalSupply": "Totale Voorraad",
+  "recentActivity": "Onlangse Aktiwiteit",
+  "tokenDecimals": "Desimale",
+  "tokenStandard": "Token Standaard",
+  "noActivityForToken": "Geen onlangse aktiwiteit vir hierdie token nie.",
+  "navAgents": "Agente",
+  "agentsTitle": "KI Agente",
+  "yourAgents": "Jou Agente",
+  "openTasks": "Oop Take",
+  "registerAgentTitle": "Registreer Agent",
+  "registerAgentDesc": "Agente werk outonoom met gedelegeerde gesag. Stel besteperke versigtig — hulle kan dit nie op-ketting oorskry nie.",
+  "agentNameLabel": "AGENT NAAM",
+  "agentNamePlaceholder": "bv. Ari-Trader-v1",
+  "agentPubKeyLabel": "AGENT PUBLIEKE SLEUTEL",
+  "agentPubKeyPlaceholder": "Base58 Ed25519 publieke sleutel",
+  "maxPerTxLabel": "MAKS PER TRANSAKSIE (XRS)",
+  "dailyBudgetLabel": "DAAGLIKSE BEGROTING (XRS)",
+  "allowedContractsLabel": "TOEGELATE KONTRAKTE",
+  "allowedContractsPlaceholder": "pool_mtk_xrs, ... (komma-geskei)",
+  "registerAgentBtn": "Registreer Agent",
+  "revokeAgentBtn": "Herroep",
+  "claimTaskBtn": "Eis",
+  "lastHeartbeatPrefix": "Laaste hartklop: ",
+  "activeAgentsStatus": "{count} AKTIEF",
+  "@activeAgentsStatus": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "sendPrivately": "Stuur Privaat",
+  "sendPrivatelyDesc": "Bedrag op-ketting versteek via ZK proof",
+  "zkpInfoBox": "Die oorplasingsbedrag sal op-ketting versteek word. Slegs jy en die ontvanger kan die waarde verifieer. Stoor jou verblindingsfaktor vir belastingrekords.",
+  "generateProofAndSend": "Genereer Proof & Stuur",
+  "quantumShieldTitle": "Kwantumskild",
+  "quantumShieldSubtitle": "Post-kwantum kriptografie",
+  "quantumShieldDesc": "Beskerm jou beursie met post-kwantum kriptografie (ML-DSA-65)",
+  "quantumProtectionActive": "Kwantumbeskerming Aktief",
+  "notProtected": "Nie Beskerm Nie",
+  "pqSecurityLevel": "ML-DSA-65 · 128-bit PQ sekuriteit",
+  "vulnerableToQuantum": "Kwesbaar vir kwantumaanvalle",
+  "statusActive": "AKTIEF",
+  "statusOff": "AF",
+  "zkProofsUsed": "ZK Proofs Gebruik",
+  "pqKeysRegistered": "PQ Sleutels Geregistreer",
+  "blockTimeStat": "Blok Tyd",
+  "quantumProtectedDesc": "Jou beursie is kwantum-beskerm. Oorplasings geteken met ML-DSA-65 wys 'n 🛡 kenteken in die verkenner.",
+  "enableQuantumProtectionDesc": "Aktivering van kwantumbeskerming genereer 'n ML-DSA-65 sleutelpaar en registreer jou publieke sleutel op-ketting. Dit is 'n eenmalige opstelling.",
+  "sendWithQuantumSigning": "Stuur met Kwantum Tekening",
+  "enableQuantumProtectionBtn": "Aktiveer Kwantumbeskerming",
+  "quantumEnabledSuccess": "Kwantumbeskerming Geaktiveer!",
+  "failedToEnablePq": "Kon nie aktiveer nie: {error}",
+  "@failedToEnablePq": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "quantumBackupTitle": "Rugsteun Kwantum Identiteit",
+  "quantumBackupWarning": "Jou 12-woord mnemoniek is nie meer genoeg om hierdie beursie te herstel nie. Jy MOET hierdie Kwantum Geheime Sleutel rugsteun.",
+  "quantumSecretKeyLabel": "KWANTUM GEHEIME SLEUTEL",
+  "backupConfirmedLabel": "Ek het my Kwantum Geheime Sleutel veilig gerugsteun",
+  "viewRecoveryKey": "Bekyk Herstelsleutel",
+  "pinCodeTitle": "PIN Kode",
+  "pinCodeSubtitle": "Beveilig beursie met 'n 6-syfer PIN",
+  "changePinCodeTitle": "Verander PIN Kode",
+  "changePinCodeSubtitle": "Werk jou sekuriteits-PIN by",
+  "pinCodeUpdated": "PIN Kode suksesvol opgedateer",
+  "noAgentsRegistered": "Geen agente geregistreer nie.",
+  "noOpenTasks": "Geen oop take nie.",
+  "refresh": "Verfris",
+  "zkpOnlyXrsError": "ZKP private oorplasings ondersteun tans slegs XRS.",
+  "pqcOnlyXrsError": "Kwantum Getekende oorplasings ondersteun tans slegs XRS.",
+  "required": "Vereis",
+  "enterPinCode": "Voer PIN Kode In",
+  "setNewPin": "Stel 'n Nuwe PIN",
+  "confirmPin": "Bevestig Jou PIN",
+  "pinSubtitle": "Beveilig jou bates met 'n 6-syfer PIN",
+  "incorrectPin": "Verkeerde PIN",
+  "pinsDoNotMatch": "PIN-kodes stem nie ooreen nie. Probeer weer.",
+  "panicPinTitle": "Paniek PIN (Self-Vernietig)",
+  "panicPinSubtitle": "'n Kode wat alle data uitvee wanneer dit ingevoer word",
+  "setPanicPin": "Stel Paniek PIN",
+  "confirmPanicPin": "Bevestig Paniek PIN",
+  "panicTriggered": "Paniek PIN geaktiveer. Alle data uitgevee.",
+  "agentMaxPerTx": "Maks/tx: {amount} XRS",
+  "agentDailyLimit": "Daagliks: {amount} XRS",
+  "appLockedTitle": "Xeris Wallet Gesluit",
+  "authenticateToContinue": "Verifieer om voort te gaan",
+  "securityAudit": "SEKURITEITSOUDIT",
+  "biometricLockActive": "Biometriese Slot Aktief",
+  "pinProtected6Digit": "6-Syfer PIN Beskerm",
+  "privacyModeEnabled": "Privaatheidsmodus Geaktiveer",
+  "privacyModeDisabled": "Privaatheidsmodus Gedeaktiveer",
+  "fullDiskEncryption": "Volle Skyf Enkripsie",
+  "zkProofAsyncInfo": "Xeris gebruik asinchrone ZK proof generering om privaatheid te handhaaf sonder om jou beursie-interaksie te blokkeer.",
+  "unknownToken": "Onbekende Token",
+  "signTransactionTitle": "Teken Transaksie",
+  "signAndSendTransactionTitle": "Teken & Stuur Transaksie",
+  "signAllTransactionsTitle": "Teken {count} Transaksies",
+  "@signAllTransactionsTitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "connectToDappDesc": "Hierdie program wil aan jou Xeris beursie koppel en jou publieke adres bekyk.",
+  "signTransactionDesc": "Hierdie program wil hê jy moet 'n transaksie teken. Hersien noukeurig voor goedkeuring.",
+  "signAllTransactionsDesc": "Hierdie program wil hê jy moet {count} transaksies op een slag teken.",
+  "@signAllTransactionsDesc": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "signMessageDesc": "Hierdie program wil hê jy moet 'n boodskap teken vir verifikasie.",
+  "dappRequestUnknown": "Hierdie program versoek toegang tot die beursie.",
+  "wrapXrs": "Verpak XRS",
+  "unwrapXrs": "Ontpak XRS",
+  "swapLabel": "Ruil",
+  "interactLabel": "Interaksie",
+  "noActiveLimitOrders": "Geen aktiewe limietbestellings nie",
+  "sellingLabel": "Verkoop",
+  "buyingMinLabel": "Koop (Min)",
+  "targetPriceLabel": "Teikenprys",
+  "orderIdLabel": "Bestelling ID",
+  "cancelOrderTitle": "Kanselleer Bestelling",
+  "cancelOrderConfirm": "Is jy seker jy wil hierdie limietbestelling kanselleer? Fondse sal aan jou beursie terugbesorg word.",
+  "no": "Nee",
+  "yesCancel": "Ja, Kanselleer",
+  "cancelTxSubmitted": "Kansellasie transaksie ingedien",
+  "cancelTxFailed": "Kon nie kansellasie indien nie",
+  "noMatchingValidators": "Geen passende valideerders nie",
+  "searchTokenPlaceholder": "Soek token...",
+  "zkpTransferSubmitted": "ZKP Oorplasing Ingedien!",
+  "paste": "Plak",
+  "myWallet": "My Beursie",
+  "networkFee": "Netwerkfooi",
+  "openStatus": "OOP",
+  "toLabel": "Aan",
+  "networkLabel": "Netwerk",
+  "testnetLabel": "Testnet",
+  "mainnetLabel": "Mainnet",
+  "mainnetSoon": "Mainnet kom binnekort",
+  "connectedSitesTitle": "Gekoppelde Webwerwe",
+  "connectedSitesSubtitle": "Bestuur dApp toestemmings",
+  "noConnectedSites": "Geen Gekoppelde Webwerwe",
+  "noConnectedSitesDesc": "Webwerwe waarmee jy via die blaaier koppel sal hier verskyn. Jy kan hul toegang te eniger tyd herroep.",
+  "connectedSiteRevoked": "Webwerf toegang herroep",
+  "revokeAllSitesTitle": "Herroep Alle Webwerwe?",
+  "revokeAllSitesDesc": "Dit sal alle webwerwe van jou beursie ontkoppel. Hulle sal weer toegang moet versoek.",
+  "revokeAll": "Herroep Alles",
+  "revoke": "Herroep",
+  "allSitesRevoked": "Alle webwerf toestemmings herroep",
+  "addressBookTitle": "Adresboek",
+  "addressBookSubtitle": "Bestuur gestoorde kontakte",
+  "themeTitle": "Tema",
+  "selectTheme": "Kies Tema",
+  "themeDark": "Donker Modus",
+  "themeLight": "Lig Modus",
+  "themeSolar": "Amber",
+  "themeCyberpunk": "Violet",
+  "themeSystem": "Stelsel Verstek",
+  "themeNameDark": "Donker",
+  "themeNameLight": "Lig",
+  "themeNameSolar": "Amber",
+  "themeNameCyberpunk": "Violet",
+  "themeNameSystem": "Stelsel"
+}

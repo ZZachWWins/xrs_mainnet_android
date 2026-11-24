@@ -1,0 +1,546 @@
+{
+  "@@locale": "nl",
+  "settingsTitle": "Instellingen",
+  "accountSection": "Account",
+  "manageWalletsTitle": "Beheer Wallets",
+  "manageWalletsSubtitle": "Wallets toevoegen, verwijderen of wisselen",
+  "recoveryPhraseTitle": "Herstelzin",
+  "recoveryPhraseSubtitle": "Bekijk uw geheime herstelzin veilig",
+  "generalSection": "Algemeen",
+  "currencyTitle": "Valuta",
+  "notificationsTitle": "Meldingen",
+  "notificationsSubtitle": "Ontvang waarschuwingen voor transacties",
+  "privacyModeTitle": "Privacy Modus",
+  "privacyModeSubtitle": "Saldo's op het dashboard verbergen",
+  "securitySection": "Beveiliging",
+  "biometricTitle": "Biometrische Authenticatie",
+  "biometricSubtitle": "Vereis Face ID / Vingerafdruk bij opstarten",
+  "supportSection": "Ondersteuning",
+  "privacyPolicyTitle": "Privacybeleid",
+  "privacyPolicySubtitle": "Lees ons privacybeleid",
+  "termsOfServiceTitle": "Servicevoorwaarden",
+  "termsOfServiceSubtitle": "Lees onze servicevoorwaarden",
+  "aboutWalletTitle": "Over Xeris Wallet",
+  "languageTitle": "Taal",
+  "selectLanguage": "Selecteer Taal",
+  "addressCopied": "Adres gekopieerd naar klembord",
+  "loadingAddress": "Laden...",
+  "errorLoadingAddress": "Fout bij laden adres",
+  "sinceLastMonth": "Sinds Vorige Maand",
+  "tokensTitle": "Tokens",
+  "comingSoon": "{itemName} details binnenkort beschikbaar!",
+  "actionSend": "Verzenden",
+  "actionReceive": "Ontvangen",
+  "actionSwap": "Wisselen",
+  "actionEarn": "Verdienen",
+  "actionScan": "Scannen",
+  "navWallet": "Wallet",
+  "navBrowser": "Browser",
+  "navActivity": "Activiteit",
+  "balanceHistoryTitle": "Saldogeschiedenis",
+  "totalBalanceTitle": "Totaal Saldo",
+  "noHistoryAvailable": "Geen geschiedenis beschikbaar",
+  "errorPrefix": "Fout: {error}",
+  "addWalletTitle": "Wallet Toevoegen",
+  "addWalletSubtitle": "Hoe wilt u een wallet toevoegen?",
+  "createNewWallet": "Nieuwe Wallet Aanmaken",
+  "createNewWalletDesc": "Genereer een nieuwe 12-woorden herstelzin",
+  "importExistingWallet": "Bestaande Wallet Importeren",
+  "importExistingWalletDesc": "Herstellen met een geheime herstelzin",
+  "myWalletsTitle": "Mijn Wallets",
+  "noWallets": "Geen Wallets",
+  "noWalletsDesc": "U heeft nog geen wallets. Maak of importeer uw eerste wallet om te beginnen.",
+  "deleteWalletPromptTitle": "Wallet Verwijderen?",
+  "deleteWalletPromptDesc": "Weet u zeker dat u \"{walletName}\" wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt, tenzij u uw herstelzin heeft opgeslagen.",
+  "cancel": "Annuleren",
+  "delete": "Verwijderen",
+  "unlockWallet": "Wallet Ontgrendelen",
+  "authRequired": "Authenticatie vereist.",
+  "verifySecretPhraseTitle": "Verifieer Geheime Herstelzin",
+  "verifyBackup": "Verifieer uw back-up",
+  "verifyBackupDesc": "Voer de volgende woorden van uw herstelzin in om te bevestigen dat u ze heeft opgeslagen.",
+  "wordNumber": "Woord #{number}",
+  "enterWordNumber": "Voer woord #{number} in",
+  "verifyComplete": "Verifiëren en Voltooien",
+  "walletVerified": "Wallet geverifieerd en beveiligd!",
+  "failedCreateWallet": "Kan wallet niet aanmaken: {error}",
+  "incorrectWords": "Onjuiste woorden. Controleer uw herstelzin en probeer het opnieuw.",
+  "importWalletTitle": "Wallet Importeren",
+  "enterSecretPhrase": "Voer Geheime Herstelzin in",
+  "enterRecoveryPhraseDesc": "Voer uw 12 of 24-woorden herstelzin in om uw wallet te herstellen.",
+  "invalidRecoveryPhrase": "Ongeldige herstelzin",
+  "pinCodeUpdated": "PIN-code succesvol bijgewerkt",
+  "noAgentsRegistered": "Geen agenten geregistreerd.",
+  "noOpenTasks": "Geen open taken.",
+  "refresh": "Vernieuwen",
+  "zkpOnlyXrsError": "ZKP privé overboekingen ondersteunen momenteel alleen XRS.",
+  "pqcOnlyXrsError": "Quantum ondertekende overboekingen ondersteunen momenteel alleen XRS.",
+  "required": "Vereist",
+  "enterPinCode": "PIN-code invoeren",
+  "setNewPin": "Nieuwe PIN instellen",
+  "confirmPin": "Bevestig uw PIN",
+  "pinSubtitle": "Beveilig uw activa met een 6-cijferige PIN",
+  "incorrectPin": "Onjuiste PIN",
+  "pinsDoNotMatch": "PINs komen niet overeen. Probeer het opnieuw.",
+  "agentMaxPerTx": "Max/tx: {amount} XRS",
+  "agentDailyLimit": "Dagelijks: {amount} XRS",
+  "walletImportedSuccess": "Wallet succesvol geïmporteerd!",
+  "failedImportWallet": "Kan wallet niet importeren: {error}",
+  "secretRecoveryPhraseTitle": "Geheime Herstelzin",
+  "secretPhraseMasterKeyDesc": "Deze herstelzin is de hoofdsleutel van uw wallet. Schrijf de herstelzin op een stuk papier en bewaar het op een veilige plek. Deel het met niemand.",
+  "copyToClipboard": "Kopiëren naar klembord",
+  "secretPhraseCopied": "Geheime herstelzin naar klembord gekopieerd",
+  "savedSecretPhraseBtn": "Ik heb mijn herstelzin opgeslagen",
+  "welcomeTo": "Welkom bij\nXeris Wallet",
+  "secureWalletForChain": "De veilige wallet voor de Xeris Chain.",
+  "createANewWallet": "Nieuwe Wallet Aanmaken",
+  "alreadyHaveWallet": "Ik heb al een wallet",
+  "sendAssetsTitle": "Activa Verzenden",
+  "recipientAddress": "Ontvangstadres",
+  "pasteAddressOrScan": "Plak adres of scan QR",
+  "amount": "Bedrag",
+  "max": "MAX",
+  "review": "Beoordelen",
+  "balance": "Saldo: {amount} {symbol}",
+  "errorEnterRecipient": "Voer een ontvangstadres in",
+  "errorInvalidAddress": "Ongeldig Xeris Chain adres",
+  "errorEnterValidAmount": "Voer een geldig bedrag in",
+  "errorInsufficientBalance": "Onvoldoende saldo",
+  "receiveAssetsTitle": "Activa Ontvangen",
+  "scanToReceive": "Scan om te Ontvangen",
+  "sendOnlyXerisAssets": "Stuur alleen Xeris Chain activa naar dit adres.",
+  "shareAddress": "Adres Delen",
+  "swapTitle": "Wisselen",
+  "from": "Van",
+  "toEstimated": "Naar (Geschat)",
+  "price": "Prijs",
+  "priceEstimate": "1 {fromSymbol} ≈ {rate} {toSymbol}",
+  "slippageTolerance": "Slippage Tolerantie",
+  "swapping": "Wisselen...",
+  "selectToken": "Selecteer Token",
+  "scanQrCodeTitle": "Scan QR Code",
+  "alignQrCode": "Plaats QR code in het kader",
+  "earnRewardsTitle": "Beloningen Verdienen",
+  "noValidatorsFound": "Geen validators gevonden op testnet.\nU kunt nog steeds proberen te staken naar het netwerk.",
+  "validatorAddress": "Validator {address}...",
+  "stakeAmount": "Staken: {amount} XRS",
+  "stake": "Staken",
+  "unstake": "Unstaken",
+  "directStake": "Direct Staken",
+  "stakedBalance": "Gestaked Saldo",
+  "totalStaked": "Totaal Gestaked: {amount} XRS",
+  "transactionSubmitted": "Transactie Ingediend",
+  "transactionFailed": "Transactie Mislukt",
+  "txSubmittedDesc": "Uw transactie is ingediend bij het Xeris netwerk.",
+  "hashLabel": "Hash: {hash}",
+  "txHashCopied": "Transactie hash naar klembord gekopieerd",
+  "viewInExplorer": "Bekijk in Explorer",
+  "backToDashboard": "Terug naar Dashboard",
+  "connectToDapp": "Verbinden met {dappName}?",
+  "reject": "Weigeren",
+  "approve": "Goedkeuren",
+  "details": "DETAILS",
+  "activityTitle": "Activiteit",
+  "noActivityYet": "Nog geen activiteit",
+  "noActivityDesc": "Je transacties verschijnen hier zodra je geld verzendt of ontvangt.",
+  "errorLoadingActivity": "Fout bij laden van activiteit",
+  "activitySearchHint": "Zoek adres, tx-hash of token",
+  "activityFilterAll": "Alle",
+  "activityFilterSent": "Verzonden",
+  "activityFilterReceived": "Ontvangen",
+  "activityFilterSwap": "Swap",
+  "activityFilterFailed": "Mislukt",
+  "activityNoMatches": "Geen resultaten",
+  "activityNoMatchesDesc": "Pas je filters of zoekopdracht aan",
+  "unknownAddress": "Onbekend",
+  "receivedAsset": "Ontvangen {symbol}",
+  "sentAsset": "Verzonden {symbol}",
+  "fromAddress": "Van: {address}",
+  "toAddress": "Aan: {address}",
+  "execContract": "Uitv",
+  "failedStatus": "Mislukt",
+  "todayAt": "Vandaag {time}",
+  "yesterdayAt": "Gisteren {time}",
+  "connectingToDapp": "Verbinden met dApp...",
+  "signMessageTitle": "Onderteken bericht",
+  "messageToSign": "BERICHT",
+  "signBtn": "Ondertekenen",
+  "searchOrEnterUrl": "Zoeken of URL invoeren",
+  "limitOrder": "Limiet",
+  "limitPriceLabel": "Limietprijs",
+  "manageCoins": "Munten beheren",
+  "marketOrder": "Markt",
+  "placeLimitOrder": "Limietorder plaatsen",
+  "rename": "Hernoemen",
+  "renameWalletPromptDesc": "Voer een nieuwe naam in voor uw wallet.",
+  "renameWalletTitle": "Wallet hernoemen",
+  "save": "Opslaan",
+  "walletNameLabel": "Wallet naam",
+  "dAppBrowser": "dApp Browser",
+  "connectedTo": "Verbonden met: {publicKey}",
+  "selectCurrency": "Valuta selecteren",
+  "stakeXrs": "Stake XRS",
+  "availableXrs": "Beschikbaar: {balance} XRS",
+  "confirmStake": "Staking bevestigen",
+  "addLiquidityWithTokens": "Liquiditeit toevoegen: {tokenA}/{tokenB}",
+  "confirmDeposit": "Storting bevestigen",
+  "ok": "OK",
+  "reviewTransaction": "Transactie beoordelen",
+  "youAreSending": "Je verstuurt",
+  "confirmAndSend": "Bevestigen & verzenden",
+  "biometricAuthFailed": "Authenticatie mislukt. Kan biometrie niet inschakelen.",
+  "couldNotOpenLink": "Kon link niet openen",
+  "recoveryPhraseWarning": "Deel deze zin nooit. Iedereen met deze woorden kan uw activa stelen.",
+  "noWalletFound": "Geen wallet gevonden.",
+  "recoveryPhraseCopied": "Herstelzin gekopieerd naar klembord",
+  "versionLabel": "Versie {version}",
+  "authFailed": "Authenticatie mislukt",
+  "marketCap": "Marktkapitalisatie",
+  "totalHolders": "Totaal aantal houders",
+  "mintAddress": "Mint-adres",
+  "totalSupply": "Totale voorraad",
+  "recentActivity": "Recente activiteit",
+  "tokenDecimals": "Decimalen",
+  "tokenStandard": "Tokenstandaard",
+  "noActivityForToken": "Geen recente activiteit voor deze token.",
+  "navAgents": "Agenten",
+  "agentsTitle": "AI Agenten",
+  "yourAgents": "Uw Agenten",
+  "openTasks": "Open Taken",
+  "registerAgentTitle": "Agent Registreren",
+  "registerAgentDesc": "Agenten werken autonoom met gedelegeerde bevoegdheid. Stel uitgavenlimieten zorgvuldig in — ze kunnen deze on-chain niet overschrijden.",
+  "agentNameLabel": "AGENT NAAM",
+  "agentNamePlaceholder": "bijv. Ari-Trader-v1",
+  "agentPubKeyLabel": "AGENT PUBLIEKE SLEUTEL",
+  "agentPubKeyPlaceholder": "Base58 Ed25519 pubkey",
+  "maxPerTxLabel": "MAX PER TRANSACTIE (XRS)",
+  "dailyBudgetLabel": "DAGELIJKS BUDGET (XRS)",
+  "allowedContractsLabel": "TOEGESTANE CONTRACTEN",
+  "allowedContractsPlaceholder": "pool_mtk_xrs, ... (gescheiden door komma's)",
+  "registerAgentBtn": "Agent Registreren",
+  "revokeAgentBtn": "Intrekken",
+  "claimTaskBtn": "Claimen",
+  "lastHeartbeatPrefix": "Laatste hartslag: ",
+  "activeAgentsStatus": "{count} ACTIEF",
+  "sendPrivately": "Privé Verzenden",
+  "sendPrivatelyDesc": "Bedrag verborgen on-chain via ZK bewijs",
+  "zkpInfoBox": "Het overboekingsbedrag wordt on-chain verborgen. Alleen u en de ontvanger kunnen de waarde verifiëren. Bewaar uw blindingsfactor voor belastingdossiers.",
+  "generateProofAndSend": "Bewijs Genereren & Verzenden",
+  "panicPinTitle": "Paniek PIN (Zelfvernietiging)",
+  "panicPinSubtitle": "Een code die alle gegevens wist bij invoer",
+  "setPanicPin": "Paniek PIN instellen",
+  "confirmPanicPin": "Paniek PIN bevestigen",
+  "panicTriggered": "Paniek PIN geactiveerd. Alle gegevens gewist.",
+  "shareReceipt": "Bewijs Delen",
+  "transactionDetails": "Transactie Details",
+  "receiptTitle": "Xeris Transactiebewijs",
+  "dateLabel": "Datum",
+  "statusLabel": "Status",
+  "successStatus": "Succes",
+  "copiedToClipboard": "Gekopieerd naar klembord",
+  "@comingSoon": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@wordNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@enterWordNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@failedCreateWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@failedImportWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@balance": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "symbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@priceEstimate": {
+    "placeholders": {
+      "fromSymbol": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "toSymbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@validatorAddress": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "@stakeAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@hashLabel": {
+    "placeholders": {
+      "hash": {
+        "type": "String"
+      }
+    }
+  },
+  "@connectToDapp": {
+    "placeholders": {
+      "dappName": {
+        "type": "String"
+      }
+    }
+  },
+  "@receivedAsset": {
+    "placeholders": {
+      "symbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@sentAsset": {
+    "placeholders": {
+      "symbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@fromAddress": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "@toAddress": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "@todayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@yesterdayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@connectedTo": {
+    "placeholders": {
+      "publicKey": {
+        "type": "String"
+      }
+    }
+  },
+  "@availableXrs": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "@addLiquidityWithTokens": {
+    "placeholders": {
+      "tokenA": {
+        "type": "String"
+      },
+      "tokenB": {
+        "type": "String"
+      }
+    }
+  },
+  "@versionLabel": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "@activeAgentsStatus": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "quantumShieldTitle": "Quantum Shield",
+  "quantumShieldSubtitle": "Post-quantum cryptography",
+  "quantumShieldDesc": "Protect your wallet with post-quantum cryptography (ML-DSA-65)",
+  "quantumProtectionActive": "Quantum Protection Active",
+  "notProtected": "Not Protected",
+  "pqSecurityLevel": "ML-DSA-65 · 128-bit PQ security",
+  "vulnerableToQuantum": "Vulnerable to quantum attacks",
+  "statusActive": "ACTIVE",
+  "statusOff": "OFF",
+  "zkProofsUsed": "ZK Proofs Used",
+  "pqKeysRegistered": "PQ Keys Registered",
+  "blockTimeStat": "Block Time",
+  "quantumProtectedDesc": "Your wallet is quantum-protected. Transfers signed with ML-DSA-65 show a 🛡 badge in the explorer.",
+  "enableQuantumProtectionDesc": "Enabling quantum protection generates a ML-DSA-65 keypair and registers your public key on-chain. This is a one-time setup.",
+  "sendWithQuantumSigning": "Send with Quantum Signing",
+  "enableQuantumProtectionBtn": "Enable Quantum Protection",
+  "quantumEnabledSuccess": "Quantum Protection Enabled!",
+  "failedToEnablePq": "Failed to enable: {error}",
+  "@failedToEnablePq": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "pinCodeTitle": "PIN Code",
+  "pinCodeSubtitle": "Secure wallet with a 6-digit PIN",
+  "changePinCodeTitle": "Change PIN Code",
+  "changePinCodeSubtitle": "Update your security PIN",
+  "appLockedTitle": "Xeris Wallet Locked",
+  "authenticateToContinue": "Authenticate to continue",
+  "securityAudit": "SECURITY AUDIT",
+  "biometricLockActive": "Biometric Lock Active",
+  "pinProtected6Digit": "6-Digit PIN Protected",
+  "privacyModeEnabled": "Privacy Mode Enabled",
+  "privacyModeDisabled": "Privacy Mode Disabled",
+  "fullDiskEncryption": "Full Disk Encryption",
+  "zkProofAsyncInfo": "Xeris uses asynchronous ZK proof generation to maintain privacy without blocking your wallet interaction.",
+  "unknownToken": "Unknown Token",
+  "backupConfirmedLabel": "Ik heb mijn Quantum Geheime Sleutel veilig geback-upt",
+  "buyingMinLabel": "Kopen (Min)",
+  "cancelOrderConfirm": "Weet je zeker dat je deze limietorder wilt annuleren? Het geld wordt teruggestort naar je wallet.",
+  "cancelOrderTitle": "Order Annuleren",
+  "cancelTxFailed": "Annulering verzenden mislukt",
+  "cancelTxSubmitted": "Annuleringstransactie verzonden",
+  "commissionLabel": "Commissie: {value}%",
+  "@commissionLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmStakeDesc": "Je staat op het punt {amount} XRS te staken op {validator}.",
+  "confirmStakeTitle": "Stake Bevestigen",
+  "confirmUnstakeDesc": "Je staat op het punt {amount} XRS te unstaken van {validator}.",
+  "confirmUnstakeTitle": "Unstake Bevestigen",
+  "connectToDappDesc": "Deze app wil verbinding maken met je Xeris wallet en je openbare adres bekijken.",
+  "dappRequestUnknown": "Deze app vraagt toegang tot de wallet.",
+  "interactLabel": "Interactie",
+  "mainnetLabel": "Mainnet",
+  "mainnetSoon": "Mainnet komt binnenkort",
+  "myWallet": "Mijn Wallet",
+  "networkFee": "Netwerkkosten",
+  "networkLabel": "Netwerk",
+  "no": "Nee",
+  "noActiveLimitOrders": "Geen actieve limietorders",
+  "noMatchingValidators": "Geen overeenkomende validators",
+  "openStatus": "OPEN",
+  "orderIdLabel": "Order-ID",
+  "paste": "Plakken",
+  "quantumBackupTitle": "Quantum Identiteit Back-uppen",
+  "quantumBackupWarning": "Je 12-woorden mnemonic is niet langer genoeg om deze wallet te herstellen. Je MOET deze Quantum Geheime Sleutel back-uppen.",
+  "quantumSecretKeyLabel": "QUANTUM GEHEIME SLEUTEL",
+  "searchTokenPlaceholder": "Zoek token...",
+  "searchValidators": "Validators Zoeken",
+  "sellingLabel": "Verkopen",
+  "signAllTransactionsDesc": "Deze app wil dat je {count} transacties tegelijk ondertekent.",
+  "@signAllTransactionsDesc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "signAllTransactionsTitle": "{count} Transacties Ondertekenen",
+  "@signAllTransactionsTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "signAndSendTransactionTitle": "Transactie Ondertekenen en Verzenden",
+  "signMessageDesc": "Deze app wil dat je een bericht ondertekent voor verificatie.",
+  "signTransactionDesc": "Deze app wil dat je een transactie ondertekent. Controleer zorgvuldig voordat je goedkeurt.",
+  "signTransactionTitle": "Transactie Ondertekenen",
+  "stakeAmountPercentage": "{percent}%",
+  "swapLabel": "Swap",
+  "targetPriceLabel": "Doelprijs",
+  "testnetLabel": "Testnet",
+  "toLabel": "Aan",
+  "unbondingNotice": "Er geldt een ontbindingsperiode van 7 dagen",
+  "unwrapXrs": "XRS Unwrappen",
+  "viewRecoveryKey": "Herstelsleutel Bekijken",
+  "wrapXrs": "XRS Wrappen",
+  "yesCancel": "Ja, annuleren",
+  "zkpTransferSubmitted": "ZKP Overdracht Verzonden!",
+  "connectedSitesTitle": "Verbonden Sites",
+  "connectedSitesSubtitle": "Beheer dApp-machtigingen",
+  "noConnectedSites": "Geen Verbonden Sites",
+  "noConnectedSitesDesc": "Sites waarmee je verbinding maakt via de browser verschijnen hier. Je kunt hun toegang op elk moment intrekken.",
+  "connectedSiteRevoked": "Sitetoegang ingetrokken",
+  "revokeAllSitesTitle": "Alle sites intrekken?",
+  "revokeAllSitesDesc": "Dit verbreekt de verbinding van alle websites met je wallet. Ze moeten opnieuw toegang aanvragen.",
+  "revokeAll": "Alles Intrekken",
+  "revoke": "Intrekken",
+  "allSitesRevoked": "Alle sitemachtigingen ingetrokken",
+  "addressBookTitle": "Adresboek",
+  "addressBookSubtitle": "Beheer opgeslagen contacten",
+  "themeTitle": "Thema",
+  "selectTheme": "Thema selecteren",
+  "themeDark": "Donkere modus",
+  "themeLight": "Lichte modus",
+  "themeSolar": "Amber",
+  "themeCyberpunk": "Violet",
+  "themeSystem": "Systeemstandaard",
+  "themeNameDark": "Donker",
+  "themeNameLight": "Licht",
+  "themeNameSolar": "Amber",
+  "themeNameCyberpunk": "Violet",
+  "themeNameSystem": "Systeem"
+}

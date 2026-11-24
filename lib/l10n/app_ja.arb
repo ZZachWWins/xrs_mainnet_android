@@ -1,0 +1,478 @@
+{
+  "@@locale": "ja",
+  "settingsTitle": "設定",
+  "accountSection": "アカウント",
+  "manageWalletsTitle": "ウォレットを管理",
+  "manageWalletsSubtitle": "ウォレットの追加、削除、切り替え",
+  "recoveryPhraseTitle": "リカバリーフレーズ",
+  "recoveryPhraseSubtitle": "保護されたシークレットシードフレーズを表示",
+  "generalSection": "一般",
+  "currencyTitle": "通貨",
+  "notificationsTitle": "通知",
+  "notificationsSubtitle": "取引のアラートを受け取る",
+  "privacyModeTitle": "プライバシーモード",
+  "privacyModeSubtitle": "ダッシュボード上の残高を非表示にする",
+  "securitySection": "セキュリティ",
+  "biometricTitle": "生体認証",
+  "biometricSubtitle": "起動時に Face ID / 指紋認証を要求",
+  "supportSection": "サポート",
+  "privacyPolicyTitle": "プライバシーポリシー",
+  "privacyPolicySubtitle": "プライバシーポリシーを読む",
+  "termsOfServiceTitle": "利用規約",
+  "termsOfServiceSubtitle": "利用規約を読む",
+  "aboutWalletTitle": "Xeris ウォレットについて",
+  "languageTitle": "言語",
+  "selectLanguage": "言語を選択",
+  "addressCopied": "アドレスをクリップボードにコピーしました",
+  "loadingAddress": "読み込み中...",
+  "errorLoadingAddress": "アドレスの読み込みエラー",
+  "sinceLastMonth": "先月から",
+  "tokensTitle": "トークン",
+  "comingSoon": "{itemName} の詳細は近日公開予定です！",
+  "@comingSoon": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "actionSend": "送信",
+  "actionReceive": "受信",
+  "actionSwap": "スワップ",
+  "actionEarn": "稼ぐ",
+  "actionScan": "スキャン",
+  "navWallet": "ウォレット",
+  "navBrowser": "ブラウザ",
+  "navActivity": "アクティビティ",
+  "balanceHistoryTitle": "残高履歴",
+  "totalBalanceTitle": "合計残高",
+  "noHistoryAvailable": "履歴がありません",
+  "errorPrefix": "エラー: {error}",
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "addWalletTitle": "ウォレットを追加",
+  "addWalletSubtitle": "ウォレットをどのように追加しますか？",
+  "createNewWallet": "新しいウォレットを作成",
+  "createNewWalletDesc": "新しい12単語のシークレットリカバリーフレーズを生成します",
+  "importExistingWallet": "既存のウォレットをインポート",
+  "importExistingWalletDesc": "シークレットリカバリーフレーズを使って復元します",
+  "myWalletsTitle": "マイウォレット",
+  "noWallets": "ウォレットがありません",
+  "noWalletsDesc": "まだウォレットがありません。最初のウォレットを作成またはインポートして始めましょう。",
+  "deleteWalletPromptTitle": "ウォレットを削除しますか？",
+  "deleteWalletPromptDesc": "「{walletName}」を本当に削除しますか？リカバリーフレーズを保存していない限り、この操作は取り消せません。",
+  "cancel": "キャンセル",
+  "delete": "削除",
+  "unlockWallet": "ウォレットのロック解除",
+  "authRequired": "認証が必要です。",
+  "verifySecretPhraseTitle": "シークレットフレーズを確認",
+  "verifyBackup": "バックアップを確認",
+  "verifyBackupDesc": "シークレットフレーズから次の単語を入力して、保存済みであることを確認してください。",
+  "wordNumber": "単語 #{number}",
+  "@wordNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "enterWordNumber": "単語 #{number} を入力",
+  "@enterWordNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyComplete": "確認して完了",
+  "walletVerified": "ウォレットが確認され、保護されました！",
+  "failedCreateWallet": "ウォレットの作成に失敗しました: {error}",
+  "@failedCreateWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "incorrectWords": "単語が正しくありません。フレーズを確認して再度お試しください。",
+  "importWalletTitle": "ウォレットをインポート",
+  "enterSecretPhrase": "シークレットフレーズを入力",
+  "enterRecoveryPhraseDesc": "12単語または24単語のリカバリーフレーズを入力してウォレットを復元します。",
+  "invalidRecoveryPhrase": "無効なリカバリーフレーズ",
+  "walletImportedSuccess": "ウォレットを正常にインポートしました！",
+  "failedImportWallet": "ウォレットのインポートに失敗しました: {error}",
+  "@failedImportWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "secretRecoveryPhraseTitle": "シークレットリカバリーフレーズ",
+  "secretPhraseMasterKeyDesc": "このシークレットフレーズはウォレットのマスターキーです。書き留めて安全な場所に保管してください。誰にも共有しないでください。",
+  "copyToClipboard": "クリップボードにコピー",
+  "secretPhraseCopied": "シークレットフレーズをクリップボードにコピーしました",
+  "savedSecretPhraseBtn": "シークレットフレーズを保存しました",
+  "welcomeTo": "Xeris ウォレットへ\nようこそ",
+  "secureWalletForChain": "Xeris チェーンのための安全なウォレット。",
+  "createANewWallet": "新しいウォレットを作成",
+  "alreadyHaveWallet": "すでにウォレットを持っています",
+  "sendAssetsTitle": "アセットを送信",
+  "recipientAddress": "受信者のアドレス",
+  "pasteAddressOrScan": "アドレスを貼り付けるか QR をスキャン",
+  "amount": "金額",
+  "max": "最大",
+  "review": "確認",
+  "balance": "残高: {amount} {symbol}",
+  "@balance": {
+    "placeholders": {
+      "amount": { "type": "String" },
+      "symbol": { "type": "String" }
+    }
+  },
+  "errorEnterRecipient": "受信者のアドレスを入力してください",
+  "errorInvalidAddress": "無効な Xeris チェーンアドレス",
+  "errorEnterValidAmount": "有効な金額を入力してください",
+  "errorInsufficientBalance": "残高が不足しています",
+  "receiveAssetsTitle": "アセットを受信",
+  "scanToReceive": "スキャンして受信",
+  "sendOnlyXerisAssets": "このアドレスには Xeris チェーンのアセットのみ送信してください。",
+  "shareAddress": "アドレスを共有",
+  "swapTitle": "スワップ",
+  "from": "From",
+  "toEstimated": "To（見積もり）",
+  "price": "価格",
+  "priceEstimate": "1 {fromSymbol} ≈ {rate} {toSymbol}",
+  "@priceEstimate": {
+    "placeholders": {
+      "fromSymbol": { "type": "String" },
+      "rate": { "type": "String" },
+      "toSymbol": { "type": "String" }
+    }
+  },
+  "slippageTolerance": "スリッページ許容値",
+  "swapping": "スワップ中...",
+  "selectToken": "トークンを選択",
+  "scanQrCodeTitle": "QR コードをスキャン",
+  "alignQrCode": "フレーム内に QR コードを合わせてください",
+  "earnRewardsTitle": "報酬を獲得",
+  "noValidatorsFound": "テストネット上にバリデーターが見つかりませんでした。\nネットワークへのステーキングは引き続き可能です。",
+  "validatorAddress": "バリデーター {address}...",
+  "@validatorAddress": {
+    "placeholders": {
+      "address": { "type": "String" }
+    }
+  },
+  "stakeAmount": "ステーキング: {amount} XRS",
+  "@stakeAmount": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "stake": "ステーキング",
+  "unstake": "アンステーキング",
+  "directStake": "直接ステーキング",
+  "stakedBalance": "ステーキング残高",
+  "totalStaked": "合計ステーキング: {amount} XRS",
+  "@totalStaked": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "commissionLabel": "手数料: {value}%",
+  "@commissionLabel": {
+    "placeholders": {
+      "value": { "type": "String" }
+    }
+  },
+  "searchValidators": "バリデーターを検索",
+  "stakeAmountPercentage": "{percent}%",
+  "confirmStakeTitle": "ステーキングを確認",
+  "confirmStakeDesc": "{amount} XRS を {validator} にステーキングしようとしています。",
+  "confirmUnstakeTitle": "アンステーキングを確認",
+  "confirmUnstakeDesc": "{amount} XRS を {validator} からアンステーキングしようとしています。",
+  "unbondingNotice": "7日間のアンボンディング期間が適用されます",
+  "transactionSubmitted": "取引が送信されました",
+  "transactionFailed": "取引に失敗しました",
+  "txSubmittedDesc": "取引が Xeris ネットワークに送信されました。",
+  "hashLabel": "ハッシュ: {hash}",
+  "@hashLabel": {
+    "placeholders": {
+      "hash": { "type": "String" }
+    }
+  },
+  "txHashCopied": "取引ハッシュをクリップボードにコピーしました",
+  "viewInExplorer": "エクスプローラーで表示",
+  "backToDashboard": "ダッシュボードに戻る",
+  "shareReceipt": "領収書を共有",
+  "transactionDetails": "取引の詳細",
+  "receiptTitle": "Xeris 取引明細書",
+  "dateLabel": "日付",
+  "statusLabel": "ステータス",
+  "successStatus": "成功",
+  "failedStatus": "失敗",
+  "copiedToClipboard": "クリップボードにコピーしました",
+  "connectToDapp": "{dappName} に接続しますか？",
+  "@connectToDapp": {
+    "placeholders": {
+      "dappName": { "type": "String" }
+    }
+  },
+  "reject": "拒否",
+  "approve": "承認",
+  "details": "詳細",
+  "activityTitle": "アクティビティ",
+  "noActivityYet": "アクティビティはまだありません",
+  "noActivityDesc": "送金または受け取りを行うと、ここに取引が表示されます。",
+  "errorLoadingActivity": "アクティビティの読み込みエラー",
+  "activitySearchHint": "アドレス、tx ハッシュ、トークンを検索",
+  "activityFilterAll": "すべて",
+  "activityFilterSent": "送信済み",
+  "activityFilterReceived": "受信済み",
+  "activityFilterSwap": "スワップ",
+  "activityFilterFailed": "失敗",
+  "activityNoMatches": "一致なし",
+  "activityNoMatchesDesc": "フィルターまたは検索を調整してみてください",
+  "unknownAddress": "不明",
+  "receivedAsset": "{symbol} を受信",
+  "@receivedAsset": { "placeholders": { "symbol": { "type": "String" } } },
+  "sentAsset": "{symbol} を送信",
+  "@sentAsset": { "placeholders": { "symbol": { "type": "String" } } },
+  "fromAddress": "From: {address}",
+  "@fromAddress": { "placeholders": { "address": { "type": "String" } } },
+  "toAddress": "To: {address}",
+  "@toAddress": { "placeholders": { "address": { "type": "String" } } },
+  "execContract": "実行",
+  "todayAt": "今日 {time}",
+  "@todayAt": { "placeholders": { "time": { "type": "String" } } },
+  "yesterdayAt": "昨日 {time}",
+  "@yesterdayAt": { "placeholders": { "time": { "type": "String" } } },
+  "connectingToDapp": "dApp に接続中...",
+  "signMessageTitle": "メッセージに署名",
+  "messageToSign": "メッセージ",
+  "signBtn": "署名",
+  "searchOrEnterUrl": "検索または URL を入力",
+  "renameWalletTitle": "ウォレット名を変更",
+  "renameWalletPromptDesc": "ウォレットの新しい名前を入力してください。",
+  "walletNameLabel": "ウォレット名",
+  "save": "保存",
+  "rename": "名前変更",
+  "marketOrder": "成行",
+  "limitOrder": "指値",
+  "limitPriceLabel": "指値価格",
+  "placeLimitOrder": "指値注文を出す",
+  "manageCoins": "コインを管理",
+  "dAppBrowser": "Xeris web4 ブラウザ",
+
+  "connectedTo": "接続済み: {publicKey}",
+  "@connectedTo": {
+    "placeholders": {
+      "publicKey": { "type": "String" }
+    }
+  },
+  "selectCurrency": "通貨を選択",
+  "stakeXrs": "XRS をステーキング",
+  "availableXrs": "利用可能: {balance} XRS",
+  "@availableXrs": {
+    "placeholders": {
+      "balance": { "type": "String" }
+    }
+  },
+  "confirmStake": "ステーキングを確認",
+  "addLiquidityWithTokens": "流動性を追加: {tokenA}/{tokenB}",
+  "@addLiquidityWithTokens": {
+    "placeholders": {
+      "tokenA": { "type": "String" },
+      "tokenB": { "type": "String" }
+    }
+  },
+  "confirmDeposit": "入金を確認",
+  "ok": "OK",
+  "reviewTransaction": "取引を確認",
+  "youAreSending": "送金内容",
+  "confirmAndSend": "確認して送信",
+  "biometricAuthFailed": "認証に失敗しました。生体認証を有効にできません。",
+  "couldNotOpenLink": "リンクを開けませんでした",
+  "recoveryPhraseWarning": "このフレーズを絶対に共有しないでください。これらの単語を知っている人は誰でもあなたの資産を盗むことができます。",
+  "noWalletFound": "ウォレットが見つかりません。",
+  "recoveryPhraseCopied": "リカバリーフレーズをクリップボードにコピーしました",
+  "versionLabel": "バージョン {version}",
+  "@versionLabel": {
+    "placeholders": {
+      "version": { "type": "String" }
+    }
+  },
+  "authFailed": "認証に失敗しました",
+  "marketCap": "時価総額",
+  "totalHolders": "総保有者数",
+  "mintAddress": "ミントアドレス",
+  "totalSupply": "総供給量",
+  "recentActivity": "最近のアクティビティ",
+  "tokenDecimals": "小数点桁数",
+  "tokenStandard": "トークン規格",
+  "noActivityForToken": "このトークンの最近のアクティビティはありません。",
+  "navAgents": "エージェント",
+  "agentsTitle": "AI エージェント",
+  "yourAgents": "あなたのエージェント",
+  "openTasks": "オープンタスク",
+  "registerAgentTitle": "エージェントを登録",
+  "registerAgentDesc": "エージェントは委任された権限で自律的に動作します。支出制限はオンチェーンで超過できないため、慎重に設定してください。",
+  "agentNameLabel": "エージェント名",
+  "agentNamePlaceholder": "例: Ari-Trader-v1",
+  "agentPubKeyLabel": "エージェント公開鍵",
+  "agentPubKeyPlaceholder": "Base58 Ed25519 公開鍵",
+  "maxPerTxLabel": "取引ごとの最大額 (XRS)",
+  "dailyBudgetLabel": "1日の予算 (XRS)",
+  "allowedContractsLabel": "許可されたコントラクト",
+  "allowedContractsPlaceholder": "pool_mtk_xrs, ... (カンマ区切り)",
+  "registerAgentBtn": "エージェントを登録",
+  "revokeAgentBtn": "取り消す",
+  "claimTaskBtn": "請求",
+  "lastHeartbeatPrefix": "最終ハートビート: ",
+  "activeAgentsStatus": "{count} 件アクティブ",
+  "@activeAgentsStatus": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "sendPrivately": "プライベート送信",
+  "sendPrivatelyDesc": "ZK proof によりオンチェーンで金額が非表示になります",
+  "zkpInfoBox": "送金額はオンチェーンで非表示になります。あなたと受信者だけが値を確認できます。税務記録のためにブラインドファクターを保存してください。",
+  "generateProofAndSend": "Proof を生成して送信",
+  "quantumShieldTitle": "クォンタムシールド",
+  "quantumShieldSubtitle": "ポスト量子暗号",
+  "quantumShieldDesc": "ポスト量子暗号 (ML-DSA-65) でウォレットを保護します",
+  "quantumProtectionActive": "量子保護が有効",
+  "notProtected": "保護されていません",
+  "pqSecurityLevel": "ML-DSA-65 · 128 ビット PQ セキュリティ",
+  "vulnerableToQuantum": "量子攻撃に対して脆弱",
+  "statusActive": "有効",
+  "statusOff": "オフ",
+  "zkProofsUsed": "使用された ZK Proof",
+  "pqKeysRegistered": "登録された PQ 鍵",
+  "blockTimeStat": "ブロック時間",
+  "quantumProtectedDesc": "あなたのウォレットは量子保護されています。ML-DSA-65 で署名された送金にはエクスプローラーで 🛡 バッジが表示されます。",
+  "enableQuantumProtectionDesc": "量子保護を有効にすると ML-DSA-65 鍵ペアが生成され、公開鍵がオンチェーンに登録されます。これは一度きりのセットアップです。",
+  "sendWithQuantumSigning": "量子署名で送信",
+  "enableQuantumProtectionBtn": "量子保護を有効にする",
+  "quantumEnabledSuccess": "量子保護が有効になりました！",
+  "failedToEnablePq": "有効化に失敗しました: {error}",
+  "@failedToEnablePq": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "quantumBackupTitle": "量子アイデンティティをバックアップ",
+  "quantumBackupWarning": "12単語のニーモニックだけではこのウォレットを復元できなくなります。Quantum Secret Key を必ずバックアップしてください。",
+  "quantumSecretKeyLabel": "QUANTUM SECRET KEY",
+  "backupConfirmedLabel": "Quantum Secret Key を安全にバックアップしました",
+  "viewRecoveryKey": "リカバリーキーを表示",
+  "pinCodeTitle": "PIN コード",
+  "pinCodeSubtitle": "6桁の PIN でウォレットを保護",
+  "changePinCodeTitle": "PIN コードを変更",
+  "changePinCodeSubtitle": "セキュリティ PIN を更新",
+  "pinCodeUpdated": "PIN コードを正常に更新しました",
+  "noAgentsRegistered": "登録されたエージェントはありません。",
+  "noOpenTasks": "オープンタスクはありません。",
+  "refresh": "更新",
+  "zkpOnlyXrsError": "ZKP プライベート送金は現在 XRS のみ対応しています。",
+  "pqcOnlyXrsError": "量子署名された送金は現在 XRS のみ対応しています。",
+  "required": "必須",
+  "enterPinCode": "PIN コードを入力",
+  "setNewPin": "新しい PIN を設定",
+  "confirmPin": "PIN を確認",
+  "pinSubtitle": "6桁の PIN で資産を保護します",
+  "incorrectPin": "PIN が正しくありません",
+  "pinsDoNotMatch": "PIN が一致しません。もう一度お試しください。",
+  "panicPinTitle": "パニック PIN（自己破壊）",
+  "panicPinSubtitle": "入力するとすべてのデータを消去するコード",
+  "setPanicPin": "パニック PIN を設定",
+  "confirmPanicPin": "パニック PIN を確認",
+  "panicTriggered": "パニック PIN がトリガーされました。すべてのデータが削除されました。",
+  "agentMaxPerTx": "取引ごと最大: {amount} XRS",
+  "agentDailyLimit": "1日: {amount} XRS",
+  "appLockedTitle": "Xeris ウォレットはロックされています",
+  "authenticateToContinue": "続行するには認証してください",
+  "securityAudit": "セキュリティ監査",
+  "biometricLockActive": "生体認証ロックが有効",
+  "pinProtected6Digit": "6桁 PIN で保護",
+  "privacyModeEnabled": "プライバシーモードが有効",
+  "privacyModeDisabled": "プライバシーモードが無効",
+  "fullDiskEncryption": "フルディスク暗号化",
+  "zkProofAsyncInfo": "Xeris は非同期 ZK proof 生成を使用し、ウォレットの操作を妨げることなくプライバシーを維持します。",
+  "unknownToken": "不明なトークン",
+  "signTransactionTitle": "取引に署名",
+  "signAndSendTransactionTitle": "署名して取引を送信",
+  "signAllTransactionsTitle": "{count} 件の取引に署名",
+  "@signAllTransactionsTitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "connectToDappDesc": "このアプリは Xeris ウォレットに接続して公開アドレスを表示しようとしています。",
+  "signTransactionDesc": "このアプリは取引への署名を要求しています。承認する前に注意深く確認してください。",
+  "signAllTransactionsDesc": "このアプリは {count} 件の取引にまとめて署名するよう要求しています。",
+  "@signAllTransactionsDesc": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "signMessageDesc": "このアプリは検証のためメッセージへの署名を要求しています。",
+  "dappRequestUnknown": "このアプリはウォレットへのアクセスを要求しています。",
+  "wrapXrs": "XRS をラップ",
+  "unwrapXrs": "XRS をアンラップ",
+  "swapLabel": "スワップ",
+  "interactLabel": "操作",
+  "noActiveLimitOrders": "アクティブな指値注文はありません",
+  "sellingLabel": "売却",
+  "buyingMinLabel": "購入（最小）",
+  "targetPriceLabel": "目標価格",
+  "orderIdLabel": "注文 ID",
+  "cancelOrderTitle": "注文をキャンセル",
+  "cancelOrderConfirm": "この指値注文をキャンセルしてもよろしいですか？資金はウォレットに返却されます。",
+  "no": "いいえ",
+  "yesCancel": "はい、キャンセル",
+  "cancelTxSubmitted": "キャンセル取引が送信されました",
+  "cancelTxFailed": "キャンセルの送信に失敗しました",
+  "noMatchingValidators": "一致するバリデーターはありません",
+  "searchTokenPlaceholder": "トークンを検索...",
+  "zkpTransferSubmitted": "ZKP 送金が送信されました！",
+  "paste": "貼り付け",
+  "myWallet": "マイウォレット",
+  "networkFee": "ネットワーク手数料",
+  "openStatus": "オープン",
+  "toLabel": "宛先",
+  "networkLabel": "ネットワーク",
+  "testnetLabel": "テストネット",
+  "mainnetLabel": "メインネット",
+  "mainnetSoon": "メインネットは近日公開予定",
+  "connectedSitesTitle": "接続済みサイト",
+  "connectedSitesSubtitle": "dApp の権限を管理",
+  "noConnectedSites": "接続済みサイトはありません",
+  "noConnectedSitesDesc": "ブラウザから接続したサイトがここに表示されます。いつでもアクセスを取り消すことができます。",
+  "connectedSiteRevoked": "サイトのアクセスを取り消しました",
+  "revokeAllSitesTitle": "すべてのサイトを取り消しますか？",
+  "revokeAllSitesDesc": "これにより、すべてのウェブサイトがウォレットから切断されます。再度アクセスをリクエストする必要があります。",
+  "revokeAll": "すべて取り消す",
+  "revoke": "取り消す",
+  "allSitesRevoked": "すべてのサイトの権限を取り消しました",
+  "addressBookTitle": "アドレス帳",
+  "addressBookSubtitle": "保存した連絡先を管理",
+  "themeTitle": "テーマ",
+  "selectTheme": "テーマを選択",
+  "themeDark": "ダークモード",
+  "themeLight": "ライトモード",
+  "themeSolar": "ソーラーフレア",
+  "themeCyberpunk": "サイバーパンク",
+  "themeSystem": "システム設定",
+  "themeNameDark": "ダーク",
+  "themeNameLight": "ライト",
+  "themeNameSolar": "ソーラーフレア",
+  "themeNameCyberpunk": "サイバーパンク",
+  "themeNameSystem": "システム"
+}

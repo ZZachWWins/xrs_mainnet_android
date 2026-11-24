@@ -1,0 +1,23 @@
+[package]
+name = "xeris-crypto-ffi"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+# Migrated off pqcrypto-dilithium (RUSTSEC-2024-0380) to pqcrypto-mldsa, matching
+# the node (see xeriscointestnet Cargo.toml / src/crypto.rs, audit XWC-12).
+# pqcrypto-dilithium 0.5's dilithium3 already shipped the FIPS-204-final ML-DSA-65
+# parameter set, so mldsa65 produces byte-identical keys/signatures
+# (PK 1952, SK 4032, sig 3309) — the on-chain wire format is unchanged.
+pqcrypto-mldsa = "0.1"
+pqcrypto-traits = "0.3"
+# Deterministic, seed-derived ML-DSA-65 keygen (FIPS 204) so the PQ key follows
+# the recovery phrase across devices. Produces byte-identical keys to
+# pqcrypto-mldsa (verified). ml-dsa is pure Rust; hkdf/sha2 derive the 32-byte
+# keygen seed from the BIP39 seed with domain separation.
+ml-dsa = "0.1"
+hkdf = "0.13"
+sha2 = "0.11"

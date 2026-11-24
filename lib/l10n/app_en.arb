@@ -1,0 +1,480 @@
+{
+  "@@locale": "en",
+  "settingsTitle": "Settings",
+  "accountSection": "Account",
+  "manageWalletsTitle": "Manage Wallets",
+  "manageWalletsSubtitle": "Add, remove, or switch wallets",
+  "recoveryPhraseTitle": "Recovery Phrase",
+  "recoveryPhraseSubtitle": "View your secret seed phrase secured",
+  "generalSection": "General",
+  "currencyTitle": "Currency",
+  "notificationsTitle": "Notifications",
+  "notificationsSubtitle": "Receive alerts for transactions",
+  "privacyModeTitle": "Privacy Mode",
+  "privacyModeSubtitle": "Obscure balances on the dashboard",
+  "securitySection": "Security",
+  "biometricTitle": "Biometric Authentication",
+  "biometricSubtitle": "Require Face ID / Fingerprint on startup",
+  "supportSection": "Support",
+  "privacyPolicyTitle": "Privacy Policy",
+  "privacyPolicySubtitle": "Read our privacy policy",
+  "termsOfServiceTitle": "Terms of Service",
+  "termsOfServiceSubtitle": "Read our terms of service",
+  "aboutWalletTitle": "About Xeris Wallet",
+  "languageTitle": "Language",
+  "selectLanguage": "Select Language",
+  "addressCopied": "Address copied to clipboard",
+  "loadingAddress": "Loading...",
+  "errorLoadingAddress": "Error loading address",
+  "sinceLastMonth": "Since Last Month",
+  "tokensTitle": "Tokens",
+  "comingSoon": "{itemName} details coming soon!",
+  "@comingSoon": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "actionSend": "Send",
+  "actionReceive": "Receive",
+  "actionSwap": "Swap",
+  "actionEarn": "Earn",
+  "actionScan": "Scan",
+  "navWallet": "Wallet",
+  "navBrowser": "Browser",
+  "navActivity": "Activity",
+  "balanceHistoryTitle": "Balance History",
+  "totalBalanceTitle": "Total Balance",
+  "noHistoryAvailable": "No history available",
+  "errorPrefix": "Error: {error}",
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "addWalletTitle": "Add Wallet",
+  "addWalletSubtitle": "How would you like to add a wallet?",
+  "createNewWallet": "Create New Wallet",
+  "createNewWalletDesc": "Generate a new 12-word secret recovery phrase",
+  "importExistingWallet": "Import Existing Wallet",
+  "importExistingWalletDesc": "Restore using a secret recovery phrase",
+  "myWalletsTitle": "My Wallets",
+  "noWallets": "No Wallets",
+  "noWalletsDesc": "You don't have any wallets yet. Create or import your first wallet to get started.",
+  "deleteWalletPromptTitle": "Delete Wallet?",
+  "deleteWalletPromptDesc": "Are you sure you want to delete \"{walletName}\"? This action cannot be undone unless you have your recovery phrase saved.",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "unlockWallet": "Unlock Wallet",
+  "authRequired": "Authentication required.",
+  "verifySecretPhraseTitle": "Verify Secret Phrase",
+  "verifyBackup": "Verify your backup",
+  "verifyBackupDesc": "Enter the following words from your secret phrase to confirm you have saved them.",
+  "wordNumber": "Word #{number}",
+  "@wordNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "enterWordNumber": "Enter word #{number}",
+  "@enterWordNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyComplete": "Verify & Complete",
+  "walletVerified": "Wallet verified and secured!",
+  "failedCreateWallet": "Failed to create wallet: {error}",
+  "@failedCreateWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "incorrectWords": "Incorrect words. Please check your phrase and try again.",
+  "importWalletTitle": "Import Wallet",
+  "enterSecretPhrase": "Enter Secret Phrase",
+  "enterRecoveryPhraseDesc": "Enter your 12 or 24-word recovery phrase to restore your wallet.",
+  "invalidRecoveryPhrase": "Invalid recovery phrase",
+  "walletImportedSuccess": "Wallet imported successfully!",
+  "failedImportWallet": "Failed to import wallet: {error}",
+  "@failedImportWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "secretRecoveryPhraseTitle": "Secret Recovery Phrase",
+  "secretPhraseMasterKeyDesc": "This secret phrase is the master key to your wallet. Write it down and store it in a secure place. Never share it with anyone.",
+  "copyToClipboard": "Copy to Clipboard",
+  "secretPhraseCopied": "Secret phrase copied to clipboard",
+  "savedSecretPhraseBtn": "I have saved my secret phrase",
+  "welcomeTo": "Welcome to\nXeris Wallet",
+  "secureWalletForChain": "The secure wallet for the Xeris Chain.",
+  "createANewWallet": "Create a New Wallet",
+  "alreadyHaveWallet": "I already have a wallet",
+  "sendAssetsTitle": "Send Assets",
+  "recipientAddress": "Recipient Address",
+  "pasteAddressOrScan": "Paste address or scan QR",
+  "amount": "Amount",
+  "max": "MAX",
+  "review": "Review",
+  "balance": "Balance: {amount} {symbol}",
+  "@balance": {
+    "placeholders": {
+      "amount": { "type": "String" },
+      "symbol": { "type": "String" }
+    }
+  },
+  "errorEnterRecipient": "Please enter a recipient address",
+  "errorInvalidAddress": "Invalid Xeris Chain address",
+  "errorEnterValidAmount": "Please enter a valid amount",
+  "errorInsufficientBalance": "Insufficient balance",
+  "receiveAssetsTitle": "Receive Assets",
+  "scanToReceive": "Scan to Receive",
+  "sendOnlyXerisAssets": "Send only Xeris Chain assets to this address.",
+  "shareAddress": "Share Address",
+  "swapTitle": "Swap",
+  "from": "From",
+  "toEstimated": "To (Estimated)",
+  "price": "Price",
+  "priceEstimate": "1 {fromSymbol} ≈ {rate} {toSymbol}",
+  "@priceEstimate": {
+    "placeholders": {
+      "fromSymbol": { "type": "String" },
+      "rate": { "type": "String" },
+      "toSymbol": { "type": "String" }
+    }
+  },
+  "slippageTolerance": "Slippage Tolerance",
+  "swapping": "Swapping...",
+  "selectToken": "Select Token",
+  "scanQrCodeTitle": "Scan QR Code",
+  "alignQrCode": "Align QR code within the frame",
+  "earnRewardsTitle": "Earn Rewards",
+  "noValidatorsFound": "No validators found on testnet.\nYou can still try staking to network.",
+  "validatorAddress": "Validator {address}...",
+  "@validatorAddress": {
+    "placeholders": {
+      "address": { "type": "String" }
+    }
+  },
+  "stakeAmount": "Stake: {amount} XRS",
+  "@stakeAmount": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "stake": "Stake",
+  "unstake": "Unstake",
+  "directStake": "Direct Stake",
+  "stakedBalance": "Staked Balance",
+  "totalStaked": "Total Staked: {amount} XRS",
+  "@totalStaked": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "commissionLabel": "Commission: {value}%",
+  "@commissionLabel": {
+    "placeholders": {
+      "value": { "type": "String" }
+    }
+  },
+  "searchValidators": "Search Validators",
+  "stakeAmountPercentage": "{percent}%",
+  "confirmStakeTitle": "Confirm Stake",
+  "confirmStakeDesc": "You are about to stake {amount} XRS to {validator}.",
+  "confirmUnstakeTitle": "Confirm Unstake",
+  "confirmUnstakeDesc": "You are about to unstake {amount} XRS from {validator}.",
+  "unbondingNotice": "7-day unbonding period applies",
+  "transactionSubmitted": "Transaction Submitted",
+  "transactionFailed": "Transaction Failed",
+  "txSubmittedDesc": "Your transaction has been submitted to the Xeris network.",
+  "hashLabel": "Hash: {hash}",
+  "@hashLabel": {
+    "placeholders": {
+      "hash": { "type": "String" }
+    }
+  },
+  "txHashCopied": "Transaction hash copied to clipboard",
+  "viewInExplorer": "View in Explorer",
+  "backToDashboard": "Back to Dashboard",
+  "shareReceipt": "Share Receipt",
+  "transactionDetails": "Transaction Details",
+  "receiptTitle": "Xeris Transaction Receipt",
+  "dateLabel": "Date",
+  "statusLabel": "Status",
+  "successStatus": "Success",
+  "failedStatus": "Failed",
+  "copiedToClipboard": "Copied to clipboard",
+  "connectToDapp": "Connect to {dappName}?",
+  "@connectToDapp": {
+    "placeholders": {
+      "dappName": { "type": "String" }
+    }
+  },
+  "reject": "Reject",
+  "approve": "Approve",
+  "details": "DETAILS",
+  "activityTitle": "Activity",
+  "noActivityYet": "No Activity Yet",
+  "noActivityDesc": "Your transactions will appear here once you send or receive funds.",
+  "errorLoadingActivity": "Error loading activity",
+  "activitySearchHint": "Search address, tx hash, or token",
+  "activityFilterAll": "All",
+  "activityFilterSent": "Sent",
+  "activityFilterReceived": "Received",
+  "activityFilterSwap": "Swap",
+  "activityFilterFailed": "Failed",
+  "activityNoMatches": "No matches",
+  "activityNoMatchesDesc": "Try adjusting your filters or search",
+  "unknownAddress": "Unknown",
+  "receivedAsset": "Received {symbol}",
+  "@receivedAsset": { "placeholders": { "symbol": { "type": "String" } } },
+  "sentAsset": "Sent {symbol}",
+  "@sentAsset": { "placeholders": { "symbol": { "type": "String" } } },
+  "fromAddress": "From: {address}",
+  "@fromAddress": { "placeholders": { "address": { "type": "String" } } },
+  "toAddress": "To: {address}",
+  "@toAddress": { "placeholders": { "address": { "type": "String" } } },
+  "execContract": "Exec",
+  "failedStatus": "Failed",
+  "todayAt": "Today {time}",
+  "@todayAt": { "placeholders": { "time": { "type": "String" } } },
+  "yesterdayAt": "Yesterday {time}",
+  "@yesterdayAt": { "placeholders": { "time": { "type": "String" } } },
+  "connectingToDapp": "Connecting to dApp...",
+  "signMessageTitle": "Sign Message",
+  "messageToSign": "MESSAGE",
+  "signBtn": "Sign",
+  "searchOrEnterUrl": "Search or enter URL",
+  "renameWalletTitle": "Rename Wallet",
+  "renameWalletPromptDesc": "Enter a new name for your wallet.",
+  "walletNameLabel": "Wallet Name",
+  "save": "Save",
+  "rename": "Rename",
+  "marketOrder": "Market",
+  "limitOrder": "Limit",
+  "limitPriceLabel": "Limit Price",
+  "placeLimitOrder": "Place Limit Order",
+  "manageCoins": "Manage Coins",
+  "dAppBrowser": "Xeris web4 browser",
+
+  "connectedTo": "Connected: {publicKey}",
+  "@connectedTo": {
+    "placeholders": {
+      "publicKey": { "type": "String" }
+    }
+  },
+  "selectCurrency": "Select Currency",
+  "stakeXrs": "Stake XRS",
+  "availableXrs": "Available: {balance} XRS",
+  "@availableXrs": {
+    "placeholders": {
+      "balance": { "type": "String" }
+    }
+  },
+  "confirmStake": "Confirm Stake",
+  "addLiquidityWithTokens": "Add Liquidity: {tokenA}/{tokenB}",
+  "@addLiquidityWithTokens": {
+    "placeholders": {
+      "tokenA": { "type": "String" },
+      "tokenB": { "type": "String" }
+    }
+  },
+  "confirmDeposit": "Confirm Deposit",
+  "ok": "OK",
+  "reviewTransaction": "Review Transaction",
+  "youAreSending": "You are sending",
+  "confirmAndSend": "Confirm & Send",
+  "biometricAuthFailed": "Authentication failed. Cannot enable biometrics.",
+  "couldNotOpenLink": "Could not open link",
+  "recoveryPhraseWarning": "Never share this phrase. Anyone with these words can steal your assets.",
+  "noWalletFound": "No wallet found.",
+  "recoveryPhraseCopied": "Recovery phrase copied to clipboard",
+  "versionLabel": "Version {version}",
+  "@versionLabel": {
+    "placeholders": {
+      "version": { "type": "String" }
+    }
+  },
+  "authFailed": "Authentication failed",
+  "marketCap": "Market Cap",
+  "totalHolders": "Total Holders",
+  "mintAddress": "Mint Address",
+  "totalSupply": "Total Supply",
+  "recentActivity": "Recent Activity",
+  "viewInExplorer": "View in Explorer",
+  "tokenDecimals": "Decimals",
+  "tokenStandard": "Token Standard",
+  "noActivityForToken": "No recent activity for this token.",
+  "navAgents": "Agents",
+  "agentsTitle": "AI Agents",
+  "yourAgents": "Your Agents",
+  "openTasks": "Open Tasks",
+  "registerAgentTitle": "Register Agent",
+  "registerAgentDesc": "Agents operate autonomously with delegated authority. Set spending limits carefully — they cannot exceed these on-chain.",
+  "agentNameLabel": "AGENT NAME",
+  "agentNamePlaceholder": "e.g. Ari-Trader-v1",
+  "agentPubKeyLabel": "AGENT PUBLIC KEY",
+  "agentPubKeyPlaceholder": "Base58 Ed25519 pubkey",
+  "maxPerTxLabel": "MAX PER TRANSACTION (XRS)",
+  "dailyBudgetLabel": "DAILY BUDGET (XRS)",
+  "allowedContractsLabel": "ALLOWED CONTRACTS",
+  "allowedContractsPlaceholder": "pool_mtk_xrs, ... (comma-separated)",
+  "registerAgentBtn": "Register Agent",
+  "revokeAgentBtn": "Revoke",
+  "claimTaskBtn": "Claim",
+  "lastHeartbeatPrefix": "Last heartbeat: ",
+  "activeAgentsStatus": "{count} ACTIVE",
+  "@activeAgentsStatus": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "sendPrivately": "Send Privately",
+  "sendPrivatelyDesc": "Amount hidden on-chain via ZK proof",
+  "zkpInfoBox": "The transfer amount will be hidden on-chain. Only you and the recipient can verify the value. Save your blinding factor for tax records.",
+  "generateProofAndSend": "Generate Proof & Send",
+  "quantumShieldTitle": "Quantum Shield",
+  "quantumShieldSubtitle": "Post-quantum cryptography",
+  "quantumShieldDesc": "Protect your wallet with post-quantum cryptography (ML-DSA-65)",
+  "quantumProtectionActive": "Quantum Protection Active",
+  "notProtected": "Not Protected",
+  "pqSecurityLevel": "ML-DSA-65 · 128-bit PQ security",
+  "vulnerableToQuantum": "Vulnerable to quantum attacks",
+  "statusActive": "ACTIVE",
+  "statusOff": "OFF",
+  "zkProofsUsed": "ZK Proofs Used",
+  "pqKeysRegistered": "PQ Keys Registered",
+  "blockTimeStat": "Block Time",
+  "quantumProtectedDesc": "Your wallet is quantum-protected. Transfers signed with ML-DSA-65 show a 🛡 badge in the explorer.",
+  "enableQuantumProtectionDesc": "Enabling quantum protection generates a ML-DSA-65 keypair and registers your public key on-chain. This is a one-time setup.",
+  "sendWithQuantumSigning": "Send with Quantum Signing",
+  "enableQuantumProtectionBtn": "Enable Quantum Protection",
+  "quantumEnabledSuccess": "Quantum Protection Enabled!",
+  "failedToEnablePq": "Failed to enable: {error}",
+  "@failedToEnablePq": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "quantumBackupTitle": "Backup Quantum Identity",
+  "quantumBackupWarning": "Your 12-word mnemonic is no longer enough to recover this wallet. You MUST back up this Quantum Secret Key.",
+  "quantumSecretKeyLabel": "QUANTUM SECRET KEY",
+  "backupConfirmedLabel": "I have securely backed up my Quantum Secret Key",
+  "viewRecoveryKey": "View Recovery Key",
+  "pinCodeTitle": "PIN Code",
+  "pinCodeSubtitle": "Secure wallet with a 6-digit PIN",
+  "changePinCodeTitle": "Change PIN Code",
+  "changePinCodeSubtitle": "Update your security PIN",
+  "pinCodeUpdated": "PIN Code updated successfully",
+  "noAgentsRegistered": "No agents registered.",
+  "noOpenTasks": "No open tasks.",
+  "refresh": "Refresh",
+  "zkpOnlyXrsError": "ZKP private transfers only support XRS at this time.",
+  "pqcOnlyXrsError": "Quantum Signed transfers currently only support XRS.",
+  "required": "Required",
+  "enterPinCode": "Enter PIN Code",
+  "setNewPin": "Set a New PIN",
+  "confirmPin": "Confirm Your PIN",
+  "pinSubtitle": "Secure your assets with a 6-digit PIN",
+  "incorrectPin": "Incorrect PIN",
+  "pinsDoNotMatch": "PINs do not match. Try again.",
+  "panicPinTitle": "Panic PIN (Self-Destruct)",
+  "panicPinSubtitle": "A code that wipes all data when entered",
+  "setPanicPin": "Set Panic PIN",
+  "confirmPanicPin": "Confirm Panic PIN",
+  "panicTriggered": "Panic PIN triggered. All data cleared.",
+  "agentMaxPerTx": "Max/tx: {amount} XRS",
+  "agentDailyLimit": "Daily: {amount} XRS",
+  "appLockedTitle": "Xeris Wallet Locked",
+  "authenticateToContinue": "Authenticate to continue",
+  "securityAudit": "SECURITY AUDIT",
+  "biometricLockActive": "Biometric Lock Active",
+  "pinProtected6Digit": "6-Digit PIN Protected",
+  "privacyModeEnabled": "Privacy Mode Enabled",
+  "privacyModeDisabled": "Privacy Mode Disabled",
+  "fullDiskEncryption": "Full Disk Encryption",
+  "zkProofAsyncInfo": "Xeris uses asynchronous ZK proof generation to maintain privacy without blocking your wallet interaction.",
+  "unknownToken": "Unknown Token",
+  "signTransactionTitle": "Sign Transaction",
+  "signAndSendTransactionTitle": "Sign & Send Transaction",
+  "signAllTransactionsTitle": "Sign {count} Transactions",
+  "@signAllTransactionsTitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "connectToDappDesc": "This app wants to connect to your Xeris wallet and view your public address.",
+  "signTransactionDesc": "This app wants you to sign a transaction. Review carefully before approving.",
+  "signAllTransactionsDesc": "This app wants you to sign {count} transactions at once.",
+  "@signAllTransactionsDesc": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "signMessageDesc": "This app wants you to sign a message for verification.",
+  "dappRequestUnknown": "This app is requesting wallet access.",
+  "wrapXrs": "Wrap XRS",
+  "unwrapXrs": "Unwrap XRS",
+  "swapLabel": "Swap",
+  "interactLabel": "Interact",
+  "noActiveLimitOrders": "No active limit orders",
+  "sellingLabel": "Selling",
+  "buyingMinLabel": "Buying (Min)",
+  "targetPriceLabel": "Target Price",
+  "orderIdLabel": "Order ID",
+  "cancelOrderTitle": "Cancel Order",
+  "cancelOrderConfirm": "Are you sure you want to cancel this limit order? Funds will be returned to your wallet.",
+  "no": "No",
+  "yesCancel": "Yes, Cancel",
+  "cancelTxSubmitted": "Cancellation transaction submitted",
+  "cancelTxFailed": "Failed to submit cancellation",
+  "noMatchingValidators": "No matching validators",
+  "searchTokenPlaceholder": "Search token...",
+  "zkpTransferSubmitted": "ZKP Transfer Submitted!",
+  "paste": "Paste",
+  "myWallet": "My Wallet",
+  "networkFee": "Network Fee",
+  "openStatus": "OPEN",
+  "toLabel": "To",
+  "networkLabel": "Network",
+  "testnetLabel": "Testnet",
+  "mainnetLabel": "Mainnet",
+  "mainnetSoon": "Mainnet is coming soon",
+  "connectedSitesTitle": "Connected Sites",
+  "connectedSitesSubtitle": "Manage dApp permissions",
+  "noConnectedSites": "No Connected Sites",
+  "noConnectedSitesDesc": "Sites you connect to via the browser will appear here. You can revoke their access at any time.",
+  "connectedSiteRevoked": "Site access revoked",
+  "revokeAllSitesTitle": "Revoke All Sites?",
+  "revokeAllSitesDesc": "This will disconnect all websites from your wallet. They will need to request access again.",
+  "revokeAll": "Revoke All",
+  "revoke": "Revoke",
+  "allSitesRevoked": "All site permissions revoked",
+  "addressBookTitle": "Address Book",
+  "addressBookSubtitle": "Manage saved contacts",
+  "themeTitle": "Theme",
+  "selectTheme": "Select Theme",
+  "themeDark": "Dark Mode",
+  "themeLight": "Light Mode",
+  "themeSolar": "Amber",
+  "themeCyberpunk": "Violet",
+  "themeSystem": "System Default",
+  "themeNameDark": "Dark",
+  "themeNameLight": "Light",
+  "themeNameSolar": "Amber",
+  "themeNameCyberpunk": "Violet",
+  "themeNameSystem": "System"
+}

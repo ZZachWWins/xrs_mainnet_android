@@ -1,0 +1,553 @@
+{
+  "@@locale": "zh",
+  "settingsTitle": "设置",
+  "accountSection": "账户",
+  "manageWalletsTitle": "管理钱包",
+  "manageWalletsSubtitle": "添加、删除或切换钱包",
+  "recoveryPhraseTitle": "恢复短语",
+  "recoveryPhraseSubtitle": "安全地查看您的秘密助记词",
+  "generalSection": "常规",
+  "currencyTitle": "货币",
+  "notificationsTitle": "通知",
+  "notificationsSubtitle": "接收交易警报",
+  "securitySection": "安全",
+  "biometricTitle": "生物识别认证",
+  "biometricSubtitle": "启动时需要面部ID / 指纹",
+  "supportSection": "支持",
+  "privacyPolicyTitle": "隐私政策",
+  "privacyPolicySubtitle": "阅读我们的隐私政策",
+  "termsOfServiceTitle": "服务条款",
+  "termsOfServiceSubtitle": "阅读我们的服务条款",
+  "aboutWalletTitle": "关于 Xeris Wallet",
+  "languageTitle": "语言",
+  "selectLanguage": "选择语言",
+  "addressCopied": "地址已复制到剪贴板",
+  "loadingAddress": "加载中...",
+  "errorLoadingAddress": "加载地址出错",
+  "sinceLastMonth": "自上个月以来",
+  "tokensTitle": "代币",
+  "comingSoon": "{itemName} 详情即将推出！",
+  "actionSend": "发送",
+  "actionReceive": "接收",
+  "actionSwap": "交换",
+  "actionEarn": "赚钱",
+  "actionScan": "扫描",
+  "navWallet": "钱包",
+  "navBrowser": "浏览器",
+  "navActivity": "活动",
+  "balanceHistoryTitle": "余额历史",
+  "totalBalanceTitle": "总余额",
+  "noHistoryAvailable": "无历史记录可用",
+  "errorPrefix": "错误：{error}",
+  "addWalletTitle": "添加钱包",
+  "addWalletSubtitle": "您想如何添加钱包？",
+  "createNewWallet": "创建新钱包",
+  "createNewWalletDesc": "生成新的12字恢复短语",
+  "importExistingWallet": "导入现有钱包",
+  "importExistingWalletDesc": "使用秘密恢复短语恢复",
+  "myWalletsTitle": "我的钱包",
+  "noWallets": "没有钱包",
+  "noWalletsDesc": "您目前没有任何钱包。创建或导入您的第一个钱包即可开始。",
+  "deleteWalletPromptTitle": "删除钱包？",
+  "deleteWalletPromptDesc": "您确定要删除 \"{walletName}\" 吗？除非您已保存恢复短语，否则此操作无法撤消。",
+  "cancel": "取消",
+  "delete": "删除",
+  "unlockWallet": "解锁钱包",
+  "authRequired": "需要身份验证。",
+  "verifySecretPhraseTitle": "验证秘密短语",
+  "verifyBackup": "验证您的备份",
+  "verifyBackupDesc": "输入秘密短语中的以下单词以确认您已保存它们。",
+  "wordNumber": "第 {number} 个单词",
+  "enterWordNumber": "输入第 {number} 个单词",
+  "verifyComplete": "验证并完成",
+  "walletVerified": "钱包已验证并受到保护！",
+  "failedCreateWallet": "创建钱包失败：{error}",
+  "incorrectWords": "单词不正确。请检查您的短语并重试。",
+  "importWalletTitle": "导入钱包",
+  "enterSecretPhrase": "输入秘密短语",
+  "enterRecoveryPhraseDesc": "输入您的 12 或 24 字恢复短语以恢复您的钱包。",
+  "invalidRecoveryPhrase": "恢复短语无效",
+  "walletImportedSuccess": "成功导入钱包！",
+  "failedImportWallet": "导入钱包失败：{error}",
+  "secretRecoveryPhraseTitle": "秘密恢复短语",
+  "secretPhraseMasterKeyDesc": "这个秘密短语是您钱包的万能钥匙。把它写下来并保存在安全的地方。切勿与任何人分享。",
+  "copyToClipboard": "复制到剪贴板",
+  "secretPhraseCopied": "秘密短语已复制到剪贴板",
+  "savedSecretPhraseBtn": "我已保存我的秘密短语",
+  "welcomeTo": "欢迎来到\nXeris 钱包",
+  "secureWalletForChain": "Xeris 链的安全钱包。",
+  "createANewWallet": "创建一个新钱包",
+  "alreadyHaveWallet": "我已经有一个钱包",
+  "sendAssetsTitle": "发送资产",
+  "recipientAddress": "收件人地址",
+  "pasteAddressOrScan": "粘贴地址或扫描二维码",
+  "amount": "金额",
+  "max": "最大",
+  "review": "审查",
+  "balance": "余额：{amount} {symbol}",
+  "errorEnterRecipient": "请输入收件人地址",
+  "errorInvalidAddress": "无效的 Xeris 链地址",
+  "errorEnterValidAmount": "请输入有效金额",
+  "errorInsufficientBalance": "余额不足",
+  "receiveAssetsTitle": "接收资产",
+  "scanToReceive": "扫描接收",
+  "sendOnlyXerisAssets": "仅向此地址发送 Xeris 链资产。",
+  "shareAddress": "分享地址",
+  "swapTitle": "交换",
+  "from": "从",
+  "pinCodeUpdated": "PIN 码更新成功",
+  "noAgentsRegistered": "没有注册的代理。",
+  "noOpenTasks": "没有待办任务。",
+  "refresh": "刷新",
+  "zkpOnlyXrsError": "ZKP 隐私转账目前仅支持 XRS。",
+  "pqcOnlyXrsError": "量子签名转账目前仅支持 XRS。",
+  "required": "必填",
+  "enterPinCode": "输入 PIN 码",
+  "setNewPin": "设置新 PIN 码",
+  "confirmPin": "确认 PIN 码",
+  "pinSubtitle": "使用 6 位 PIN 码保护您的资产",
+  "incorrectPin": "PIN 码不正确",
+  "pinsDoNotMatch": "PIN 码不匹配。请重试。",
+  "agentMaxPerTx": "最大单笔: {amount} XRS",
+  "agentDailyLimit": "每日限额: {amount} XRS",
+  "toEstimated": "到（估计）",
+  "price": "价格",
+  "priceEstimate": "1 {fromSymbol} ≈ {rate} {toSymbol}",
+  "slippageTolerance": "滑点容忍度",
+  "swapping": "交换中...",
+  "selectToken": "选择代币",
+  "scanQrCodeTitle": "扫描二维码",
+  "alignQrCode": "将二维码对准框内",
+  "earnRewardsTitle": "赚取奖励",
+  "noValidatorsFound": "测试网络上未找到验证者。\n您仍然可以尝试质押到网络。",
+  "validatorAddress": "验证者 {address}...",
+  "stakeAmount": "质押：{amount} XRS",
+  "stake": "质押",
+  "directStake": "直接质押",
+  "transactionSubmitted": "交易已提交",
+  "transactionFailed": "交易失败",
+  "txSubmittedDesc": "您的交易已提交到 Xeris 网络。",
+  "hashLabel": "哈希：{hash}",
+  "txHashCopied": "交易哈希已复制到剪贴板",
+  "viewInExplorer": "在浏览器中查看",
+  "backToDashboard": "返回仪表板",
+  "connectToDapp": "连接到 {dappName} 吗？",
+  "reject": "拒绝",
+  "approve": "批准",
+  "details": "详细信息",
+  "activityTitle": "活动",
+  "noActivityYet": "暂无活动",
+  "noActivityDesc": "一旦您发送或接收资金，您的交易就会出现在这里。",
+  "errorLoadingActivity": "加载活动时出错",
+  "activitySearchHint": "搜索地址、交易哈希或代币",
+  "activityFilterAll": "全部",
+  "activityFilterSent": "发送",
+  "activityFilterReceived": "接收",
+  "activityFilterSwap": "兑换",
+  "activityFilterFailed": "失败",
+  "activityNoMatches": "无匹配项",
+  "activityNoMatchesDesc": "尝试调整筛选条件或搜索",
+  "unknownAddress": "未知",
+  "receivedAsset": "收到 {symbol}",
+  "sentAsset": "发送 {symbol}",
+  "fromAddress": "来自：{address}",
+  "toAddress": "发往：{address}",
+  "execContract": "执行",
+  "failedStatus": "失败",
+  "todayAt": "今天 {time}",
+  "yesterdayAt": "昨天 {time}",
+  "connectingToDapp": "正在连接到dApp...",
+  "signMessageTitle": "签名消息",
+  "messageToSign": "消息",
+  "signBtn": "签名",
+  "searchOrEnterUrl": "搜索或输入URL",
+  "limitOrder": "限价",
+  "limitPriceLabel": "限价价格",
+  "manageCoins": "管理代币",
+  "marketOrder": "市价",
+  "placeLimitOrder": "下限价单",
+  "rename": "重命名",
+  "renameWalletPromptDesc": "输入钱包的新名称。",
+  "renameWalletTitle": "重命名钱包",
+  "save": "保存",
+  "walletNameLabel": "钱包名称",
+  "dAppBrowser": "dApp 浏览器",
+  "connectedTo": "已连接到：{publicKey}",
+  "selectCurrency": "选择货币",
+  "stakeXrs": "质押 XRS",
+  "availableXrs": "可用余额：{balance} XRS",
+  "confirmStake": "确认质押",
+  "addLiquidityWithTokens": "添加流动性：{tokenA}/{tokenB}",
+  "confirmDeposit": "确认存款",
+  "ok": "确定",
+  "reviewTransaction": "检查交易",
+  "youAreSending": "您正在发送",
+  "confirmAndSend": "确认并发送",
+  "biometricAuthFailed": "身份验证失败。无法启用生物识别。",
+  "couldNotOpenLink": "无法打开链接",
+  "recoveryPhraseWarning": "切勿分享此助记词。任何拥有这些单词的人都可以窃取您的资产。",
+  "noWalletFound": "未找到钱包。",
+  "recoveryPhraseCopied": "助记词已复制到剪贴板",
+  "versionLabel": "版本 {version}",
+  "authFailed": "身份验证失败",
+  "sendPrivately": "私密发送",
+  "sendPrivatelyDesc": "通过 ZK 证明在链上隐藏金额",
+  "zkpInfoBox": "转账金额将在链上隐藏。只有您和收款人可以验证该值。请保存您的盲化因子以备税务记录。",
+  "generateProofAndSend": "生成证明并发送",
+  "privacyModeTitle": "Privacy Mode",
+  "privacyModeSubtitle": "Obscure balances on the dashboard",
+  "@comingSoon": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@wordNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@enterWordNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@failedCreateWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@failedImportWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@balance": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "symbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@priceEstimate": {
+    "placeholders": {
+      "fromSymbol": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "toSymbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@validatorAddress": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "@stakeAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@hashLabel": {
+    "placeholders": {
+      "hash": {
+        "type": "String"
+      }
+    }
+  },
+  "shareReceipt": "Share Receipt",
+  "transactionDetails": "Transaction Details",
+  "receiptTitle": "Xeris Transaction Receipt",
+  "dateLabel": "Date",
+  "statusLabel": "Status",
+  "successStatus": "Success",
+  "copiedToClipboard": "Copied to clipboard",
+  "@connectToDapp": {
+    "placeholders": {
+      "dappName": {
+        "type": "String"
+      }
+    }
+  },
+  "@receivedAsset": {
+    "placeholders": {
+      "symbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@sentAsset": {
+    "placeholders": {
+      "symbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@fromAddress": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "@toAddress": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "@todayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@yesterdayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@connectedTo": {
+    "placeholders": {
+      "publicKey": {
+        "type": "String"
+      }
+    }
+  },
+  "@availableXrs": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "@addLiquidityWithTokens": {
+    "placeholders": {
+      "tokenA": {
+        "type": "String"
+      },
+      "tokenB": {
+        "type": "String"
+      }
+    }
+  },
+  "@versionLabel": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "marketCap": "Market Cap",
+  "totalHolders": "Total Holders",
+  "mintAddress": "Mint Address",
+  "totalSupply": "Total Supply",
+  "recentActivity": "Recent Activity",
+  "tokenDecimals": "Decimals",
+  "tokenStandard": "Token Standard",
+  "noActivityForToken": "No recent activity for this token.",
+  "navAgents": "Agents",
+  "agentsTitle": "AI Agents",
+  "yourAgents": "Your Agents",
+  "openTasks": "Open Tasks",
+  "registerAgentTitle": "Register Agent",
+  "registerAgentDesc": "Agents operate autonomously with delegated authority. Set spending limits carefully — they cannot exceed these on-chain.",
+  "agentNameLabel": "AGENT NAME",
+  "agentNamePlaceholder": "e.g. Ari-Trader-v1",
+  "agentPubKeyLabel": "AGENT PUBLIC KEY",
+  "agentPubKeyPlaceholder": "Base58 Ed25519 pubkey",
+  "maxPerTxLabel": "MAX PER TRANSACTION (XRS)",
+  "dailyBudgetLabel": "DAILY BUDGET (XRS)",
+  "allowedContractsLabel": "ALLOWED CONTRACTS",
+  "allowedContractsPlaceholder": "pool_mtk_xrs, ... (comma-separated)",
+  "registerAgentBtn": "Register Agent",
+  "revokeAgentBtn": "Revoke",
+  "claimTaskBtn": "Claim",
+  "lastHeartbeatPrefix": "Last heartbeat: ",
+  "activeAgentsStatus": "{count} ACTIVE",
+  "@activeAgentsStatus": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "quantumShieldTitle": "Quantum Shield",
+  "quantumShieldSubtitle": "Post-quantum cryptography",
+  "quantumShieldDesc": "Protect your wallet with post-quantum cryptography (ML-DSA-65)",
+  "quantumProtectionActive": "Quantum Protection Active",
+  "notProtected": "Not Protected",
+  "pqSecurityLevel": "ML-DSA-65 · 128-bit PQ security",
+  "vulnerableToQuantum": "Vulnerable to quantum attacks",
+  "statusActive": "ACTIVE",
+  "statusOff": "OFF",
+  "zkProofsUsed": "ZK Proofs Used",
+  "pqKeysRegistered": "PQ Keys Registered",
+  "blockTimeStat": "Block Time",
+  "quantumProtectedDesc": "Your wallet is quantum-protected. Transfers signed with ML-DSA-65 show a 🛡 badge in the explorer.",
+  "enableQuantumProtectionDesc": "Enabling quantum protection generates a ML-DSA-65 keypair and registers your public key on-chain. This is a one-time setup.",
+  "sendWithQuantumSigning": "Send with Quantum Signing",
+  "enableQuantumProtectionBtn": "Enable Quantum Protection",
+  "quantumEnabledSuccess": "Quantum Protection Enabled!",
+  "failedToEnablePq": "Failed to enable: {error}",
+  "@failedToEnablePq": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "pinCodeTitle": "PIN Code",
+  "pinCodeSubtitle": "Secure wallet with a 6-digit PIN",
+  "changePinCodeTitle": "Change PIN Code",
+  "changePinCodeSubtitle": "Update your security PIN",
+  "panicPinTitle": "Panic PIN (Self-Destruct)",
+  "panicPinSubtitle": "A code that wipes all data when entered",
+  "setPanicPin": "Set Panic PIN",
+  "confirmPanicPin": "Confirm Panic PIN",
+  "panicTriggered": "Panic PIN triggered. All data cleared.",
+  "appLockedTitle": "Xeris Wallet Locked",
+  "authenticateToContinue": "Authenticate to continue",
+  "securityAudit": "SECURITY AUDIT",
+  "biometricLockActive": "Biometric Lock Active",
+  "pinProtected6Digit": "6-Digit PIN Protected",
+  "privacyModeEnabled": "Privacy Mode Enabled",
+  "privacyModeDisabled": "Privacy Mode Disabled",
+  "fullDiskEncryption": "Full Disk Encryption",
+  "zkProofAsyncInfo": "Xeris uses asynchronous ZK proof generation to maintain privacy without blocking your wallet interaction.",
+  "unknownToken": "Unknown Token",
+  "backupConfirmedLabel": "我已安全备份我的量子密钥",
+  "buyingMinLabel": "买入（最低）",
+  "cancelOrderConfirm": "确定要取消此限价单吗？资金将返回到您的钱包。",
+  "cancelOrderTitle": "取消订单",
+  "cancelTxFailed": "提交取消失败",
+  "cancelTxSubmitted": "取消交易已提交",
+  "commissionLabel": "佣金：{value}%",
+  "@commissionLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmStakeDesc": "您即将向 {validator} 质押 {amount} XRS。",
+  "confirmStakeTitle": "确认质押",
+  "confirmUnstakeDesc": "您即将从 {validator} 解除质押 {amount} XRS。",
+  "confirmUnstakeTitle": "确认解除质押",
+  "connectToDappDesc": "此应用想要连接到您的 Xeris 钱包并查看您的公共地址。",
+  "dappRequestUnknown": "此应用正在请求钱包访问权限。",
+  "interactLabel": "交互",
+  "mainnetLabel": "主网",
+  "mainnetSoon": "主网即将上线",
+  "myWallet": "我的钱包",
+  "networkFee": "网络费用",
+  "networkLabel": "网络",
+  "no": "否",
+  "noActiveLimitOrders": "无活动的限价单",
+  "noMatchingValidators": "无匹配的验证者",
+  "openStatus": "未成交",
+  "orderIdLabel": "订单 ID",
+  "paste": "粘贴",
+  "quantumBackupTitle": "备份量子身份",
+  "quantumBackupWarning": "您的 12 词助记词已不足以恢复此钱包。您必须备份此量子密钥。",
+  "quantumSecretKeyLabel": "量子密钥",
+  "searchTokenPlaceholder": "搜索代币...",
+  "searchValidators": "搜索验证者",
+  "sellingLabel": "卖出",
+  "signAllTransactionsDesc": "此应用希望您一次签署 {count} 笔交易。",
+  "@signAllTransactionsDesc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "signAllTransactionsTitle": "签署 {count} 笔交易",
+  "@signAllTransactionsTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "signAndSendTransactionTitle": "签署并发送交易",
+  "signMessageDesc": "此应用希望您签署一条消息以进行验证。",
+  "signTransactionDesc": "此应用希望您签署一笔交易。请在批准前仔细检查。",
+  "signTransactionTitle": "签署交易",
+  "stakeAmountPercentage": "{percent}%",
+  "stakedBalance": "质押余额",
+  "swapLabel": "兑换",
+  "targetPriceLabel": "目标价格",
+  "testnetLabel": "测试网",
+  "toLabel": "至",
+  "totalStaked": "总质押：{amount} XRS",
+  "@totalStaked": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "unbondingNotice": "适用 7 天解除质押期",
+  "unstake": "解除质押",
+  "unwrapXrs": "解包 XRS",
+  "viewRecoveryKey": "查看恢复密钥",
+  "wrapXrs": "包装 XRS",
+  "yesCancel": "是，取消",
+  "zkpTransferSubmitted": "ZKP 转账已提交！",
+  "connectedSitesTitle": "已连接站点",
+  "connectedSitesSubtitle": "管理 dApp 权限",
+  "noConnectedSites": "无已连接站点",
+  "noConnectedSitesDesc": "通过浏览器连接的站点将显示在此处。您可以随时撤销其访问权限。",
+  "connectedSiteRevoked": "站点访问已撤销",
+  "revokeAllSitesTitle": "撤销所有站点？",
+  "revokeAllSitesDesc": "这将断开所有网站与您钱包的连接。它们需要重新请求访问权限。",
+  "revokeAll": "全部撤销",
+  "revoke": "撤销",
+  "allSitesRevoked": "所有站点权限已撤销",
+  "addressBookTitle": "通讯录",
+  "addressBookSubtitle": "管理已保存的联系人",
+  "themeTitle": "主题",
+  "selectTheme": "选择主题",
+  "themeDark": "深色模式",
+  "themeLight": "浅色模式",
+  "themeSolar": "太阳耀斑",
+  "themeCyberpunk": "赛博朋克",
+  "themeSystem": "系统默认",
+  "themeNameDark": "深色",
+  "themeNameLight": "浅色",
+  "themeNameSolar": "太阳耀斑",
+  "themeNameCyberpunk": "赛博朋克",
+  "themeNameSystem": "系统"
+}

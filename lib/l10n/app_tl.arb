@@ -1,0 +1,553 @@
+{
+  "@@locale": "tl",
+  "settingsTitle": "Mga Setting",
+  "accountSection": "Account",
+  "manageWalletsTitle": "Pamahalaan ang mga Wallet",
+  "manageWalletsSubtitle": "Magdagdag, mag-alis, o magpalit ng mga wallet",
+  "recoveryPhraseTitle": "Recovery Phrase",
+  "recoveryPhraseSubtitle": "Tingnan ang iyong sikretong seed phrase nang ligtas",
+  "generalSection": "Pangkalahatan",
+  "currencyTitle": "Pera",
+  "notificationsTitle": "Mga Abiso",
+  "notificationsSubtitle": "Tumanggap ng mga alerto para sa mga transaksyon",
+  "securitySection": "Seguridad",
+  "biometricTitle": "Biometric Authentication",
+  "biometricSubtitle": "Nangangailangan ng Face ID / Fingerprint sa pagsisimula",
+  "supportSection": "Suporta",
+  "privacyPolicyTitle": "Patakaran sa Privacy",
+  "privacyPolicySubtitle": "Basahin ang aming patakaran sa privacy",
+  "termsOfServiceTitle": "Mga Tuntunin ng Serbisyo",
+  "termsOfServiceSubtitle": "Basahin ang aming mga tuntunin ng serbisyo",
+  "aboutWalletTitle": "Tungkol sa Xeris Wallet",
+  "languageTitle": "Wika",
+  "selectLanguage": "Pumili ng Wika",
+  "addressCopied": "Address nakopya sa clipboard",
+  "loadingAddress": "Naglo-load...",
+  "errorLoadingAddress": "Error sa pag-load ng address",
+  "sinceLastMonth": "Mula noong nakaraang buwan",
+  "tokensTitle": "Mga Token",
+  "comingSoon": "Malapit na ang mga detalye ng {itemName}!",
+  "actionSend": "Magpadala",
+  "actionReceive": "Tumanggap",
+  "actionSwap": "Ipagpalit",
+  "actionEarn": "Kumita",
+  "actionScan": "I-scan",
+  "navWallet": "Wallet",
+  "navBrowser": "Browser",
+  "navActivity": "Aktibidad",
+  "balanceHistoryTitle": "Kasaysayan ng Balanse",
+  "totalBalanceTitle": "Kabuuang Balanse",
+  "noHistoryAvailable": "Walang magagamit na kasaysayan",
+  "errorPrefix": "Error: {error}",
+  "addWalletTitle": "Magdagdag ng Wallet",
+  "addWalletSubtitle": "Paano mo gustong magdagdag ng wallet?",
+  "createNewWallet": "Lumikha ng Bagong Wallet",
+  "createNewWalletDesc": "Bumuo ng bagong 12-salitang sikretong recovery phrase",
+  "importExistingWallet": "Mag-import ng Umiiral na Wallet",
+  "importExistingWalletDesc": "I-restore gamit ang sikretong recovery phrase",
+  "myWalletsTitle": "Aking Mga Wallet",
+  "noWallets": "Walang Mga Wallet",
+  "noWalletsDesc": "Wala ka pang anumang mga wallet. Lumikha o mag-import ng iyong unang wallet upang makapagsimula.",
+  "deleteWalletPromptTitle": "Tanggalin ang Wallet?",
+  "deleteWalletPromptDesc": "Sigurado ka bang gusto mong tanggalin ang \"{walletName}\"? Ang pagkilos na ito ay hindi maaaring bawiin maliban kung nai-save mo ang iyong recovery phrase.",
+  "cancel": "Kanselahin",
+  "delete": "Tanggalin",
+  "unlockWallet": "I-unlock ang Wallet",
+  "authRequired": "Kailangan ng pagpapatunay.",
+  "verifySecretPhraseTitle": "I-verify ang Secret Phrase",
+  "verifyBackup": "I-verify ang iyong backup",
+  "verifyBackupDesc": "Ipasok ang mga sumusunod na salita mula sa iyong secret phrase upang kumpirmahin na na-save mo ito.",
+  "wordNumber": "Salita #{number}",
+  "enterWordNumber": "Ipasok ang salita #{number}",
+  "verifyComplete": "I-verify at Kumpletuhin",
+  "walletVerified": "Na-verify at ligtas na ang wallet!",
+  "failedCreateWallet": "Nabigo sa paggawa ng wallet: {error}",
+  "incorrectWords": "Maling mga salita. Pakisuri ang iyong phrase at subukan muli.",
+  "importWalletTitle": "Mag-import ng Wallet",
+  "enterSecretPhrase": "Ipasok ang Secret Phrase",
+  "enterRecoveryPhraseDesc": "Ipasok ang iyong 12 o 24-salitang recovery phrase upang maibalik ang iyong wallet.",
+  "invalidRecoveryPhrase": "Imbalidong recovery phrase",
+  "pinCodeUpdated": "Matagumpay na na-update ang PIN Code",
+  "noAgentsRegistered": "Walang rehistradong mga ahente.",
+  "noOpenTasks": "Walang mga bukas na gawain.",
+  "refresh": "I-refresh",
+  "zkpOnlyXrsError": "Ang ZKP private transfers ay sumusuporta lamang sa XRS sa ngayon.",
+  "pqcOnlyXrsError": "Ang Quantum Signed transfers ay kasalukuyang sumusuporta lamang sa XRS.",
+  "required": "Kailangan",
+  "enterPinCode": "Ipasok ang PIN Code",
+  "setNewPin": "Magtakda ng Bagong PIN",
+  "confirmPin": "Kumpirmahin ang iyong PIN",
+  "pinSubtitle": "I-secure ang iyong mga asset gamit ang 6-digit na PIN",
+  "incorrectPin": "Maling PIN",
+  "pinsDoNotMatch": "Hindi magkatugma ang mga PIN. Subukan muli.",
+  "agentMaxPerTx": "Max/tx: {amount} XRS",
+  "agentDailyLimit": "Araw-araw: {amount} XRS",
+  "walletImportedSuccess": "Matagumpay na na-import ang wallet!",
+  "failedImportWallet": "Nabigo sa pag-import ng wallet: {error}",
+  "secretRecoveryPhraseTitle": "Secret Recovery Phrase",
+  "secretPhraseMasterKeyDesc": "Ang sikretong phrase na ito ay ang master key ng iyong wallet. Isulat ito at itago sa ligtas na lugar. Huwag hinding-hindi ibahagi kaninuman.",
+  "copyToClipboard": "Kopyahin sa Clipboard",
+  "secretPhraseCopied": "Sikretong phrase nakopya sa clipboard",
+  "savedSecretPhraseBtn": "Nai-save ko na ang aking sikretong phrase",
+  "welcomeTo": "Maligayang pagdating sa\nXeris Wallet",
+  "secureWalletForChain": "Ang ligtas na wallet para sa Xeris Chain.",
+  "createANewWallet": "Gumawa ng Bagong Wallet",
+  "alreadyHaveWallet": "Mayroon na akong wallet",
+  "sendAssetsTitle": "Magpadala ng mga Asset",
+  "recipientAddress": "Address ng Tatanggap",
+  "pasteAddressOrScan": "Idikit ang address o i-scan ang QR",
+  "amount": "Halaga",
+  "max": "MAX",
+  "review": "Suriin",
+  "balance": "Balanse: {amount} {symbol}",
+  "errorEnterRecipient": "Mangyaring maglagay ng address ng tatanggap",
+  "errorInvalidAddress": "Imbalidong address ng Xeris Chain",
+  "errorEnterValidAmount": "Mangyaring maglagay ng wastong halaga",
+  "errorInsufficientBalance": "Kulang ang balanse",
+  "receiveAssetsTitle": "Makatanggap ng mga Asset",
+  "scanToReceive": "I-scan para Makatanggap",
+  "sendOnlyXerisAssets": "Magpadala lamang ng mga asset ng Xeris Chain sa address na ito.",
+  "shareAddress": "Ibahagi ang Address",
+  "swapTitle": "Ipagpalit",
+  "from": "Mula",
+  "toEstimated": "Papunta (Tinatantya)",
+  "price": "Presyo",
+  "priceEstimate": "1 {fromSymbol} ≈ {rate} {toSymbol}",
+  "slippageTolerance": "Slippage Tolerance",
+  "swapping": "Nagpapalit...",
+  "selectToken": "Pumili ng Token",
+  "scanQrCodeTitle": "I-scan ang QR Code",
+  "alignQrCode": "Ihanay ang QR code sa loob ng frame",
+  "earnRewardsTitle": "Kumita ng Mga Gantimpala",
+  "noValidatorsFound": "Walang nakitang validators sa testnet.\nMaaari mo pa ring subukang mag-stake sa network.",
+  "validatorAddress": "Validator {address}...",
+  "stakeAmount": "Stake: {amount} XRS",
+  "stake": "Stake",
+  "directStake": "Direktang Stake",
+  "transactionSubmitted": "Naipadala ang Transaksyon",
+  "transactionFailed": "Nabigo ang Transaksyon",
+  "txSubmittedDesc": "Ang iyong transaksyon ay naipadala sa Xeris network.",
+  "hashLabel": "Hash: {hash}",
+  "txHashCopied": "Nakopya ang hash ng transaksyon sa clipboard",
+  "viewInExplorer": "Tingnan sa Explorer",
+  "backToDashboard": "Bumalik sa Dashboard",
+  "connectToDapp": "Kumonekta sa {dappName}?",
+  "reject": "Tanggihan",
+  "approve": "Aprubahan",
+  "details": "MGA DETALYE",
+  "activityTitle": "Aktibidad",
+  "noActivityYet": "Wala pang Aktibidad",
+  "noActivityDesc": "Ang iyong mga transaksyon ay lilitaw dito kapag nagpadala o tumanggap ka ng pondo.",
+  "errorLoadingActivity": "Error sa pag-load ng aktibidad",
+  "activitySearchHint": "Maghanap ng address, tx hash, o token",
+  "activityFilterAll": "Lahat",
+  "activityFilterSent": "Naipadala",
+  "activityFilterReceived": "Natanggap",
+  "activityFilterSwap": "Swap",
+  "activityFilterFailed": "Nabigo",
+  "activityNoMatches": "Walang katugma",
+  "activityNoMatchesDesc": "Subukang ayusin ang iyong filter o paghahanap",
+  "unknownAddress": "Hindi kilala",
+  "receivedAsset": "Natanggap {symbol}",
+  "sentAsset": "Ipinadala {symbol}",
+  "fromAddress": "Mula kay: {address}",
+  "toAddress": "Para kay: {address}",
+  "execContract": "Ehek",
+  "failedStatus": "Nabigo",
+  "todayAt": "Ngayon {time}",
+  "yesterdayAt": "Kahapon {time}",
+  "connectingToDapp": "Kumokonekta sa dApp...",
+  "signMessageTitle": "Pirmahan ang Mensahe",
+  "messageToSign": "MENSAJE",
+  "signBtn": "Pirmahan",
+  "searchOrEnterUrl": "Maghanap o ipasok ang URL",
+  "limitOrder": "Limit",
+  "limitPriceLabel": "Presyo ng Limit",
+  "manageCoins": "Pamahalaan ang mga Coin",
+  "marketOrder": "Market",
+  "placeLimitOrder": "Maglagay ng Limit Order",
+  "rename": "Palitan ang Pangalan",
+  "renameWalletPromptDesc": "Maglagay ng bagong pangalan para sa iyong wallet.",
+  "renameWalletTitle": "Palitan ang Pangalan ng Wallet",
+  "save": "I-save",
+  "walletNameLabel": "Pangalan ng Wallet",
+  "dAppBrowser": "dApp Browser",
+  "connectedTo": "Nakakonekta sa: {publicKey}",
+  "selectCurrency": "Pumili ng Currency",
+  "stakeXrs": "I-stake ang XRS",
+  "availableXrs": "Available: {balance} XRS",
+  "confirmStake": "I-kumpirma ang Stake",
+  "addLiquidityWithTokens": "Magdagdag ng Liquidity: {tokenA}/{tokenB}",
+  "confirmDeposit": "I-kumpirma ang Deposit",
+  "ok": "OK",
+  "reviewTransaction": "Suriin ang Transaksyon",
+  "youAreSending": "Nagpapadala ka ng",
+  "confirmAndSend": "Kumpirmahin at Ipadala",
+  "biometricAuthFailed": "Nabigo ang pagpapatunay. Hindi paganahin ang biometrics.",
+  "couldNotOpenLink": "Hindi mabuksan ang link",
+  "recoveryPhraseWarning": "Huwag kailanman ibahagi ang pariralang ito. Kahit sino na may mga salitang ito ay maaaring magnakaw ng iyong mga asset.",
+  "noWalletFound": "Walang natagpuang wallet.",
+  "recoveryPhraseCopied": "Kinopya ang recovery phrase sa clipboard",
+  "versionLabel": "Bersyon {version}",
+  "authFailed": "Nabigo ang pagpapatunay",
+  "marketCap": "Market Cap",
+  "totalHolders": "Kabuuang Holder",
+  "mintAddress": "Address ng Mint",
+  "totalSupply": "Kabuuang Supply",
+  "recentActivity": "Kamakailang Aktibidad",
+  "tokenDecimals": "Decimals",
+  "tokenStandard": "Token Standard",
+  "noActivityForToken": "Walang kamakailang aktibidad para sa token na ito.",
+  "navAgents": "Mga Ahente",
+  "agentsTitle": "AI Ahente",
+  "yourAgents": "Ang iyong mga Ahente",
+  "openTasks": "Mga Bukas na Gawain",
+  "registerAgentTitle": "I-rehistro ang Ahente",
+  "registerAgentDesc": "Ang mga ahente ay awtonomong gumagana nang may delegadong awtoridad. Magtakda ng limitasyon sa paggastos nang maingat — hindi sila maaaring lumampas dito on-chain.",
+  "agentNameLabel": "PANGALAN NG AHENTE",
+  "agentNamePlaceholder": "e.g. Ari-Trader-v1",
+  "agentPubKeyLabel": "PUBLIC KEY NG AHENTE",
+  "agentPubKeyPlaceholder": "Base58 Ed25519 pubkey",
+  "maxPerTxLabel": "MAX KADA TRANSAKSYON (XRS)",
+  "dailyBudgetLabel": "ARAW-ARAW NA BUDGET (XRS)",
+  "allowedContractsLabel": "MGA PINAYAGANG KONTRATA",
+  "allowedContractsPlaceholder": "pool_mtk_xrs, ... (gamit ang kuwit)",
+  "registerAgentBtn": "I-rehistro ang Ahente",
+  "revokeAgentBtn": "Bawiin",
+  "claimTaskBtn": "Kunin",
+  "lastHeartbeatPrefix": "Huling tibay: ",
+  "activeAgentsStatus": "{count} AKTIBO",
+  "sendPrivately": "Ipadala nang Pribado",
+  "sendPrivatelyDesc": "Halaga ay nakatago sa chain sa pamamagitan ng ZK proof",
+  "zkpInfoBox": "Ang halaga ng padala ay itatago sa chain. Ikaw at ang tatanggap lamang ang makakakita ng halaga. I-save ang iyong blinding factor para sa mga talaan ng buwis.",
+  "generateProofAndSend": "Bumuo ng Katibayan at Ipadala",
+  "privacyModeTitle": "Privacy Mode",
+  "privacyModeSubtitle": "Obscure balances on the dashboard",
+  "@comingSoon": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@wordNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@enterWordNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@failedCreateWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@failedImportWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@balance": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "symbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@priceEstimate": {
+    "placeholders": {
+      "fromSymbol": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "toSymbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@validatorAddress": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "@stakeAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@hashLabel": {
+    "placeholders": {
+      "hash": {
+        "type": "String"
+      }
+    }
+  },
+  "shareReceipt": "Share Receipt",
+  "transactionDetails": "Transaction Details",
+  "receiptTitle": "Xeris Transaction Receipt",
+  "dateLabel": "Date",
+  "statusLabel": "Status",
+  "successStatus": "Success",
+  "copiedToClipboard": "Copied to clipboard",
+  "@connectToDapp": {
+    "placeholders": {
+      "dappName": {
+        "type": "String"
+      }
+    }
+  },
+  "@receivedAsset": {
+    "placeholders": {
+      "symbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@sentAsset": {
+    "placeholders": {
+      "symbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@fromAddress": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "@toAddress": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "@todayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@yesterdayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@connectedTo": {
+    "placeholders": {
+      "publicKey": {
+        "type": "String"
+      }
+    }
+  },
+  "@availableXrs": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "@addLiquidityWithTokens": {
+    "placeholders": {
+      "tokenA": {
+        "type": "String"
+      },
+      "tokenB": {
+        "type": "String"
+      }
+    }
+  },
+  "@versionLabel": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "@activeAgentsStatus": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "quantumShieldTitle": "Quantum Shield",
+  "quantumShieldSubtitle": "Post-quantum cryptography",
+  "quantumShieldDesc": "Protect your wallet with post-quantum cryptography (ML-DSA-65)",
+  "quantumProtectionActive": "Quantum Protection Active",
+  "notProtected": "Not Protected",
+  "pqSecurityLevel": "ML-DSA-65 · 128-bit PQ security",
+  "vulnerableToQuantum": "Vulnerable to quantum attacks",
+  "statusActive": "ACTIVE",
+  "statusOff": "OFF",
+  "zkProofsUsed": "ZK Proofs Used",
+  "pqKeysRegistered": "PQ Keys Registered",
+  "blockTimeStat": "Block Time",
+  "quantumProtectedDesc": "Your wallet is quantum-protected. Transfers signed with ML-DSA-65 show a 🛡 badge in the explorer.",
+  "enableQuantumProtectionDesc": "Enabling quantum protection generates a ML-DSA-65 keypair and registers your public key on-chain. This is a one-time setup.",
+  "sendWithQuantumSigning": "Send with Quantum Signing",
+  "enableQuantumProtectionBtn": "Enable Quantum Protection",
+  "quantumEnabledSuccess": "Quantum Protection Enabled!",
+  "failedToEnablePq": "Failed to enable: {error}",
+  "@failedToEnablePq": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "pinCodeTitle": "PIN Code",
+  "pinCodeSubtitle": "Secure wallet with a 6-digit PIN",
+  "changePinCodeTitle": "Change PIN Code",
+  "changePinCodeSubtitle": "Update your security PIN",
+  "panicPinTitle": "Panic PIN (Self-Destruct)",
+  "panicPinSubtitle": "A code that wipes all data when entered",
+  "setPanicPin": "Set Panic PIN",
+  "confirmPanicPin": "Confirm Panic PIN",
+  "panicTriggered": "Panic PIN triggered. All data cleared.",
+  "appLockedTitle": "Xeris Wallet Locked",
+  "authenticateToContinue": "Authenticate to continue",
+  "securityAudit": "SECURITY AUDIT",
+  "biometricLockActive": "Biometric Lock Active",
+  "pinProtected6Digit": "6-Digit PIN Protected",
+  "privacyModeEnabled": "Privacy Mode Enabled",
+  "privacyModeDisabled": "Privacy Mode Disabled",
+  "fullDiskEncryption": "Full Disk Encryption",
+  "zkProofAsyncInfo": "Xeris uses asynchronous ZK proof generation to maintain privacy without blocking your wallet interaction.",
+  "unknownToken": "Unknown Token",
+  "backupConfirmedLabel": "Ligtas kong na-backup ang aking Quantum Secret Key",
+  "buyingMinLabel": "Bumibili (Min)",
+  "cancelOrderConfirm": "Sigurado ka bang kanselahin ang limit order na ito? Ibabalik ang pondo sa iyong wallet.",
+  "cancelOrderTitle": "Kanselahin ang Order",
+  "cancelTxFailed": "Nabigo ang pagsumite ng kanselasyon",
+  "cancelTxSubmitted": "Naisumite ang transaksyon ng kanselasyon",
+  "commissionLabel": "Komisyon: {value}%",
+  "@commissionLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmStakeDesc": "Magsa-stake ka ng {amount} XRS sa {validator}.",
+  "confirmStakeTitle": "Kumpirmahin ang Stake",
+  "confirmUnstakeDesc": "Mag-a-unstake ka ng {amount} XRS mula sa {validator}.",
+  "confirmUnstakeTitle": "Kumpirmahin ang Unstake",
+  "connectToDappDesc": "Gustong kumonekta ng app na ito sa iyong Xeris wallet at tingnan ang iyong public address.",
+  "dappRequestUnknown": "Humihiling ang app na ito ng wallet access.",
+  "interactLabel": "Makipag-ugnayan",
+  "mainnetLabel": "Mainnet",
+  "mainnetSoon": "Malapit na ang Mainnet",
+  "myWallet": "Aking Wallet",
+  "networkFee": "Network Fee",
+  "networkLabel": "Network",
+  "no": "Hindi",
+  "noActiveLimitOrders": "Walang aktibong limit orders",
+  "noMatchingValidators": "Walang tumutugmang validators",
+  "openStatus": "BUKAS",
+  "orderIdLabel": "Order ID",
+  "paste": "I-paste",
+  "quantumBackupTitle": "I-backup ang Quantum Identity",
+  "quantumBackupWarning": "Hindi na sapat ang iyong 12-salitang mnemonic upang ma-recover ang wallet na ito. DAPAT mong i-backup ang Quantum Secret Key na ito.",
+  "quantumSecretKeyLabel": "QUANTUM SECRET KEY",
+  "searchTokenPlaceholder": "Maghanap ng token...",
+  "searchValidators": "Maghanap ng Validators",
+  "sellingLabel": "Nagbebenta",
+  "signAllTransactionsDesc": "Gusto ng app na ito na pirmahan mo ang {count} transaksyon nang sabay-sabay.",
+  "@signAllTransactionsDesc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "signAllTransactionsTitle": "Pirmahan ang {count} Transaksyon",
+  "@signAllTransactionsTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "signAndSendTransactionTitle": "Pirmahan at Ipadala ang Transaksyon",
+  "signMessageDesc": "Gusto ng app na ito na pirmahan mo ang isang mensahe para sa verification.",
+  "signTransactionDesc": "Gusto ng app na ito na pirmahan mo ang isang transaksyon. Suriin nang mabuti bago aprubahan.",
+  "signTransactionTitle": "Pirmahan ang Transaksyon",
+  "stakeAmountPercentage": "{percent}%",
+  "stakedBalance": "Staked Balance",
+  "swapLabel": "Swap",
+  "targetPriceLabel": "Target Price",
+  "testnetLabel": "Testnet",
+  "toLabel": "Kay",
+  "totalStaked": "Total Staked: {amount} XRS",
+  "@totalStaked": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "unbondingNotice": "May 7-araw na unbonding period",
+  "unstake": "Unstake",
+  "unwrapXrs": "I-unwrap ang XRS",
+  "viewRecoveryKey": "Tingnan ang Recovery Key",
+  "wrapXrs": "I-wrap ang XRS",
+  "yesCancel": "Oo, Kanselahin",
+  "zkpTransferSubmitted": "Naisumite ang ZKP Transfer!",
+  "connectedSitesTitle": "Mga Konektadong Site",
+  "connectedSitesSubtitle": "Pamahalaan ang mga pahintulot ng dApp",
+  "noConnectedSites": "Walang Konektadong Site",
+  "noConnectedSitesDesc": "Ang mga site na kinokonekta mo sa pamamagitan ng browser ay lalabas dito. Maaari mong bawiin ang kanilang access anumang oras.",
+  "connectedSiteRevoked": "Binawi ang access sa site",
+  "revokeAllSitesTitle": "Bawiin ang lahat ng site?",
+  "revokeAllSitesDesc": "Ididiskonekta nito ang lahat ng website mula sa iyong wallet. Kailangan nilang humiling muli ng access.",
+  "revokeAll": "Bawiin Lahat",
+  "revoke": "Bawiin",
+  "allSitesRevoked": "Lahat ng pahintulot ng site ay binawi",
+  "addressBookTitle": "Address Book",
+  "addressBookSubtitle": "Pamahalaan ang mga naka-save na contact",
+  "themeTitle": "Tema",
+  "selectTheme": "Pumili ng Tema",
+  "themeDark": "Madilim na Mode",
+  "themeLight": "Maliwanag na Mode",
+  "themeSolar": "Amber",
+  "themeCyberpunk": "Violet",
+  "themeSystem": "Default ng Sistema",
+  "themeNameDark": "Madilim",
+  "themeNameLight": "Maliwanag",
+  "themeNameSolar": "Amber",
+  "themeNameCyberpunk": "Violet",
+  "themeNameSystem": "Sistema"
+}

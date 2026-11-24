@@ -1,0 +1,6 @@
+{
+  "XERIS_NETWORK": "mainnet",
+  "XERIS_MAINNET_RPC_URL": "https://mainnetrpc.xerisweb.com",
+  "XERIS_MAINNET_CONTROL_URL": "https://mainnetrpc.xerisweb.com",
+  "XERIS_EXPLORER_URL": "https://mainnetrpc.xerisweb.com"
+}

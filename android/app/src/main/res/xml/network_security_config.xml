@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The existing testnet endpoint is cleartext HTTP on 138.197.116.81. Mainnet
+  endpoints are configured separately; other hosts remain HTTPS-only. CronetClient
+  enforces Android's cleartext policy, so cleartext must be explicitly permitted
+  for that host or every REST call is blocked on-device. All other destinations
+  remain HTTPS-only via the secure base-config.
+  TODO(mainnet): once the node exposes an HTTPS domain, drop this domain-config.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">138.197.116.81</domain>
+    </domain-config>
+</network-security-config>

@@ -1,0 +1,553 @@
+{
+  "@@locale": "fr",
+  "settingsTitle": "Paramètres",
+  "accountSection": "Compte",
+  "manageWalletsTitle": "Gérer les portefeuilles",
+  "manageWalletsSubtitle": "Ajouter, supprimer ou changer de portefeuilles",
+  "recoveryPhraseTitle": "Phrase de récupération",
+  "recoveryPhraseSubtitle": "Afficher votre phrase secrète en toute sécurité",
+  "generalSection": "Général",
+  "currencyTitle": "Devise",
+  "notificationsTitle": "Notifications",
+  "notificationsSubtitle": "Recevoir des alertes pour les transactions",
+  "privacyModeTitle": "Mode Privé",
+  "privacyModeSubtitle": "Masquer les soldes sur le tableau de bord",
+  "securitySection": "Sécurité",
+  "biometricTitle": "Authentification Biométrique",
+  "biometricSubtitle": "Nécessite Face ID / Empreinte digitale au démarrage",
+  "supportSection": "Assistance",
+  "privacyPolicyTitle": "Politique de confidentialité",
+  "privacyPolicySubtitle": "Lisez notre politique de confidentialité",
+  "termsOfServiceTitle": "Conditions générales",
+  "termsOfServiceSubtitle": "Lisez nos conditions de service",
+  "aboutWalletTitle": "À propos de Xeris Wallet",
+  "languageTitle": "Langue",
+  "selectLanguage": "Choisir la langue",
+  "addressCopied": "Adresse copiée dans le presse-papiers",
+  "loadingAddress": "Chargement...",
+  "errorLoadingAddress": "Erreur lors du chargement de l'adresse",
+  "sinceLastMonth": "Depuis le mois dernier",
+  "tokensTitle": "Jetons",
+  "comingSoon": "Détails de {itemName} bientôt disponibles !",
+  "actionSend": "Envoyer",
+  "actionReceive": "Recevoir",
+  "actionSwap": "Échanger",
+  "actionEarn": "Gagner",
+  "actionScan": "Scanner",
+  "navWallet": "Portefeuille",
+  "navBrowser": "Navigateur",
+  "navActivity": "Activité",
+  "balanceHistoryTitle": "Historique du solde",
+  "totalBalanceTitle": "Solde Total",
+  "noHistoryAvailable": "Aucun historique disponible",
+  "errorPrefix": "Erreur : {error}",
+  "addWalletTitle": "Ajouter un portefeuille",
+  "addWalletSubtitle": "Comment souhaitez-vous ajouter un portefeuille ?",
+  "createNewWallet": "Créer un nouveau portefeuille",
+  "createNewWalletDesc": "Générer une nouvelle phrase secrète de 12 mots",
+  "importExistingWallet": "Importer un portefeuille existant",
+  "importExistingWalletDesc": "Restaurer à l'aide d'une phrase secrète",
+  "myWalletsTitle": "Mes portefeuilles",
+  "noWallets": "Aucun portefeuille",
+  "noWalletsDesc": "Vous n'avez pas encore de portefeuille. Créez ou importez votre premier portefeuille pour commencer.",
+  "deleteWalletPromptTitle": "Supprimer le portefeuille ?",
+  "deleteWalletPromptDesc": "Êtes-vous sûr de vouloir supprimer \"{walletName}\" ? Cette action ne peut pas être annulée à moins que vous ayez sauvegardé votre phrase de récupération.",
+  "cancel": "Annuler",
+  "delete": "Supprimer",
+  "unlockWallet": "Déverrouiller le portefeuille",
+  "authRequired": "Authentification requise.",
+  "verifySecretPhraseTitle": "Vérifier la phrase secrète",
+  "verifyBackup": "Vérifiez votre sauvegarde",
+  "verifyBackupDesc": "Saisissez les mots suivants de votre phrase secrète pour confirmer que vous les avez enregistrés.",
+  "wordNumber": "Mot n°{number}",
+  "enterWordNumber": "Saisir le mot n°{number}",
+  "verifyComplete": "Vérifier et terminer",
+  "walletVerified": "Portefeuille vérifié et sécurisé !",
+  "failedCreateWallet": "Échec de la création du portefeuille : {error}",
+  "incorrectWords": "Mots incorrects. Veuillez vérifier votre phrase et réessayer.",
+  "importWalletTitle": "Importer un portefeuille",
+  "enterSecretPhrase": "Entrez la phrase secrète",
+  "enterRecoveryPhraseDesc": "Entrez votre phrase de récupération de 12 ou 24 mots pour restaurer votre portefeuille.",
+  "invalidRecoveryPhrase": "Phrase de récupération invalide",
+  "walletImportedSuccess": "Portefeuille importé avec succès !",
+  "failedImportWallet": "Échec de l'importation du portefeuille : {error}",
+  "secretRecoveryPhraseTitle": "Phrase de récupération secrète",
+  "secretPhraseMasterKeyDesc": "Cette phrase secrète est la clé maîtresse de votre portefeuille. Notez-la et conservez-la en lieu sûr. Ne la partagez jamais avec personne.",
+  "copyToClipboard": "Copier dans le presse-papiers",
+  "secretPhraseCopied": "Phrase secrète copiée dans le presse-papiers",
+  "savedSecretPhraseBtn": "J'ai sauvegardé ma phrase secrète",
+  "welcomeTo": "Bienvenue sur\nXeris Wallet",
+  "secureWalletForChain": "Le portefeuille sécurisé pour la chaîne Xeris.",
+  "createANewWallet": "Créer un nouveau portefeuille",
+  "alreadyHaveWallet": "J'ai déjà un portefeuille",
+  "sendAssetsTitle": "Envoyer des actifs",
+  "recipientAddress": "Adresse du destinataire",
+  "pasteAddressOrScan": "Coller l'adresse ou scanner le QR",
+  "amount": "Montant",
+  "max": "MAX",
+  "review": "Vérifier",
+  "balance": "Solde : {amount} {symbol}",
+  "errorEnterRecipient": "Veuillez entrer une adresse de destinataire",
+  "errorInvalidAddress": "Adresse de la chaîne Xeris invalide",
+  "errorEnterValidAmount": "Veuillez entrer un montant valide",
+  "errorInsufficientBalance": "Solde insuffisant",
+  "receiveAssetsTitle": "Recevoir des actifs",
+  "scanToReceive": "Scanner pour recevoir",
+  "sendOnlyXerisAssets": "N'envoyez que des actifs de la chaîne Xeris à cette adresse.",
+  "shareAddress": "Partager l'adresse",
+  "swapTitle": "Échanger",
+  "from": "De",
+  "toEstimated": "À (Estimé)",
+  "price": "Prix",
+  "priceEstimate": "1 {fromSymbol} ≈ {rate} {toSymbol}",
+  "slippageTolerance": "Tolérance de glissement",
+  "swapping": "Échange en cours...",
+  "selectToken": "Sélectionner un jeton",
+  "scanQrCodeTitle": "Scanner le code QR",
+  "alignQrCode": "Alignez le code QR dans le cadre",
+  "earnRewardsTitle": "Gagner des récompenses",
+  "noValidatorsFound": "Aucun validateur trouvé sur le réseau de test.\nVous pouvez toujours essayer de miser sur le réseau.",
+  "validatorAddress": "Validateur {address}...",
+  "stakeAmount": "Mise : {amount} XRS",
+  "stake": "Miser",
+  "directStake": "Mise directe",
+  "transactionSubmitted": "Transaction soumise",
+  "transactionFailed": "Échec de la transaction",
+  "txSubmittedDesc": "Votre transaction a été soumise au réseau Xeris.",
+  "hashLabel": "Hachage : {hash}",
+  "txHashCopied": "Hachage de la transaction copié dans le presse-papiers",
+  "viewInExplorer": "Voir dans l'explorateur",
+  "backToDashboard": "Retour au tableau de bord",
+  "connectToDapp": "Se connecter à {dappName} ?",
+  "reject": "Rejeter",
+  "approve": "Approuver",
+  "details": "DÉTAILS",
+  "activityTitle": "Activité",
+  "noActivityYet": "Pas encore d'activité",
+  "noActivityDesc": "Vos transactions apparaîtront ici une fois que vous aurez envoyé ou reçu des fonds.",
+  "errorLoadingActivity": "Erreur lors du chargement de l'activité",
+  "activitySearchHint": "Rechercher adresse, hash ou jeton",
+  "activityFilterAll": "Tous",
+  "activityFilterSent": "Envoyés",
+  "activityFilterReceived": "Reçus",
+  "activityFilterSwap": "Échange",
+  "activityFilterFailed": "Échoués",
+  "activityNoMatches": "Aucun résultat",
+  "activityNoMatchesDesc": "Essayez d'ajuster vos filtres ou votre recherche",
+  "unknownAddress": "Inconnu",
+  "receivedAsset": "Reçu {symbol}",
+  "sentAsset": "Envoyé {symbol}",
+  "fromAddress": "De : {address}",
+  "toAddress": "À : {address}",
+  "execContract": "Exéc",
+  "failedStatus": "Échec",
+  "todayAt": "Aujourd'hui {time}",
+  "yesterdayAt": "Hier {time}",
+  "connectingToDapp": "Connexion à dApp...",
+  "signMessageTitle": "Signer le message",
+  "messageToSign": "MESSAGE",
+  "signBtn": "Signer",
+  "searchOrEnterUrl": "Rechercher ou entrer l'URL",
+  "limitOrder": "Limite",
+  "limitPriceLabel": "Prix limite",
+  "manageCoins": "Gérer les pièces",
+  "marketOrder": "Marché",
+  "placeLimitOrder": "Placer un ordre limite",
+  "rename": "Renommer",
+  "renameWalletPromptDesc": "Entrez un nouveau nom pour votre portefeuille.",
+  "renameWalletTitle": "Renommer le portefeuille",
+  "save": "Sauvegarder",
+  "walletNameLabel": "Nom du portefeuille",
+  "dAppBrowser": "Navigateur dApp",
+  "connectedTo": "Connecté à : {publicKey}",
+  "selectCurrency": "Sélectionner la devise",
+  "stakeXrs": "Staker XRS",
+  "availableXrs": "Disponible : {balance} XRS",
+  "confirmStake": "Confirmer le staking",
+  "addLiquidityWithTokens": "Ajouter de la liquidité : {tokenA}/{tokenB}",
+  "confirmDeposit": "Confirmer le dépôt",
+  "ok": "OK",
+  "reviewTransaction": "Réviser la transaction",
+  "youAreSending": "Vous envoyez",
+  "confirmAndSend": "Confirmer et envoyer",
+  "biometricAuthFailed": "L'authentification a échoué. Impossible d'activer la biométrie.",
+  "couldNotOpenLink": "Impossible d'ouvrir le lien",
+  "recoveryPhraseWarning": "Ne partagez jamais cette phrase. Quiconque possède ces mots peut voler vos actifs.",
+  "noWalletFound": "Aucun portefeuille trouvé.",
+  "recoveryPhraseCopied": "Phrase de récupération copiée dans le presse-papiers",
+  "versionLabel": "Version {version}",
+  "authFailed": "Échec de l'authentification",
+  "marketCap": "Capitalisation boursière",
+  "totalHolders": "Nombre total de détenteurs",
+  "mintAddress": "Adresse de frappe",
+  "totalSupply": "Offre totale",
+  "recentActivity": "Activité récente",
+  "tokenDecimals": "Décimales",
+  "tokenStandard": "Standard de jeton",
+  "noActivityForToken": "Aucune activité récente pour ce jeton.",
+  "navAgents": "Agents",
+  "agentsTitle": "Agents IA",
+  "yourAgents": "Vos Agents",
+  "openTasks": "Tâches Ouvertes",
+  "registerAgentTitle": "Enregistrer l'Agent",
+  "registerAgentDesc": "Les agents opèrent de manière autonome avec une autorité déléguée. Définissez soigneusement les limites de dépenses — ils ne peuvent pas les dépasser sur la chaîne.",
+  "agentNameLabel": "NOM DE L'AGENT",
+  "agentNamePlaceholder": "ex. Ari-Trader-v1",
+  "agentPubKeyLabel": "CLÉ PUBLIQUE DE L'AGENT",
+  "agentPubKeyPlaceholder": "Clé publique Ed25519 Base58",
+  "maxPerTxLabel": "MAX PAR TRANSACTION (XRS)",
+  "dailyBudgetLabel": "BUDGET QUOTIDIEN (XRS)",
+  "allowedContractsLabel": "CONTRATS AUTORISÉS",
+  "allowedContractsPlaceholder": "pool_mtk_xrs, ... (séparés par des virgules)",
+  "registerAgentBtn": "Enregistrer l'Agent",
+  "revokeAgentBtn": "Révoquer",
+  "claimTaskBtn": "Réclamer",
+  "lastHeartbeatPrefix": "Dernier battement de cœur : ",
+  "quantumShieldTitle": "Bouclier Quantique",
+  "quantumShieldSubtitle": "Cryptographie post-quantique",
+  "quantumShieldDesc": "Protégez votre portefeuille avec la cryptographie post-quantique (ML-DSA-65)",
+  "quantumProtectionActive": "Protection Quantique Active",
+  "notProtected": "Non Protégé",
+  "pqSecurityLevel": "ML-DSA-65 · Sécurité PQ 128 bits",
+  "vulnerableToQuantum": "Vulnérable aux attaques quantiques",
+  "statusActive": "ACTIVO",
+  "statusOff": "DÉSACTIVÉ",
+  "zkProofsUsed": "Preuves ZK utilisées",
+  "pqKeysRegistered": "Clés PQ enregistrées",
+  "blockTimeStat": "Temps de bloc",
+  "quantumProtectedDesc": "Votre portefeuille est protégé contre le quantique. Les transferts signés avec ML-DSA-65 affichent un badge 🛡 dans l'explorateur.",
+  "enableQuantumProtectionDesc": "L'activation de la protection quantique génère une paire de clés ML-DSA-65 et enregistre votre clé publique sur la chaîne. Il s'agit d'une configuration unique.",
+  "sendWithQuantumSigning": "Envoyer avec signature quantique",
+  "enableQuantumProtectionBtn": "Activer la Protection Quantique",
+  "quantumEnabledSuccess": "Protection Quantique Activée !",
+  "failedToEnablePq": "Échec de l'activation : {error}",
+  "pinCodeTitle": "Code PIN",
+  "pinCodeSubtitle": "Sécurisez votre portefeuille avec un PIN à 6 chiffres",
+  "changePinCodeTitle": "Changer le code PIN",
+  "changePinCodeSubtitle": "Mettez à jour votre PIN de sécurité",
+  "pinCodeUpdated": "Code PIN mis à jour avec succès",
+  "noAgentsRegistered": "Aucun agent enregistré.",
+  "noOpenTasks": "Aucune tâche ouverte.",
+  "refresh": "Rafraîchir",
+  "zkpOnlyXrsError": "Les transferts privés ZKP ne prennent en charge que le XRS pour le moment.",
+  "pqcOnlyXrsError": "Les transferts signés quantiquement ne prennent actuellement en charge que le XRS.",
+  "required": "Requis",
+  "enterPinCode": "Entrez le code PIN",
+  "setNewPin": "Définir un nouveau PIN",
+  "confirmPin": "Confirmez votre PIN",
+  "pinSubtitle": "Sécurisez vos actifs avec un PIN à 6 chiffres",
+  "incorrectPin": "Code PIN incorrect",
+  "pinsDoNotMatch": "Les codes PIN ne correspondent pas. Réessayez.",
+  "agentMaxPerTx": "Max/tx : {amount} XRS",
+  "agentDailyLimit": "Quotidien : {amount} XRS",
+  "activeAgentsStatus": "{count} ACTIF(S)",
+  "sendPrivately": "Envoyer en Privé",
+  "sendPrivatelyDesc": "Montant masqué sur la chaîne via preuve ZK",
+  "zkpInfoBox": "Le montant du transfert sera masqué sur la chaîne. Seuls vous et le destinataire pouvez vérifier la valeur. Conservez votre facteur d'aveuglement pour les dossiers fiscaux.",
+  "generateProofAndSend": "Générer la Preuve et Envoyer",
+  "panicPinTitle": "Code PIN Panique (Auto-destruction)",
+  "panicPinSubtitle": "Un code qui efface toutes les données lors de la saisie",
+  "setPanicPin": "Définir le PIN Panique",
+  "confirmPanicPin": "Confirmer le PIN Panique",
+  "panicTriggered": "PIN Panique déclenché. Toutes les données ont été effacées.",
+  "shareReceipt": "Partager le Reçu",
+  "transactionDetails": "Détails de la Transaction",
+  "receiptTitle": "Reçu de Transaction Xeris",
+  "dateLabel": "Date",
+  "statusLabel": "Statut",
+  "successStatus": "Succès",
+  "copiedToClipboard": "Copié dans le presse-papiers",
+  "@comingSoon": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@wordNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@enterWordNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@failedCreateWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@failedImportWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "@balance": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "symbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@priceEstimate": {
+    "placeholders": {
+      "fromSymbol": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      },
+      "toSymbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@validatorAddress": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "@stakeAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@hashLabel": {
+    "placeholders": {
+      "hash": {
+        "type": "String"
+      }
+    }
+  },
+  "@connectToDapp": {
+    "placeholders": {
+      "dappName": {
+        "type": "String"
+      }
+    }
+  },
+  "@receivedAsset": {
+    "placeholders": {
+      "symbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@sentAsset": {
+    "placeholders": {
+      "symbol": {
+        "type": "String"
+      }
+    }
+  },
+  "@fromAddress": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "@toAddress": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "@todayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@yesterdayAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@connectedTo": {
+    "placeholders": {
+      "publicKey": {
+        "type": "String"
+      }
+    }
+  },
+  "@availableXrs": {
+    "placeholders": {
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "@addLiquidityWithTokens": {
+    "placeholders": {
+      "tokenA": {
+        "type": "String"
+      },
+      "tokenB": {
+        "type": "String"
+      }
+    }
+  },
+  "@versionLabel": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "@activeAgentsStatus": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@failedToEnablePq": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "appLockedTitle": "Xeris Wallet Locked",
+  "authenticateToContinue": "Authenticate to continue",
+  "securityAudit": "SECURITY AUDIT",
+  "biometricLockActive": "Biometric Lock Active",
+  "pinProtected6Digit": "6-Digit PIN Protected",
+  "privacyModeEnabled": "Privacy Mode Enabled",
+  "privacyModeDisabled": "Privacy Mode Disabled",
+  "fullDiskEncryption": "Full Disk Encryption",
+  "zkProofAsyncInfo": "Xeris uses asynchronous ZK proof generation to maintain privacy without blocking your wallet interaction.",
+  "unknownToken": "Unknown Token",
+  "backupConfirmedLabel": "J'ai sauvegardé en toute sécurité ma Clé Secrète Quantique",
+  "buyingMinLabel": "Achat (Min)",
+  "cancelOrderConfirm": "Êtes-vous sûr de vouloir annuler cet ordre limite ? Les fonds seront renvoyés à votre portefeuille.",
+  "cancelOrderTitle": "Annuler l'ordre",
+  "cancelTxFailed": "Échec de l'envoi de l'annulation",
+  "cancelTxSubmitted": "Transaction d'annulation envoyée",
+  "commissionLabel": "Commission : {value}%",
+  "@commissionLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmStakeDesc": "Vous êtes sur le point de staker {amount} XRS sur {validator}.",
+  "confirmStakeTitle": "Confirmer le Stake",
+  "confirmUnstakeDesc": "Vous êtes sur le point de retirer {amount} XRS de {validator}.",
+  "confirmUnstakeTitle": "Confirmer le Unstake",
+  "connectToDappDesc": "Cette application souhaite se connecter à votre portefeuille Xeris et voir votre adresse publique.",
+  "dappRequestUnknown": "Cette application demande l'accès au portefeuille.",
+  "interactLabel": "Interagir",
+  "mainnetLabel": "Mainnet",
+  "mainnetSoon": "Le Mainnet arrive bientôt",
+  "myWallet": "Mon Portefeuille",
+  "networkFee": "Frais de Réseau",
+  "networkLabel": "Réseau",
+  "no": "Non",
+  "noActiveLimitOrders": "Aucun ordre limite actif",
+  "noMatchingValidators": "Aucun validateur correspondant",
+  "openStatus": "OUVERT",
+  "orderIdLabel": "ID de l'ordre",
+  "paste": "Coller",
+  "quantumBackupTitle": "Sauvegarder l'Identité Quantique",
+  "quantumBackupWarning": "Votre mnémonique de 12 mots ne suffit plus à récupérer ce portefeuille. Vous DEVEZ sauvegarder cette Clé Secrète Quantique.",
+  "quantumSecretKeyLabel": "CLÉ SECRÈTE QUANTIQUE",
+  "searchTokenPlaceholder": "Rechercher un jeton...",
+  "searchValidators": "Rechercher des Validateurs",
+  "sellingLabel": "Vente",
+  "signAllTransactionsDesc": "Cette application souhaite que vous signiez {count} transactions en une fois.",
+  "@signAllTransactionsDesc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "signAllTransactionsTitle": "Signer {count} Transactions",
+  "@signAllTransactionsTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "signAndSendTransactionTitle": "Signer et Envoyer la Transaction",
+  "signMessageDesc": "Cette application souhaite que vous signiez un message pour vérification.",
+  "signTransactionDesc": "Cette application souhaite que vous signiez une transaction. Vérifiez attentivement avant d'approuver.",
+  "signTransactionTitle": "Signer la Transaction",
+  "stakeAmountPercentage": "{percent}%",
+  "stakedBalance": "Solde Staké",
+  "swapLabel": "Échange",
+  "targetPriceLabel": "Prix Cible",
+  "testnetLabel": "Testnet",
+  "toLabel": "À",
+  "totalStaked": "Total Staké : {amount} XRS",
+  "@totalStaked": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "unbondingNotice": "Une période de dévalidation de 7 jours s'applique",
+  "unstake": "Unstake",
+  "unwrapXrs": "Unwrap XRS",
+  "viewRecoveryKey": "Voir la Clé de Récupération",
+  "wrapXrs": "Wrap XRS",
+  "yesCancel": "Oui, annuler",
+  "zkpTransferSubmitted": "Transfert ZKP Envoyé !",
+  "connectedSitesTitle": "Sites Connectés",
+  "connectedSitesSubtitle": "Gérer les permissions des dApps",
+  "noConnectedSites": "Aucun Site Connecté",
+  "noConnectedSitesDesc": "Les sites auxquels vous vous connectez via le navigateur apparaîtront ici. Vous pouvez révoquer leur accès à tout moment.",
+  "connectedSiteRevoked": "Accès au site révoqué",
+  "revokeAllSitesTitle": "Révoquer tous les sites ?",
+  "revokeAllSitesDesc": "Cela déconnectera tous les sites web de votre portefeuille. Ils devront demander l'accès à nouveau.",
+  "revokeAll": "Tout Révoquer",
+  "revoke": "Révoquer",
+  "allSitesRevoked": "Tous les permissions de sites révoquées",
+  "addressBookTitle": "Carnet d'adresses",
+  "addressBookSubtitle": "Gérer les contacts enregistrés",
+  "themeTitle": "Thème",
+  "selectTheme": "Sélectionner le thème",
+  "themeDark": "Mode Sombre",
+  "themeLight": "Mode Clair",
+  "themeSolar": "Amber",
+  "themeCyberpunk": "Violet",
+  "themeSystem": "Paramètre du système",
+  "themeNameDark": "Sombre",
+  "themeNameLight": "Clair",
+  "themeNameSolar": "Amber",
+  "themeNameCyberpunk": "Violet",
+  "themeNameSystem": "Système"
+}
