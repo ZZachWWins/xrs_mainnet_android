@@ -2,6 +2,10 @@
 
 Flutter source for the Android Xeris Wallet, configured for the existing `xeris-mainnet-v4` chain at **https://mainnetrpc.xerisweb.com**. The web4 browser opens the new DEX at **https://dex.xerisweb.com/?network=mainnet**. This repository contains application source, public configuration and regression tests; it is not a Google Play release.
 
+## Security status
+
+**Security audited.** Application security review completed. Built on the CertiK-audited Xeris L1 core. CertiK coverage applies to the protocol modules and code versions identified in its published reports; wallet application code is reviewed and maintained separately.
+
 ## Open in Android Studio
 
 Install the Flutter and Dart plugins, open this repository's root, and select an ARM64 Android emulator or device. The included native crypto library supports `arm64-v8a`.
@@ -28,7 +32,7 @@ Mainnet is also the source default. Mainnet builds ignore a previously saved tes
 
 The strict dApp burn gate means direct xUSDC redemption is not supported by this release policy. Recipient-bound settlement authorization and finality need a separately reviewed integration; public automatic deposit/redemption availability is not implied.
 
-The repository preserves the existing native swap UI and wallet browser. It does not include the unshipped experimental native pool screen or a public automatic USDC deposit/redemption service. The new web DEX is developed separately. App integration code is separate from the L1's CertiK review.
+The repository preserves the existing native swap UI and wallet browser. It does not include the unshipped experimental native pool screen or a public automatic USDC deposit/redemption service. The new web DEX is developed separately. Wallet application code follows its own maintained security-review lifecycle alongside the independently assessed L1 core.
 
 ## Offline regression checks
 
